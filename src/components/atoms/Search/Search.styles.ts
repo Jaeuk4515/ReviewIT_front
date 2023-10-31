@@ -10,6 +10,7 @@ const SearchArea = styled.div<{width: string, height: string}>`
 `
 
 const SearchBox = styled(InputBox)`
+  border: 1px solid rgba(0, 0, 0, .15);
   border-radius: 30px;
   position: absolute;
   box-sizing: border-box;

@@ -1,7 +1,12 @@
 import { UserImg } from "./UserProfile.styles";
 
-export default function UserProfile({ url }: {url: string}) {
+interface UserProfileType {
+  className: string;
+  url: string;
+}
+
+export default function UserProfile({ className, url }: UserProfileType) {
   return (
-    <UserImg category={url} />
+    <UserImg className={className} category={url} />
   )
 }

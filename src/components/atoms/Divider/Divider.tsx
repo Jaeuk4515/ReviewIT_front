@@ -1,7 +1,12 @@
 import { Line } from "./Divider.styles"
 
-export default function Divider() {
+interface DividerType { 
+  className: string,
+  width: string
+}
+
+export default function Divider({ className, width }: DividerType) {
   return (
-    <Line />
+    <Line className={className} width={width} />
   )
 }
