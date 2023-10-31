@@ -1,7 +1,12 @@
 import { ProductImg } from "./ImageCard.styles";
 
-export default function ImageCard({ url }: {url: string}) {
+interface ImageCardType {
+  className: string;
+  url: string;
+}
+
+export default function ImageCard({ className, url }: ImageCardType) {
   return (
-    <ProductImg category={url} />
+    <ProductImg className={className} category={url} />
   )
 }

@@ -1,0 +1,119 @@
+import styled from "styled-components";
+import logo from "../../../assets/icons/logo.svg";
+import Input from "../../atoms/Input/Input";
+import { SubmitButton } from "../CommentForm/CommentForm.styles";
+import Divider from "../../atoms/Divider/Divider";
+import google from "../../../assets/icons/google.svg"
+
+interface modalType {
+  modalType: "login" | "signup";
+}
+
+const Modal = styled.form<modalType>`
+  width: 420px;
+  height: ${props => props.modalType === "login" ? "630px" : "658px"};
+  border: 1px solid #C4C4C4;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+`
+
+const Logo = styled.div`
+  background-image: url(${logo});
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 200px;
+  height: 45px;
+`
+
+const ModalTitle = styled.span`
+  font-size: 25px;
+  font-weight: bold;
+`
+
+const InputArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
+`
+
+const InputBox = styled(Input)`
+  box-sizing: border-box;
+  padding: 0 20px;
+  border: none;
+  
+  &::placeholder {
+    color: #A8A8A8;
+  }
+`
+
+const ModalButton = styled(SubmitButton)`
+  width: 330px;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  margin-top: 10px;
+`
+
+const TextArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .2rem;
+`
+
+const FindPasswordText = styled.span`
+  color: #4375F5;
+  cursor: pointer;
+`
+
+const ModalTypeToggle = styled.div`
+  display: flex;
+  gap: 1rem;
+`
+
+const NormalText = styled.span`
+  color: #909090;
+`
+
+const ToggleLink = styled.span`
+  color: #4375F5;
+  cursor: pointer;
+`
+
+const ModalDivider = styled(Divider)`
+  border: 1px solid rgba(0, 0, 0, .1);
+`
+
+const GoogleLoginButton = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 10px;
+  width: 328px;
+  height: 45px;
+  margin-top: 15px;
+`
+
+const GoogleLogo = styled(Logo)`
+  background-image: url(${google});
+  width: 35px;
+  height: 35px;
+  margin-left: 20px;
+`
+
+const GoogleLoginText = styled(NormalText)`
+  font-size: 20px;
+`
+
+export { Modal, Logo, ModalTitle, InputArea, InputBox, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink, ModalDivider, GoogleLoginButton, GoogleLogo, GoogleLoginText }
