@@ -4,16 +4,19 @@ import { Logo } from "../AuthModal/AuthModal.styles";
 
 
 const FooterWrapper = styled(HeaderWrapper)`
-  height: 150px;
+  height: 200px;
+  border-bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, .05);
+  background-color: #f3f7ff;
 `
 
 const FooterArea = styled(HeaderArea)`
-  height: 55%;
+  height: 80px;
 `
 
 const IconArea = styled.div`
   height: 100%;
-  width: 20%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -42,7 +45,7 @@ const FooterTextArea = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  width: 60%;
+  width: 50%;
 `
 
 const FooterText = styled.span`

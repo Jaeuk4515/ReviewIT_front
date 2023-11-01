@@ -4,11 +4,13 @@ import bad from "../../../assets/icons/bad.svg";
 
 const Card = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   justify-content: center;
   align-items: center;
-  width: 450px;
-  height: 180px;
+  width: 48%;
+  height: 80%;
+  min-width: 450px;
+  min-height: 180px;
   border: 1.5px solid rgba(182, 182, 182, .5);
   border-radius: 15px;
   cursor: pointer;
