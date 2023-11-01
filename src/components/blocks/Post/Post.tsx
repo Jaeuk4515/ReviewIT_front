@@ -5,7 +5,7 @@ import { PostArea, ProductImg, ProductName } from "./Post.styles"
 interface PostType {
   url: string,
   name: string,
-  grade: number
+  grade: 1 | 2 | 3 | 4 | 5
 }
 
 export default function Post({ url, name, grade }: PostType) {
