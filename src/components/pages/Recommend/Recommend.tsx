@@ -19,8 +19,8 @@ export default function Recommend({ pageType }: {pageType: "recommend" | "non-re
       </TitleArea>
       <Search color="white" width="500px" height="50px" />
       <ReviewPostArea>
-        {posts.map(({ url, name, grade }, idx) => {
-          return <Post key={idx} url={url} name={name} grade={grade} />
+        {posts.map(({ productUrl, productName, grade }, idx) => {
+          return <Post key={idx} url={productUrl} name={productName} grade={grade} />
         })}
       </ReviewPostArea>
       <Pagination />

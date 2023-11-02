@@ -19,6 +19,7 @@ const UserInfoArea = styled.div`
   align-items: center;
   width: 100%;
   height: 50%;
+  padding-left: 5px;
 `
 
 const Profile = styled(UserProfile)`
@@ -38,7 +39,7 @@ const WritedTime = styled.span`
 
 const CommentText = styled.p`
   margin: 0;
-  padding: 0 20px;
+  padding: 5px 10px;
   width: 100%;
   height: auto;
   line-height: 50px;

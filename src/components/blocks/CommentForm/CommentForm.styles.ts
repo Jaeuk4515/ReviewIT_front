@@ -3,7 +3,8 @@ import Button from "../../atoms/Button/Button";
 import TextArea from "../../atoms/TextArea/TextArea";
 
 const Form = styled.div`
-  width: 800px;
+  width: 46%;
+  min-width: 787px;
   height: 120px;
   border: 1.5px solid rgba(182, 182, 182, .1);
   border-radius: 15px;

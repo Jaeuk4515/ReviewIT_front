@@ -9,8 +9,8 @@ import Post from "../../blocks/Post/Post";
 import Pagination from "../../blocks/Pagination/Pagination";
 
 export type PostObject = {
-  url: string;
-  name: string;
+  productUrl: string;
+  productName: string;
   grade: 1 | 2 | 3 | 4 | 5;
   content: string;
 }
@@ -18,8 +18,8 @@ export type PostObject = {
 export const posts: PostObject[] = [];
 for (let i = 0; i < 15; i++) {
   posts.push({
-    url: image,
-    name: `test${i}`,
+    productUrl: image,
+    productName: `test${i}`,
     grade: Math.ceil(Math.random()*5) as 1 | 2 | 3 | 4 | 5,
     content: ""
   })
@@ -38,8 +38,8 @@ export default function Review() {
       <CategoryNav />
       <Search color="white" width="500px" height="50px" />
       <ReviewPostArea>
-        {posts.map(({ url, name, grade }, idx) => {
-          return <Post key={idx} url={url} name={name} grade={grade} />
+        {posts.map(({ productUrl, productName, grade }, idx) => {
+          return <Post key={idx} url={productUrl} name={productName} grade={grade} />
         })}
       </ReviewPostArea>
       <Pagination />
