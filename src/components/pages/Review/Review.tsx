@@ -8,14 +8,14 @@ import image from "../../../assets/icons/image.webp";
 import Post from "../../blocks/Post/Post";
 import Pagination from "../../blocks/Pagination/Pagination";
 
-type PostObject = {
+export type PostObject = {
   url: string;
   name: string;
   grade: 1 | 2 | 3 | 4 | 5;
   content: string;
 }
 
-const posts: PostObject[] = [];
+export const posts: PostObject[] = [];
 for (let i = 0; i < 15; i++) {
   posts.push({
     url: image,

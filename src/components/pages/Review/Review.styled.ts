@@ -9,7 +9,7 @@ const ReviewPostArea = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 3rem;
-  width: 60%;
+  min-width: 60%;
   margin-top: 20px;
 `
 
