@@ -13,6 +13,22 @@ const Form = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+`
+
+const NoAuthCover = styled.div`
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(54, 79, 107, .1);
+`
+
+const NoAuthText = styled.h2`
+  color: #8D98A4;
 `
 
 const FormArea = styled.div`
@@ -41,4 +57,4 @@ const SubmitButton = styled(Button)`
   cursor: pointer;
 `
 
-export { Form, FormArea, InputWrapper, CommentInput, SubmitButton }
+export { Form, NoAuthCover, NoAuthText, FormArea, InputWrapper, CommentInput, SubmitButton }

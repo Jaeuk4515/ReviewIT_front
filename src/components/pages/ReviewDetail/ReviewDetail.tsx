@@ -11,9 +11,10 @@ interface reviewContentType extends CommentItemType, PostObject {
   productLink: string;
   commentAmount: number;
   likeyAmount: number;
+  isLogin: boolean;
 }
 
-export default function ReviewDetail({ userImageUrl, userName, time, text, productUrl, productName, grade, content, productLink, commentAmount, likeyAmount }: reviewContentType) {
+export default function ReviewDetail({ userImageUrl, userName, time, text, productUrl, productName, grade, content, productLink, commentAmount, likeyAmount, isLogin }: reviewContentType) {
   return (
     <ReviewDetailPage>
       <UserInfoWrapper>
@@ -35,7 +36,7 @@ export default function ReviewDetail({ userImageUrl, userName, time, text, produ
           </ExtraInfo>
         </ExtraInfoWrapper>
       </PostContent>
-      <CommentForm url={userImageUrl} />
+      <CommentForm isLogin={isLogin} url={userImageUrl} />
       <CommentArea>
         <CommentItem userImageUrl={userImageUrl} userName={userName} time={time} text={text} />
         <CommentItem userImageUrl={userImageUrl} userName={userName} time={time} text={text} />
