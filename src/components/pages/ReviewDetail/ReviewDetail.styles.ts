@@ -17,8 +17,8 @@ const UserInfoWrapper = styled.div`
 
 const ListButton = styled(SubmitButton)`
   margin-right: 15px;
-  background-color: #E8F2FF;
-  color: #256FFF;
+  background-color: #EAEAEA;
+  color: black;
   width: 60px;
 `
 

@@ -8,7 +8,7 @@ interface CommentFormType {
 
 export default function CommentForm({ url, isLogin }: CommentFormType) {
   return (
-    <Form>
+    <Form action="" method="">
       {!isLogin && <NoAuthCover><NoAuthText>댓글을 작성하려면 로그인을 해주세요!</NoAuthText></NoAuthCover>}
       <FormArea>
         <InputWrapper>

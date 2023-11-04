@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Button from "../../atoms/Button/Button";
 import TextArea from "../../atoms/TextArea/TextArea";
 
-const Form = styled.div`
+const Form = styled.form`
   width: 46%;
   min-width: 787px;
   height: 120px;

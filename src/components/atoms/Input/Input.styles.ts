@@ -6,6 +6,9 @@ const InputBox = styled.input<{color: string, width: string, height: string}>`
   background-color: ${props => props.color};
   border-radius: 10px;
   border: 1.5px solid rgba(0, 0, 0, .1);
+  padding: 0 15px;
+  font-size: 17px;
+  box-sizing: border-box;
   
   &:focus {
     outline: none;
