@@ -5,7 +5,8 @@ const CategoryArea = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: .7rem;
+  gap: .8rem;
+  cursor: pointer;
 `
 
 const ImgWrapper = styled.div`
@@ -15,7 +16,7 @@ const ImgWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 15px;
+  border-radius: 25px;
   box-shadow: 0 0 5px #C4C4C4;
 `
 

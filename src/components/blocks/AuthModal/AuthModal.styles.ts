@@ -9,6 +9,18 @@ interface modalType {
   modalType: "login" | "signup";
 }
 
+const ModalBg = styled.div`
+  position: fixed;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  background-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+`
+
 const Modal = styled.form<modalType>`
   width: 420px;
   height: ${props => props.modalType === "login" ? "630px" : "658px"};
@@ -19,6 +31,7 @@ const Modal = styled.form<modalType>`
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  background-color: white;
 `
 
 const Logo = styled.div`
@@ -103,17 +116,18 @@ const GoogleLoginButton = styled.div`
   width: 328px;
   height: 45px;
   margin-top: 15px;
+  cursor: pointer;
 `
 
 const GoogleLogo = styled(Logo)`
   background-image: url(${google});
   width: 35px;
   height: 35px;
-  margin-left: 20px;
+  margin-left: 30px;
 `
 
 const GoogleLoginText = styled(NormalText)`
   font-size: 20px;
 `
 
-export { Modal, Logo, ModalTitle, InputArea, InputBox, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink, ModalDivider, GoogleLoginButton, GoogleLogo, GoogleLoginText }
+export { ModalBg, Modal, Logo, ModalTitle, InputArea, InputBox, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink, ModalDivider, GoogleLoginButton, GoogleLogo, GoogleLoginText }

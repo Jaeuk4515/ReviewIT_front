@@ -1,17 +1,18 @@
 import ImageCard from "../../atoms/ImageCard/ImageCard"
 import Stars from "../Stars/Stars"
-import { PostArea, ProductName } from "./Post.styles"
+import { PostArea, ProductImg, ProductName } from "./Post.styles"
 
 interface PostType {
+  className: string,
   url: string,
   name: string,
-  grade: number
+  grade: 1 | 2 | 3 | 4 | 5
 }
 
-export default function Post({ url, name, grade }: PostType) {
+export default function Post({ className, url, name, grade }: PostType) {
   return (
-    <PostArea>
-      <ImageCard className="" url={url} />
+    <PostArea className={className}>
+      <ProductImg className="" url={url} />
       <ProductName>{name}</ProductName>
       <Stars grade={grade} />
     </PostArea>

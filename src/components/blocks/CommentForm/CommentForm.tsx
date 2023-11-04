@@ -1,9 +1,15 @@
 import UserProfile from "../../atoms/UserProfile/UserProfile";
-import { Form, InputWrapper, CommentInput, SubmitButton, FormArea } from "./CommentForm.styles";
+import { Form, NoAuthCover, NoAuthText, InputWrapper, CommentInput, SubmitButton, FormArea } from "./CommentForm.styles";
 
-export default function CommentForm({ url }: {url:string}) {
+interface CommentFormType {
+  url: string;
+  isLogin: boolean;
+}
+
+export default function CommentForm({ url, isLogin }: CommentFormType) {
   return (
-    <Form>
+    <Form action="" method="">
+      {!isLogin && <NoAuthCover><NoAuthText>댓글을 작성하려면 로그인을 해주세요!</NoAuthText></NoAuthCover>}
       <FormArea>
         <InputWrapper>
           <UserProfile className="" url={url} />

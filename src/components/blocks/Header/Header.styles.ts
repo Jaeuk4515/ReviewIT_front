@@ -10,6 +10,11 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+  z-index: 1000;
 `
 
 const HeaderArea = styled.div`
@@ -23,6 +28,7 @@ const HeaderArea = styled.div`
 const HeaderLogo = styled(Logo)`
   width: 160px;
   height: 35px;
+  cursor: pointer;
 `
 
 const ButtonArea = styled.div`
