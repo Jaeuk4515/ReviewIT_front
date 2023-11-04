@@ -27,11 +27,11 @@ export default function Home() {
           </MoreButton>
         </ContentArea>
         <PostArea>
-          <Post url={image} name="test" grade={3} />
-          <Post url={image} name="test" grade={3} />
-          <Post url={image} name="test" grade={3} />
-          <Post url={image} name="test" grade={3} />
-          <Post url={image} name="test" grade={3} />
+          <Post className="" url={image} name="test" grade={3} />
+          <Post className="" url={image} name="test" grade={3} />
+          <Post className="" url={image} name="test" grade={3} />
+          <Post className="" url={image} name="test" grade={3} />
+          <Post className="" url={image} name="test" grade={3} />
           <ShiftButton className="" direction="left" state="disable" />
           <ShiftButton className="" direction="right" state="enable" />
         </PostArea>

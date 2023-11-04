@@ -3,14 +3,15 @@ import Stars from "../Stars/Stars"
 import { PostArea, ProductImg, ProductName } from "./Post.styles"
 
 interface PostType {
+  className: string,
   url: string,
   name: string,
   grade: 1 | 2 | 3 | 4 | 5
 }
 
-export default function Post({ url, name, grade }: PostType) {
+export default function Post({ className, url, name, grade }: PostType) {
   return (
-    <PostArea>
+    <PostArea className={className}>
       <ProductImg className="" url={url} />
       <ProductName>{name}</ProductName>
       <Stars grade={grade} />

@@ -8,6 +8,7 @@ import Recommend from './components/pages/Recommend/Recommend';
 import ReviewDetail from './components/pages/ReviewDetail/ReviewDetail';
 import image from "./assets/icons/image.webp"
 import ReviewCreate from './components/pages/ReviewCreate/ReviewCreate';
+import ChangePassword from './components/pages/ChangePassword/ChangePassword';
 
 const content = `
 국가는 균형있는 국민경제의 성장 및 안정과 적정한 소득의 분배를 유지하고, 시장의 지배와 경제력의 남용을 방지하며, 경제주체간의 조화를 통한 경제의 민주화를 위하여 경제에 관한 규제와 조정을 할 수 있다.
@@ -41,7 +42,8 @@ function App() {
         likeyAmount={4}
         isLogin={true}
         /> */}
-        <ReviewCreate />
+        {/* <ReviewCreate /> */}
+        {/* <ChangePassword /> */}
       <Footer />
     </>
   );

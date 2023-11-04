@@ -9,7 +9,7 @@ const Card = styled.div`
   align-items: center;
   width: 48%;
   height: 80%;
-  min-width: 450px;
+  min-width: 380px;
   min-height: 180px;
   border: 1.5px solid rgba(182, 182, 182, .5);
   border-radius: 15px;
@@ -21,8 +21,8 @@ const Icon = styled.div<{status: "good" | "bad"}>`
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  width: 110px;
-  height: 110px;
+  width: 22%;
+  aspect-ratio: 1;
 `
 
 const Description = styled.div`
@@ -30,7 +30,7 @@ const Description = styled.div`
   flex-direction: column;
   gap: 1rem;
   justify-content: center;
-  width: 230px;
+  width: 47%;
   margin: 0 15px 0 0px;
 `
 

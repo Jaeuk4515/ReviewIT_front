@@ -4,7 +4,7 @@ import { SubmitButton } from "../CommentForm/CommentForm.styles";
 const PaginationArea = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 20%;
+  width: 320px;
   margin-top: 30px;
 `
 

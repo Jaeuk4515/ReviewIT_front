@@ -16,6 +16,7 @@ const HomePage = styled.div`
 
 const Carousel = styled.div`
   width: 65%;
+  min-width: 800px;
   height: 370px;
   border-radius: 15px;
   background-color: #D9D9D9;
@@ -26,12 +27,14 @@ const PagePart = styled.div`
   flex-direction: column;
   gap: 2rem;
   width: 60%;
+  min-width: 800px;
 `
 
 const ContentArea = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  width: 100%;
 `
 
 const PageText = styled.div`

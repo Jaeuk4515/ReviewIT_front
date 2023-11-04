@@ -7,11 +7,13 @@ const PostArea = styled.div`
   justify-content: center;
   align-items: center;
   gap: .7rem;
+  width: 20%;
 `
 
 const ProductImg = styled(ImageCard)`
-  width: 160px;
-  height: 160px;
+  width: 80%;
+  height: auto;
+  aspect-ratio: 1;
 `
 
 const ProductName = styled.span`

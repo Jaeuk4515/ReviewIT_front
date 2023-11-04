@@ -3,9 +3,8 @@ import Search from "../../atoms/Search/Search";
 import CategoryNav from "../../blocks/CategoryNav/CategoryNav";
 import RecommendCard from "../../blocks/RecommendCard/RecommendCard";
 import { ContentArea } from "../Home/Home.styles";
-import { ReviewPage, ReviewPostArea } from "./Review.styled";
+import { ReviewPage, ReviewPostArea, GridPost } from "./Review.styled";
 import image from "../../../assets/icons/image.webp";
-import Post from "../../blocks/Post/Post";
 import Pagination from "../../blocks/Pagination/Pagination";
 
 export type PostObject = {
@@ -31,7 +30,7 @@ export default function Review() {
 
   return (
     <ReviewPage>
-      <ContentArea style={{"width": "60%"}}>
+      <ContentArea style={{"width": "60%", "minWidth": "800px"}}>
         <RecommendCard status="good" />
         <RecommendCard status="bad" />
       </ContentArea>
@@ -39,7 +38,7 @@ export default function Review() {
       <Search color="white" width="500px" height="50px" />
       <ReviewPostArea>
         {posts.map(({ productUrl, productName, grade }, idx) => {
-          return <Post key={idx} url={productUrl} name={productName} grade={grade} />
+          return <GridPost className="" key={idx} url={productUrl} name={productName} grade={grade} />
         })}
       </ReviewPostArea>
       <Pagination />
