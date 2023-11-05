@@ -25,4 +25,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-export { GlobalStyle }
+const LayoutWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+`
+
+export { GlobalStyle, LayoutWrapper }

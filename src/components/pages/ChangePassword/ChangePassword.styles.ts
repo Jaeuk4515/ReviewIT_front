@@ -3,7 +3,7 @@ import { CompleteButton } from "../ReviewCreate/ReviewCreate.styles";
 import { HomePage } from "../Home/Home.styles";
 
 const ChangePasswordPage = styled(HomePage)`
-  height: calc( 100vh - 522px );
+  height: calc( 100vh - 535px );
   justify-content: center;
   margin-bottom: 160px;
 `

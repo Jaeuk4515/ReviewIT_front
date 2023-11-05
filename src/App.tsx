@@ -1,6 +1,6 @@
 import React from 'react';
 import Home from './components/pages/Home/Home';
-import { GlobalStyle } from './App.styles';
+import { GlobalStyle, LayoutWrapper } from './App.styles';
 import Header from './components/blocks/Header/Header';
 import Footer from './components/blocks/Footer/Footer';
 import Review from './components/pages/Review/Review';
@@ -9,6 +9,7 @@ import ReviewDetail from './components/pages/ReviewDetail/ReviewDetail';
 import image from "./assets/icons/image.webp"
 import ReviewCreate from './components/pages/ReviewCreate/ReviewCreate';
 import ChangePassword from './components/pages/ChangePassword/ChangePassword';
+import { Route, Routes } from 'react-router-dom';
 
 const content = `
 국가는 균형있는 국민경제의 성장 및 안정과 적정한 소득의 분배를 유지하고, 시장의 지배와 경제력의 남용을 방지하며, 경제주체간의 조화를 통한 경제의 민주화를 위하여 경제에 관한 규제와 조정을 할 수 있다.
@@ -20,31 +21,68 @@ const content = `
 대통령은 내란 또는 외환의 죄를 범한 경우를 제외하고는 재직중 형사상의 소추를 받지 아니한다. 모든 국민은 신체의 자유를 가진다. 누구든지 법률에 의하지 아니하고는 체포·구속·압수·수색 또는 심문을 받지 아니하며, 법률과 적법한 절차에 의하지 아니하고는 처벌·보안처분 또는 강제노역을 받지 아니한다.`
 
 function App() {
+  const routePath = [
+    {
+      path: "/",
+      element: <Home />
+    },
+    {
+      path: "/review",
+      element: <Review />
+    },
+    {
+      path: "/recommend",
+      element: <Recommend pageType='recommend' />
+    },
+    {
+      path: "/non_recommend",
+      element: <Recommend pageType='non-recommend' />
+    },
+    {
+      path: "/review_detail",
+      element: <
+        ReviewDetail 
+          userImageUrl={image} 
+          userName="test" 
+          time="2023.11.03" 
+          text="Product Review"
+          productUrl={image} 
+          productName="Product" 
+          grade={4} 
+          content={content} 
+          productLink="http://www.naver.com"
+          commentAmount={2}
+          likeyAmount={4}
+          isLogin={true}
+      />
+    },
+    {
+      path: "/review_create",
+      element: <ReviewCreate />
+    },
+    {
+      path: "/change_password",
+      element: <ChangePassword />
+    },
+  ]
+  
   return (
     <>
       <GlobalStyle />
-      <Header isLogin={true} />
-      {/* <Home /> */}
-      {/* <Review /> */}
-      {/* <Recommend pageType="recommend" /> */}
-      {/* <Recommend pageType="non-recommend" /> */}
-      {/* <ReviewDetail 
-        userImageUrl={image} 
-        userName="test" 
-        time="2023.11.03" 
-        text="Product Review"
-        productUrl={image} 
-        productName="Product" 
-        grade={4} 
-        content={content} 
-        productLink="http://www.naver.com"
-        commentAmount={2}
-        likeyAmount={4}
-        isLogin={true}
-        /> */}
-        {/* <ReviewCreate /> */}
-        {/* <ChangePassword /> */}
-      <Footer />
+      <Routes>
+        {routePath.map(data => (
+          <Route 
+            key={data.path}
+            path={data.path} 
+            element={
+            <LayoutWrapper>
+              <Header isLogin={true} />
+              {data.element}
+              <Footer />
+            </LayoutWrapper>
+          } />
+        ))}
+      </Routes>
     </>
   );
 }

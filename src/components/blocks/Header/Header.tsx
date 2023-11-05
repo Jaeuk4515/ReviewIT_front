@@ -2,9 +2,15 @@ import { HeaderWrapper, HeaderArea, HeaderLogo, ButtonArea, HeaderButton, WriteR
 import image from '../../../assets/icons/image.webp';
 import { useState } from "react";
 import AuthModal from "../AuthModal/AuthModal";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header({ isLogin }: {isLogin: boolean}) {
   const [ modal, setModal ] = useState<"login" | "signup" | "">("");
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/review_create");
+  }
 
   const handleLogin = () => {
     setModal("login");
@@ -19,16 +25,16 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
   return (
     <HeaderWrapper>
       <HeaderArea>
-        <HeaderLogo />
+        <Link to="/"><HeaderLogo /></Link>
         {
-          isLogin ? 
+          !isLogin ? 
           <ButtonArea>
             <HeaderButton buttonType="login" onClick={handleLogin}>로그인</HeaderButton>
             <HeaderButton buttonType="signup" onClick={handleSignup}>회원가입</HeaderButton>
             {modal && <AuthModal modalType={modal} state={modal} setState={setModal} />}
           </ButtonArea> : 
           <ButtonArea>
-            <WriteReviewButton>
+            <WriteReviewButton onClick={handleClick}>
               <WriteIcon />
               리뷰작성
             </WriteReviewButton>

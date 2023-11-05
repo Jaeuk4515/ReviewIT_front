@@ -8,6 +8,7 @@ const FooterWrapper = styled(HeaderWrapper)`
   border-bottom: 0;
   border-top: 1px solid rgba(0, 0, 0, .05);
   background-color: #f3f7ff;
+  z-index: 10;
 `
 
 const FooterArea = styled(HeaderArea)`

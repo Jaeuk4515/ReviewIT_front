@@ -6,6 +6,7 @@ import { ContentArea } from "../Home/Home.styles";
 import { ReviewPage, ReviewPostArea, GridPost } from "./Review.styled";
 import image from "../../../assets/icons/image.webp";
 import Pagination from "../../blocks/Pagination/Pagination";
+import { useNavigate } from "react-router-dom";
 
 export type PostObject = {
   productUrl: string;
@@ -26,13 +27,23 @@ for (let i = 0; i < 15; i++) {
 
 export default function Review() {
   // const [ post, setPost ] = useState<PostObject[]>([]);
+  const navigate = useNavigate();
+  
+  const gotoRecommend = () => {
+    console.log("rec");
+    navigate("/recommend");
+  }
 
+  const gotoNonRecommend = () => {
+    console.log("non_rec");
+    navigate("/non_recommend");
+  }
 
   return (
     <ReviewPage>
       <ContentArea style={{"width": "60%", "minWidth": "800px"}}>
-        <RecommendCard status="good" />
-        <RecommendCard status="bad" />
+        <RecommendCard status="good" onClick={gotoRecommend} />
+        <RecommendCard status="bad" onClick={gotoNonRecommend} />
       </ContentArea>
       <CategoryNav />
       <Search color="white" width="500px" height="50px" />

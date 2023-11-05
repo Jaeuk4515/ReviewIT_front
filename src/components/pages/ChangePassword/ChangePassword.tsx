@@ -7,6 +7,7 @@ export default function ChangePassword() {
       <PasswordForm>
         <ModalTitle>비밀번호 변경</ModalTitle>
         <InputArea>
+          <InputBox className="" color="#F0F0F0" width="330px" height="45px" placeholder="아이디를 입력하세요" />
           <InputBox className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호를 입력하세요" />
           <InputBox className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호 확인" />
         </InputArea>

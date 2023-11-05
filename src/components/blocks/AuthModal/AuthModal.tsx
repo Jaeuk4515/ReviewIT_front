@@ -17,6 +17,7 @@ import {
   GoogleLogo, 
   GoogleLoginText 
 } from "./AuthModal.styles";
+import { Link, useNavigate } from "react-router-dom";
 
 interface AuthModalType {
   modalType: "login" | "signup";
@@ -25,6 +26,8 @@ interface AuthModalType {
 }
 
 export default function AuthModal({ modalType, state, setState }: AuthModalType) {
+  const navigate = useNavigate();
+
   const [modal, setModal] = useState<"login" | "signup">(modalType);
   let path = modalType === "login" ? "/login" : "/signup";
 
@@ -33,7 +36,10 @@ export default function AuthModal({ modalType, state, setState }: AuthModalType)
     if (modal === "signup") setModal("login");
   }
 
-  console.log("AuthModal : " + modal);
+  const handleClick = () => {
+    navigate("/change_password");
+    setState("");
+  }
 
   return (
     <ModalBg onClick={() => { setState("") }}>
@@ -47,7 +53,7 @@ export default function AuthModal({ modalType, state, setState }: AuthModalType)
           <ModalButton>{modal === "login" ? "로그인" : "회원가입"}</ModalButton>
         </InputArea>
         <TextArea>
-          {modal === "login" && <FindPasswordText>비밀번호를 잊어버리셨나요?</FindPasswordText>}
+          {modal === "login" && <FindPasswordText onClick={handleClick}>비밀번호를 잊어버리셨나요?</FindPasswordText>}
           <ModalTypeToggle>
             <NormalText>{modal === "login" ? "계정이 없으신가요?" : "이미 가입하셨나요?"}</NormalText>
             <ToggleLink onClick={handleModal}>{modal === "login" ? "회원가입" : "로그인"}</ToggleLink>

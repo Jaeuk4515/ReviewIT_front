@@ -6,8 +6,21 @@ import RecommendCard from "../../blocks/RecommendCard/RecommendCard";
 import review from "../../../assets/icons/review_icon.svg";
 import thumbs_up from "../../../assets/icons/thumbs_up.svg"
 import thumbs_down from "../../../assets/icons/thumbs_down.svg"
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
+  
+  const gotoRecommend = () => {
+    console.log("rec");
+    navigate("/recommend");
+  }
+
+  const gotoNonRecommend = () => {
+    console.log("non_rec");
+    navigate("/non_recommend");
+  }
+
   return (
     <HomePage>
       <Carousel />
@@ -22,7 +35,7 @@ export default function Home() {
             <PageDes>제품들의 사용 후기를 찾아보세요!</PageDes>
           </PageText>
           <MoreButton>
-            <MoreText>더보기</MoreText>
+            <Link to="/review"><MoreText>더보기</MoreText></Link>
             <MoreIcon />
           </MoreButton>
         </ContentArea>
@@ -47,8 +60,8 @@ export default function Home() {
           <PageDes>제품들의 사용 후기를 찾아보세요!</PageDes>
         </PageText>
         <ContentArea>
-          <RecommendCard status="good" />
-          <RecommendCard status="bad" />
+          <RecommendCard status="good" onClick={gotoRecommend} />
+          <RecommendCard status="bad" onClick={gotoNonRecommend} />
         </ContentArea>
       </PagePart>
     </HomePage>
