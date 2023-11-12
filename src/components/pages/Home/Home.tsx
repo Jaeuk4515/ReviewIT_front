@@ -11,14 +11,9 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
   
-  const gotoRecommend = () => {
-    console.log("rec");
-    navigate("/recommend");
-  }
-
-  const gotoNonRecommend = () => {
-    console.log("non_rec");
-    navigate("/non_recommend");
+  const goToReviews = (status: "good" | "bad") => () => {
+    if (status === "good") navigate("/posts/good-review");
+    if (status === "bad") navigate("/posts/bad-review");
   }
 
   return (
@@ -35,7 +30,7 @@ export default function Home() {
             <PageDes>제품들의 사용 후기를 찾아보세요!</PageDes>
           </PageText>
           <MoreButton>
-            <Link to="/review"><MoreText>더보기</MoreText></Link>
+            <Link to="/posts"><MoreText>더보기</MoreText></Link>
             <MoreIcon />
           </MoreButton>
         </ContentArea>
@@ -60,8 +55,8 @@ export default function Home() {
           <PageDes>제품들의 사용 후기를 찾아보세요!</PageDes>
         </PageText>
         <ContentArea>
-          <RecommendCard status="good" onClick={gotoRecommend} />
-          <RecommendCard status="bad" onClick={gotoNonRecommend} />
+          <RecommendCard status="good" onClick={goToReviews("good")} />
+          <RecommendCard status="bad" onClick={goToReviews("bad")} />
         </ContentArea>
       </PagePart>
     </HomePage>

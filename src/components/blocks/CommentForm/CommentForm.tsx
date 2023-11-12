@@ -13,7 +13,7 @@ export default function CommentForm({ url, isLogin }: CommentFormType) {
       <FormArea>
         <InputWrapper>
           <UserProfile className="" url={url} />
-          <CommentInput color="#FFF" width="700px" height="60px" />
+          <CommentInput color="#FFF" width="700px" height="60px" fontSize="15px" name="" value="" onChange={() => {}} />
         </InputWrapper>
         <SubmitButton>댓글 쓰기</SubmitButton>
       </FormArea>

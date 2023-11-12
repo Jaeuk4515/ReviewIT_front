@@ -27,19 +27,19 @@ function App() {
       element: <Home />
     },
     {
-      path: "/review",
+      path: "/posts",
       element: <Review />
     },
     {
-      path: "/recommend",
+      path: "/posts/good-review",
       element: <Recommend pageType='recommend' />
     },
     {
-      path: "/non_recommend",
+      path: "/posts/bad-review",
       element: <Recommend pageType='non-recommend' />
     },
     {
-      path: "/review_detail",
+      path: "/posts/detail",
       element: <
         ReviewDetail 
           userImageUrl={image} 
@@ -57,11 +57,11 @@ function App() {
       />
     },
     {
-      path: "/review_create",
+      path: "/create",
       element: <ReviewCreate />
     },
     {
-      path: "/change_password",
+      path: "/new-password",
       element: <ChangePassword />
     },
   ]
@@ -76,7 +76,7 @@ function App() {
             path={data.path} 
             element={
             <LayoutWrapper>
-              <Header isLogin={true} />
+              <Header isLogin={false} />
               {data.element}
               <Footer />
             </LayoutWrapper>

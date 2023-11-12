@@ -9,7 +9,7 @@ const ReviewCreatePage = styled.form`
   align-items: center;
   width: 100%;
   margin-bottom: 100px;
-  gap: 6rem;
+  gap: 5rem;
 `
 
 const ReviewInfoArea = styled.div`
@@ -19,11 +19,11 @@ const ReviewInfoArea = styled.div`
   min-width: 800px;
 `
 
-const SubArea = styled(ReviewInfoArea)`
+const TextInfoArea = styled(ReviewInfoArea)`
   flex-direction: column;
-  width: 45%;
+  width: 40%;
   min-width: 320px;
-  height: 400px;
+  height: 500px;
 `
 
 const InputArea = styled.div`
@@ -67,13 +67,13 @@ const Arrow = styled(Img)`
   }
 `
 
-const OptionBox = styled.div<{on: boolean}>`
+const OptionBox = styled.div<{on: string}>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: ${props => props.on ? "1.5px solid rgba(0, 0, 0, .1)" : 0};
+  border: ${props => props.on === "true" ? "1.5px solid rgba(0, 0, 0, .1)" : 0};
   border-radius: 10px;
-  height: ${props => props.on ? "143px" : 0};
+  height: ${props => props.on === "true" ? "143px" : 0};
   overflow-y: hidden;
   transition: .2s;
   position: absolute;
@@ -95,15 +95,34 @@ const Option = styled.div`
   }
 `
 
-const InputPicture = styled.div`
+const ImageInfoArea = styled(TextInfoArea)`
+  width: 50%;
+`
+
+const InputPicture = styled.div<{isgrid: string}>`
   width: 100%;
-  height: 250px;
+  height: 400px;
   border: 1.5px solid rgba(0, 0, 0, .1);
   border-radius: 10px;
   box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: ${props => props.isgrid === "true" ? "grid" : "flex"};
+  justify-content: ${props => props.isgrid === "true" ? "" : "center"};
+  align-items: ${props => props.isgrid === "true" ? "" : "center"};
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  overflow: hidden;
+`
+
+const ImageWrapper = styled.div`
+  position: relative;
+`
+
+const XButton = styled(Img)`
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 10px; right: 10px;
+  cursor: pointer;
 `
 
 const IconWrapper = styled(InputArea)`
@@ -115,9 +134,34 @@ const PictureIcon = styled(Img)`
   height: 70px;
 `
 
-const PictureButton = styled(SubmitButton)`
+const FileBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
+const ImageUploadButton = styled.label`
+  display: inline-block;
   background-color: #EAEAEA;
   color: black;
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+`
+
+const ImageInput = styled.input<{onChange: (e: React.ChangeEvent<HTMLInputElement>) => void}>`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 `
 
 const ButtonArea = styled(ReviewInfoArea)`
@@ -125,12 +169,34 @@ const ButtonArea = styled(ReviewInfoArea)`
   margin-top: -50px;
 `
 
-const CompleteButton = styled(SubmitButton)<{buttonType: "cancel" | "write"}>`
+const CompleteButton = styled(SubmitButton)<{buttontype: "cancel" | "write"}>`
   width: 65px;
   height: 35px;
-  background-color: ${props => props.buttonType === "cancel" ? "#EAEAEA" : ""};
-  color: ${props => props.buttonType === "cancel" ? "black" : ""};
+  background-color: ${props => props.buttontype === "cancel" ? "#EAEAEA" : ""};
+  color: ${props => props.buttontype === "cancel" ? "black" : ""};
   margin-left: 10px;
 `
 
-export { ReviewCreatePage, ReviewInfoArea, SubArea, InputArea, SelectBox, Seleted, SelectedValue, Arrow, OptionBox, Option, InputPicture, IconWrapper, PictureIcon, PictureButton, ButtonArea, CompleteButton }
+export { 
+  ReviewCreatePage, 
+  ReviewInfoArea, 
+  TextInfoArea, 
+  InputArea, 
+  SelectBox, 
+  Seleted, 
+  SelectedValue, 
+  Arrow, 
+  OptionBox, 
+  Option, 
+  ImageInfoArea, 
+  InputPicture,
+  ImageWrapper,
+  XButton,
+  IconWrapper, 
+  PictureIcon, 
+  FileBox,
+  ImageUploadButton,
+  ImageInput,
+  ButtonArea, 
+  CompleteButton 
+}

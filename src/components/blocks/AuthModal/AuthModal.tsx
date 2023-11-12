@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { 
   ModalBg,
   Modal, 
@@ -18,6 +18,7 @@ import {
   GoogleLoginText 
 } from "./AuthModal.styles";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface AuthModalType {
   modalType: "login" | "signup";
@@ -25,11 +26,43 @@ interface AuthModalType {
   setState(state: "login" | "signup" | ""): void;
 }
 
+type stateObj = {
+  nickname: string;
+  email: string;
+  password: string;
+}
+
+type Action = {
+  type: "update";
+  payload: {
+    name: string;
+    value: string;
+  }
+}
+
+const reducer = (state: stateObj, action: Action) => {
+  switch (action.type) {
+    case "update":
+      return { ...state, [action.payload.name]: action.payload.value };
+    default:
+      return state;
+  }
+}
+
+const initialState = {
+  nickname: "",
+  email: "",
+  password: ""
+}
+
 export default function AuthModal({ modalType, state, setState }: AuthModalType) {
   const navigate = useNavigate();
+  const [ modal, setModal ] = useState<"login" | "signup">(modalType);
+  const [ userInfo, dispatch ] = useReducer(reducer, initialState);
 
-  const [modal, setModal] = useState<"login" | "signup">(modalType);
-  let path = modalType === "login" ? "/login" : "/signup";
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
+    dispatch({ type: "update", payload: { name, value: e.target.value } });
+  }
 
   const handleModal = () => {
     if (modal === "login") setModal("signup");
@@ -37,19 +70,36 @@ export default function AuthModal({ modalType, state, setState }: AuthModalType)
   }
 
   const handleClick = () => {
-    navigate("/change_password");
+    navigate("/new-password");
     setState("");
   }
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response = await axios.post("http://localhost:3001/signup", userInfo, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response.data);
+    if (response.data.message === "success") {
+      console.log("회원가입 성공!");
+      navigate("/");
+      return;
+    }
+  }
+
+  console.log(userInfo);
+
   return (
     <ModalBg onClick={() => { setState("") }}>
-      <Modal action={path} method="post" modalType={modal} onClick={(e) => e.stopPropagation()} >
+      <Modal modaltype={modal} onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit} >
         <Logo />
         <ModalTitle>{modal === "login" ? "로그인" : "회원가입"}</ModalTitle>
         <InputArea>
-          {modal === "signup" && <InputBox className="" color="#F0F0F0" width="330px" height="45px" placeholder="이름" />}
-          <InputBox className="" color="#F0F0F0" width="330px" height="45px" placeholder="아이디" />
-          <InputBox className="" color="#F0F0F0" width="330px" height="45px" placeholder="비밀번호" />
+          {modal === "signup" && <InputBox type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="닉네임" name="nickname" value={userInfo.nickname} onChange={(e) => handleChange(e, "nickname")} />}
+          <InputBox type="email" className="" color="#F0F0F0" width="330px" height="45px" placeholder="이메일" name="email" value={userInfo.email} onChange={(e)=>handleChange(e, "email")} />
+          <InputBox type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="비밀번호" name="password" value={userInfo.password} onChange={(e)=>handleChange(e, "password")} />
           <ModalButton>{modal === "login" ? "로그인" : "회원가입"}</ModalButton>
         </InputArea>
         <TextArea>

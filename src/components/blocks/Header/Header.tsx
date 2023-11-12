@@ -9,7 +9,7 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/review_create");
+    navigate("/create");
   }
 
   const handleLogin = () => {
@@ -20,8 +20,6 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
     setModal("signup");
   }
 
-  console.log("Header : " + modal);
-
   return (
     <HeaderWrapper>
       <HeaderArea>
@@ -29,8 +27,8 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
         {
           !isLogin ? 
           <ButtonArea>
-            <HeaderButton buttonType="login" onClick={handleLogin}>로그인</HeaderButton>
-            <HeaderButton buttonType="signup" onClick={handleSignup}>회원가입</HeaderButton>
+            <HeaderButton buttontype="login" onClick={handleLogin}>로그인</HeaderButton>
+            <HeaderButton buttontype="signup" onClick={handleSignup}>회원가입</HeaderButton>
             {modal && <AuthModal modalType={modal} state={modal} setState={setModal} />}
           </ButtonArea> : 
           <ButtonArea>

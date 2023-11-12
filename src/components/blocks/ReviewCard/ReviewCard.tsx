@@ -21,7 +21,7 @@ export default function ReviewCard({ url, name, link, grade }: ReviewCardType) {
           <ProductLink href={link} target="_blank">{link}</ProductLink>
         </LinkArea>
         <InfoArea>
-          <Stars grade={grade} />
+          <Stars mode="view" grade={grade} />
         </InfoArea>
       </ReviewInfo>
     </Card>

@@ -35,8 +35,8 @@ const ContactIconArea = styled.div`
   width: 170px;
 `
 
-const ContactIcon = styled(Logo)<{iconType: string}>`
-  background-image: url(${props => props.iconType});
+const ContactIcon = styled(Logo)<{icontype: string}>`
+  background-image: url(${props => props.icontype});
   width: 30px;
   height: 30px;
 `

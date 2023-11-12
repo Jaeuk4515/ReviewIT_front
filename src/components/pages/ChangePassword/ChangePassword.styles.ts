@@ -26,8 +26,8 @@ const ButtonArea = styled.div`
 const Btn = styled(CompleteButton)`
   width: 50%;
   margin: 0;
-  background-color: ${props => props.buttonType === "cancel" ? "white" : ""};
-  border: ${props => props.buttonType === "cancel" ? "1.5px solid rgba(0, 0, 0, .1)" : ""};
+  background-color: ${props => props.buttontype === "cancel" ? "white" : ""};
+  border: ${props => props.buttontype === "cancel" ? "1.5px solid rgba(0, 0, 0, .1)" : ""};
 `
 
 export { ChangePasswordPage, PasswordForm, ButtonArea, Btn }

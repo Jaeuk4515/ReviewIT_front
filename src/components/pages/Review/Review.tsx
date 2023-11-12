@@ -29,21 +29,16 @@ export default function Review() {
   // const [ post, setPost ] = useState<PostObject[]>([]);
   const navigate = useNavigate();
   
-  const gotoRecommend = () => {
-    console.log("rec");
-    navigate("/recommend");
-  }
-
-  const gotoNonRecommend = () => {
-    console.log("non_rec");
-    navigate("/non_recommend");
+  const goToReviews = (status: "good" | "bad") => () => {
+    if (status === "good") navigate("/posts/good-review");
+    if (status === "bad") navigate("/posts/bad-review");
   }
 
   return (
     <ReviewPage>
       <ContentArea style={{"width": "60%", "minWidth": "800px"}}>
-        <RecommendCard status="good" onClick={gotoRecommend} />
-        <RecommendCard status="bad" onClick={gotoNonRecommend} />
+        <RecommendCard status="good" onClick={goToReviews("good")} />
+        <RecommendCard status="bad" onClick={goToReviews("bad")} />
       </ContentArea>
       <CategoryNav />
       <Search color="white" width="500px" height="50px" />

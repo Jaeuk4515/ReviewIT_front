@@ -38,10 +38,10 @@ const ButtonArea = styled.div`
   gap: .6rem;
 `
 
-const HeaderButton = styled(SubmitButton)<{buttonType: "login" | "signup"}>`
-  background-color: ${props => props.buttonType === "login" ? "white" : "#E8F2FF"};
-  color: ${props => props.buttonType === "login" ? "black" : "#256FFF"};
-  border: ${props => props.buttonType === "login" ? "1px solid rgba(0, 0, 0, .1)" : "none"};
+const HeaderButton = styled(SubmitButton)<{buttontype: "login" | "signup"}>`
+  background-color: ${props => props.buttontype === "login" ? "white" : "#E8F2FF"};
+  color: ${props => props.buttontype === "login" ? "black" : "#256FFF"};
+  border: ${props => props.buttontype === "login" ? "1px solid rgba(0, 0, 0, .1)" : "none"};
   height: 35px;
   width: 80px;
   font-size: 15px;

@@ -5,10 +5,6 @@ import { SubmitButton } from "../CommentForm/CommentForm.styles";
 import Divider from "../../atoms/Divider/Divider";
 import google from "../../../assets/icons/google.svg"
 
-interface modalType {
-  modalType: "login" | "signup";
-}
-
 const ModalBg = styled.div`
   position: fixed;
   top: 0; bottom: 0;
@@ -21,9 +17,9 @@ const ModalBg = styled.div`
   z-index: 2000;
 `
 
-const Modal = styled.form<modalType>`
+const Modal = styled.form<{modaltype: "login" | "signup"}>`
   width: 420px;
-  height: ${props => props.modalType === "login" ? "630px" : "658px"};
+  height: ${props => props.modaltype === "login" ? "630px" : "658px"};
   border: 1px solid #C4C4C4;
   border-radius: 20px;
   display: flex;
