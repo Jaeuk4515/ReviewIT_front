@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import Home from './components/pages/Home/Home';
 import { GlobalStyle, LayoutWrapper } from './App.styles';
 import Header from './components/blocks/Header/Header';
@@ -10,6 +10,7 @@ import image from "./assets/icons/image.webp"
 import ReviewCreate from './components/pages/ReviewCreate/ReviewCreate';
 import ChangePassword from './components/pages/ChangePassword/ChangePassword';
 import { Route, Routes } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const content = `
 국가는 균형있는 국민경제의 성장 및 안정과 적정한 소득의 분배를 유지하고, 시장의 지배와 경제력의 남용을 방지하며, 경제주체간의 조화를 통한 경제의 민주화를 위하여 경제에 관한 규제와 조정을 할 수 있다.
@@ -20,7 +21,22 @@ const content = `
 
 대통령은 내란 또는 외환의 죄를 범한 경우를 제외하고는 재직중 형사상의 소추를 받지 아니한다. 모든 국민은 신체의 자유를 가진다. 누구든지 법률에 의하지 아니하고는 체포·구속·압수·수색 또는 심문을 받지 아니하며, 법률과 적법한 절차에 의하지 아니하고는 처벌·보안처분 또는 강제노역을 받지 아니한다.`
 
+interface AuthContextType {
+  isLogin: boolean;
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export const authContext = createContext<AuthContextType | undefined>(undefined);
+
+const cookies = new Cookies();
+
 function App() {
+  const [ isLogin, setIsLogin ] = useState(false);
+
+  useEffect(() => {
+    const jwtToken = cookies.get('token');
+    if (jwtToken) setIsLogin(true);
+  }, [])
+
   const routePath = [
     {
       path: "/",
@@ -65,24 +81,28 @@ function App() {
       element: <ChangePassword />
     },
   ]
+
+  console.log(isLogin);
   
   return (
     <>
       <GlobalStyle />
-      <Routes>
-        {routePath.map(data => (
-          <Route 
-            key={data.path}
-            path={data.path} 
-            element={
-            <LayoutWrapper>
-              <Header isLogin={false} />
-              {data.element}
-              <Footer />
-            </LayoutWrapper>
-          } />
-        ))}
-      </Routes>
+      <authContext.Provider value={{ isLogin, setIsLogin }}>
+        <Routes>
+          {routePath.map(data => (
+            <Route 
+              key={data.path}
+              path={data.path} 
+              element={
+              <LayoutWrapper>
+                <Header isLogin={isLogin} />
+                {data.element}
+                <Footer />
+              </LayoutWrapper>
+            } />
+          ))}
+        </Routes>
+      </authContext.Provider>
     </>
   );
 }

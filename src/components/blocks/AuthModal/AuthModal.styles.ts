@@ -19,7 +19,7 @@ const ModalBg = styled.div`
 
 const Modal = styled.form<{modaltype: "login" | "signup"}>`
   width: 420px;
-  height: ${props => props.modaltype === "login" ? "630px" : "658px"};
+  height: ${props => props.modaltype === "login" ? "645px" : "700px"};
   border: 1px solid #C4C4C4;
   border-radius: 20px;
   display: flex;
@@ -60,6 +60,14 @@ const InputBox = styled(Input)`
   &::placeholder {
     color: #A8A8A8;
   }
+`
+
+const ErrorText = styled.span`
+  height: 14px;
+  width: 100%;
+  color: #ff1919;
+  font-size: 10.5px;
+  padding-left: 20px;
 `
 
 const ModalButton = styled(SubmitButton)`
@@ -126,4 +134,4 @@ const GoogleLoginText = styled(NormalText)`
   font-size: 20px;
 `
 
-export { ModalBg, Modal, Logo, ModalTitle, InputArea, InputBox, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink, ModalDivider, GoogleLoginButton, GoogleLogo, GoogleLoginText }
+export { ModalBg, Modal, Logo, ModalTitle, InputArea, InputBox, ErrorText, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink, ModalDivider, GoogleLoginButton, GoogleLogo, GoogleLoginText }

@@ -19,7 +19,7 @@ export default function ReviewDetail({ userImageUrl, userName, time, text, produ
     <ReviewDetailPage>
       <UserInfoWrapper>
         <UserInfoArea style={{"marginLeft": "15px"}}>
-          <Profile className="" url={userImageUrl} />
+          <Profile className="" url={userImageUrl} onClick={()=>{}} />
           <UserName>{userName}</UserName>
           <WritedTime>{time}</WritedTime>
         </UserInfoArea>

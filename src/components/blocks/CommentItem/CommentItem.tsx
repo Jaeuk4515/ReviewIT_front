@@ -11,7 +11,7 @@ export default function CommentItem({ userImageUrl, userName, time, text }: Comm
   return (
     <CommentArea>
       <UserInfoArea>
-        <Profile className="" url={userImageUrl} />
+        <Profile className="" url={userImageUrl} onClick={()=>{}} />
         <UserName>{userName}</UserName>
         <WritedTime>{time}</WritedTime>
       </UserInfoArea>

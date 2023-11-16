@@ -27,11 +27,16 @@ import arrow from "../../../assets/icons/bottom-arrow.svg";
 import TextArea from "../../atoms/TextArea/TextArea";
 import camera from "../../../assets/icons/camera.svg";
 import { PageDes, PageTitle } from "../Home/Home.styles";
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import x_button from "../../../assets/icons/x-button.svg";
+import getUserInfo from "../../../services/getUserInfo";
+import { authContext } from "../../../App";
+import { useNavigate } from "react-router-dom";
 
 interface content {
+  nickname: string;
+  userImage: string;
   reviewTitle: string;
   category: string;
   productName: string;
@@ -43,6 +48,8 @@ interface content {
 
 export const starContext = createContext<{ content: content; setContent: React.Dispatch<React.SetStateAction<content>>; }>({
   content: {
+    nickname: "",
+    userImage: "",
     reviewTitle: "",
     category: "",
     productName: "",
@@ -57,6 +64,8 @@ export const starContext = createContext<{ content: content; setContent: React.D
 export default function ReviewCreate() {
   const [ option, setOption ] = useState(false);
   const [ content, setContent ] = useState<content>({
+    nickname: "",
+    userImage: "",
     reviewTitle: "",
     category: "카테고리",
     productName: "",
@@ -65,6 +74,28 @@ export default function ReviewCreate() {
     reviewContent: "",
     grade: 0,
   });
+  const { isLogin, setIsLogin } = useContext(authContext)!;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLogin) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/");
+    } else {
+      const getData = async () => {
+        const userInfo = await getUserInfo();
+        console.log(userInfo);
+        const { nickname, userImage } = userInfo;
+        setContent({
+          ...content,
+          nickname: nickname,
+          userImage: userImage
+        });
+      }
+
+      getData();
+    };
+  }, []);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent({

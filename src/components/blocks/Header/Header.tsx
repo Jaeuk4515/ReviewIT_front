@@ -1,11 +1,19 @@
 import { HeaderWrapper, HeaderArea, HeaderLogo, ButtonArea, HeaderButton, WriteReviewButton, WriteIcon, Profile } from "./Header.styles";
-import image from '../../../assets/icons/image.webp';
-import { useState } from "react";
+// import image from '../../../assets/icons/image.webp';
+import { useEffect, useState } from "react";
 import AuthModal from "../AuthModal/AuthModal";
 import { Link, useNavigate } from "react-router-dom";
+import getUserInfo from "../../../services/getUserInfo";
+import ProfileModal from "../ProfileModal/ProfileModal";
 
 export default function Header({ isLogin }: {isLogin: boolean}) {
   const [ modal, setModal ] = useState<"login" | "signup" | "">("");
+  const [ userData, setUserData ] = useState({
+    nickname: "",
+    email: "",
+    userImage: ""
+  })
+  const [ profileModal, setProfileModal ] = useState(false);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -19,6 +27,27 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
   const handleSignup = () => {
     setModal("signup");
   }
+
+  const handleProfileModal = () => {
+    setProfileModal(!profileModal);
+  }
+
+  console.log("header profileModal : ", profileModal);
+
+  useEffect(() => {
+    if (isLogin) {
+      const getData = async () => {
+        const userInfo = await getUserInfo();
+        setUserData({
+          nickname: userInfo.nickname,
+          email: userInfo.email,
+          userImage: userInfo.userImage
+        });
+      };
+
+      getData();
+    }
+  }, [isLogin]);
 
   return (
     <HeaderWrapper>
@@ -36,7 +65,10 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
               <WriteIcon />
               리뷰작성
             </WriteReviewButton>
-            <Profile className="" url={image} />
+            <div style={{position: "relative"}}>
+              <Profile className="" url={userData.userImage} onClick={handleProfileModal} />
+              {profileModal && <ProfileModal userData={userData} setProfileModal={setProfileModal} />}
+            </div>
           </ButtonArea>
         }
       </HeaderArea>
