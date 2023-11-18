@@ -32,7 +32,7 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
     setProfileModal(!profileModal);
   }
 
-  console.log("header profileModal : ", profileModal);
+  // console.log("header profileModal : ", profileModal);
 
   useEffect(() => {
     if (isLogin) {

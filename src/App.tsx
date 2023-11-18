@@ -55,22 +55,8 @@ function App() {
       element: <Recommend pageType='non-recommend' />
     },
     {
-      path: "/posts/detail",
-      element: <
-        ReviewDetail 
-          userImageUrl={image} 
-          userName="test" 
-          time="2023.11.03" 
-          text="Product Review"
-          productUrl={image} 
-          productName="Product" 
-          grade={4} 
-          content={content} 
-          productLink="http://www.naver.com"
-          commentAmount={2}
-          likeyAmount={4}
-          isLogin={true}
-      />
+      path: "/posts/detail/:pId",
+      element: <ReviewDetail isLogin={isLogin} />
     },
     {
       path: "/create",
@@ -82,7 +68,7 @@ function App() {
     },
   ]
 
-  console.log(isLogin);
+  console.log("isLogin : ", isLogin);
   
   return (
     <>

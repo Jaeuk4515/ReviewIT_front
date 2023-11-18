@@ -29,7 +29,7 @@ const PostContent = styled.div`
   align-items: center;
   width: 50%;
   min-width: 855px;
-  gap: 2rem;
+  gap: 2.5rem;
 `
 
 const ReviewTitle = styled.h2`
@@ -42,6 +42,7 @@ const ContentText = styled.p`
   min-width: 787px;
   font-size: 18px;
   line-height: 30px;
+  margin-top: 15px;
 `
 
 const ExtraInfoWrapper = styled(UserInfoWrapper)`

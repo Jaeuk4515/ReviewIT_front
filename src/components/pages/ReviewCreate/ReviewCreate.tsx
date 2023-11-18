@@ -33,8 +33,10 @@ import x_button from "../../../assets/icons/x-button.svg";
 import getUserInfo from "../../../services/getUserInfo";
 import { authContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
+import AlertModal from "../../blocks/AlertModal/AlertModal";
+import { Img } from "../../atoms/Category/Category.styles";
 
-interface content {
+export interface content {
   nickname: string;
   userImage: string;
   reviewTitle: string;
@@ -67,7 +69,7 @@ export default function ReviewCreate() {
     nickname: "",
     userImage: "",
     reviewTitle: "",
-    category: "카테고리",
+    category: "",
     productName: "",
     productLink: "",
     productImages: null,
@@ -75,26 +77,27 @@ export default function ReviewCreate() {
     grade: 0,
   });
   const { isLogin, setIsLogin } = useContext(authContext)!;
+  const [ alertModal, setAlertModal ] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLogin) {
-      alert("로그인이 필요한 서비스입니다.");
-      navigate("/");
-    } else {
-      const getData = async () => {
-        const userInfo = await getUserInfo();
-        console.log(userInfo);
-        const { nickname, userImage } = userInfo;
-        setContent({
-          ...content,
-          nickname: nickname,
-          userImage: userImage
-        });
-      }
-
-      getData();
+    // 로그인 중인데 리뷰 작성 페이지에서 브라우저를 새로고침 하면 isLogin이 false로 되서 튕김.. 왜이런지 모르겠다. 리렌더링 되도 그러네
+    // if (!isLogin) { 
+    //   alert("로그인이 필요한 서비스입니다.");
+    //   navigate("/");
+    // }
+    const getData = async () => {
+      const userInfo = await getUserInfo();
+      console.log(userInfo);
+      const { nickname, userImage } = userInfo;
+      setContent({
+        ...content,
+        nickname: nickname,
+        userImage: userImage
+      });
     };
+
+    getData();
   }, []);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,17 +108,26 @@ export default function ReviewCreate() {
   }
 
   console.log(content);
+  console.log('alertModal : ', alertModal);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+    const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
+    if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
+      setAlertModal(true);
+      return;
+    };
+    
+    // 함수로 빼기
     const formData = new FormData();
     formData.append("reviewTitle", content.reviewTitle);
     formData.append("category", content.category);
     formData.append("productName", content.productName);
     formData.append("productLink", content.productLink);
     formData.append("reviewContent", content.reviewContent);
-    formData.append("grade", content.grade.toString());
+    formData.append("grade", content.grade.toString()); // formData는 문자열만 가능 
+    formData.append("nickname", content.nickname);
+    formData.append("userImage", content.userImage);
     // 이미지 파일 추가
     if (content.productImages) {
       for (let i = 0; i < content.productImages.length; i++) {
@@ -123,12 +135,16 @@ export default function ReviewCreate() {
       }
     }
     // 서버로 전송
-    const response = await axios.post("http://localhost:3001/api/v1/add", formData, {
+    const response = await axios.post("http://localhost:3001/review/create", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
     console.log(response);
+    if (response.data.message === 'success') {
+      navigate(`/posts/detail/${response.data.reviewId}`);
+      // console.log(response.data.reivewId);
+    }
   }
 
   const handleOption = () => {
@@ -212,7 +228,7 @@ export default function ReviewCreate() {
                   ? 
                   showImages.map((image, idx) => (
                     <ImageWrapper key={idx}>
-                      <img src={image}  style={{width: "100%", height: "100%"}} />
+                      <Img category={image} style={{width: "100%", height: "100%", backgroundSize: "cover"}} />
                       <XButton category={x_button} onClick={() => handleDeleteImage(idx)} />
                     </ImageWrapper>
                   ))
@@ -238,6 +254,7 @@ export default function ReviewCreate() {
           <CompleteButton buttontype="cancel">취소</CompleteButton>
           <CompleteButton buttontype="write" type="submit">등록</CompleteButton>
         </ButtonArea>
+        { alertModal && <AlertModal setAlertModal={setAlertModal} />}
       </ReviewCreatePage>
     </starContext.Provider>
   )

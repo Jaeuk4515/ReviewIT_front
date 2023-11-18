@@ -40,8 +40,8 @@ export default function Home() {
           <Post className="" url={image} name="test" grade={3} />
           <Post className="" url={image} name="test" grade={3} />
           <Post className="" url={image} name="test" grade={3} />
-          <ShiftButton className="" direction="left" state="disable" />
-          <ShiftButton className="" direction="right" state="enable" />
+          <ShiftButton className="" direction="left" state="disable" onClick={()=>{}} />
+          <ShiftButton className="" direction="right" state="enable" onClick={()=>{}} />
         </PostArea>
       </PagePart>
       <PagePart style={{"marginTop": "20px"}}>
