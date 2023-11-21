@@ -1,15 +1,15 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Comment from "../../atoms/Comment/Comment";
 import Likey from "../../atoms/Likey/Likey";
 import CommentForm from "../../blocks/CommentForm/CommentForm";
 import CommentItem, { CommentItemType } from "../../blocks/CommentItem/CommentItem";
 import { Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
 import ReviewCard from "../../blocks/ReviewCard/ReviewCard";
-import { PostObject } from "../Review/Review";
 import { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewTitle, ContentText, ExtraInfoWrapper, ExtraInfo, CommentArea } from "./ReviewDetail.styles";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { content } from "../ReviewCreate/ReviewCreate";
+import getUserInfoById from "../../../services/getUserInfoById";
 
 // interface reviewContentType extends CommentItemType, PostObject {
 //   productLink: string;
@@ -21,11 +21,14 @@ interface ReviewInfo extends Omit<content, 'productImages'> {
   likey: number;
   createdAt: string;
   productImages: string[];
+  nickname: string;
+  userImage: string;
 }
 
 export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   const param = useParams();
   const [ reviewInfo, setReviewInfo ] = useState<ReviewInfo>({
+    userId: "",
     nickname: "",
     userImage: "",
     reviewTitle: "",
@@ -44,14 +47,19 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   useEffect(() => {
     const getReviewInfo = async () => {
       const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
-      // console.log(response.data);
+      const { nickname, userImage } = await getUserInfoById(response.data.userId);
+      const date = new Date(response.data.createdAt);
       setReviewInfo({
-        ...response.data
+        ...response.data,
+        createdAt: `${date.toLocaleDateString('ko-KR')} ${date.toLocaleTimeString('ko-KR')}`,
+        nickname: nickname,
+        userImage: userImage
       });
     };
 
     getReviewInfo();
-  }, [])
+  }, []);
+
   return (
     <ReviewDetailPage>
       <UserInfoWrapper>
@@ -60,7 +68,7 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
           <UserName>{reviewInfo.nickname}</UserName>
           <WritedTime>{reviewInfo.createdAt}</WritedTime>
         </UserInfoArea>
-        <ListButton>목록</ListButton>
+        <Link to="/posts"><ListButton>목록</ListButton></Link>
       </UserInfoWrapper>
       <PostContent>
         <ReviewTitle>{reviewInfo.reviewTitle}</ReviewTitle>

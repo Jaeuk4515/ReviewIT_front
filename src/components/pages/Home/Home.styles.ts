@@ -4,6 +4,7 @@ import { FooterText } from "../../blocks/Footer/Footer.styles";
 import right from "../../../assets/icons/right.svg";
 import DirectionButton from "../../atoms/DirectionButton/DirectionButton";
 import Post from "../../blocks/Post/Post";
+import { NextButton, PrevButton } from "../../blocks/ReviewCard/ReviewCard.styles";
 
 const HomePage = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ const HomePage = styled.div`
   margin-bottom: 100px;
 `
 
-const Carousel = styled.div`
+const Banner = styled.div`
   width: 65%;
   min-width: 800px;
   height: 370px;
@@ -93,11 +94,30 @@ const PostArea = styled.div`
   position: relative;
 `
 
-const ShiftButton = styled(DirectionButton)`
-  position: absolute;
-  right: ${props => props.direction === "left" ? "" : "-45px"};
-  left: ${props => props.direction === "left" ? "-45px" : ""};
-  top: 60px;
+const Carousel = styled.div`
+  overflow: hidden;
+  width: 100%;
 `
 
-export { HomePage, Carousel, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, ShiftButton }
+const ImgWrapper = styled.div<{ multi: number, leftOffSet: number }>`
+  display: flex;
+  width: ${props => props.multi * 100}%;
+  position: relative;
+  left: ${props => props.leftOffSet}px;
+  transition: .35s;
+`
+
+const PostWrapper = styled.div`
+  display: flex;
+  width: 100%;
+`
+
+const LeftShiftButton = styled(PrevButton)`
+  top: 85px; left: -25px;
+`
+
+const RightShiftButton = styled(NextButton)`
+  top: 85px; right: -25px;
+`
+
+export { HomePage, Banner, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, Carousel, ImgWrapper, PostWrapper, LeftShiftButton, RightShiftButton }

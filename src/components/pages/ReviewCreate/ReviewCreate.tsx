@@ -37,8 +37,7 @@ import AlertModal from "../../blocks/AlertModal/AlertModal";
 import { Img } from "../../atoms/Category/Category.styles";
 
 export interface content {
-  nickname: string;
-  userImage: string;
+  userId: string;
   reviewTitle: string;
   category: string;
   productName: string;
@@ -50,8 +49,7 @@ export interface content {
 
 export const starContext = createContext<{ content: content; setContent: React.Dispatch<React.SetStateAction<content>>; }>({
   content: {
-    nickname: "",
-    userImage: "",
+    userId: "",
     reviewTitle: "",
     category: "",
     productName: "",
@@ -66,8 +64,7 @@ export const starContext = createContext<{ content: content; setContent: React.D
 export default function ReviewCreate() {
   const [ option, setOption ] = useState(false);
   const [ content, setContent ] = useState<content>({
-    nickname: "",
-    userImage: "",
+    userId: "",
     reviewTitle: "",
     category: "",
     productName: "",
@@ -89,11 +86,9 @@ export default function ReviewCreate() {
     const getData = async () => {
       const userInfo = await getUserInfo();
       console.log(userInfo);
-      const { nickname, userImage } = userInfo;
       setContent({
         ...content,
-        nickname: nickname,
-        userImage: userImage
+        userId: userInfo._id
       });
     };
 
@@ -113,10 +108,10 @@ export default function ReviewCreate() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
-    if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
-      setAlertModal(true);
-      return;
-    };
+    // if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
+    //   setAlertModal(true);
+    //   return;
+    // };
     
     // 함수로 빼기
     const formData = new FormData();
@@ -126,8 +121,7 @@ export default function ReviewCreate() {
     formData.append("productLink", content.productLink);
     formData.append("reviewContent", content.reviewContent);
     formData.append("grade", content.grade.toString()); // formData는 문자열만 가능 
-    formData.append("nickname", content.nickname);
-    formData.append("userImage", content.userImage);
+    formData.append("userId", content.userId);
     // 이미지 파일 추가
     if (content.productImages) {
       for (let i = 0; i < content.productImages.length; i++) {

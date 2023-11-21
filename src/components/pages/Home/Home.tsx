@@ -1,14 +1,38 @@
 import CategoryNav from "../../blocks/CategoryNav/CategoryNav";
 import Post from "../../blocks/Post/Post";
-import { HomePage, Carousel, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, ShiftButton } from "./Home.styles";
-import image from "../../../assets/icons/image.webp";
+import { 
+  HomePage, 
+  Banner, 
+  PagePart, 
+  ContentArea, 
+  PageText, 
+  PageTitle, 
+  PageIcon, 
+  PageTitleText, 
+  PageDes, 
+  MoreButton, 
+  MoreText, 
+  MoreIcon, 
+  PostArea, 
+  Carousel, 
+  ImgWrapper, 
+  PostWrapper, 
+  LeftShiftButton, 
+  RightShiftButton 
+} from "./Home.styles";
 import RecommendCard from "../../blocks/RecommendCard/RecommendCard";
 import review from "../../../assets/icons/review_icon.svg";
 import thumbs_up from "../../../assets/icons/thumbs_up.svg"
 import thumbs_down from "../../../assets/icons/thumbs_down.svg"
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { PostObject } from "../Review/Review";
 
 export default function Home() {
+  const [ postInfo, setPostInfo ] = useState<PostObject[][]>([]);
+  const [ leftOffSet, setLeftOffSet ] = useState(0);
+  const [ windowWidth, setWindowWidth ] = useState(0.594792 * window.innerWidth);
   const navigate = useNavigate();
   
   const goToReviews = (status: "good" | "bad") => () => {
@@ -16,9 +40,52 @@ export default function Home() {
     if (status === "bad") navigate("/posts/bad-review");
   }
 
+  useEffect(() => {
+    const getReviewsInfo = async () => {
+      const response = await axios.get("http://localhost:3001/review/?page=1&perPage=20");
+      let postsWrapper: PostObject[][] = [];
+      let posts: PostObject[] = [];
+      response.data.thumbnailInfo.map((info: PostObject) => {
+        posts.push(info);
+        if (posts.length === 5) {
+          postsWrapper.push(posts);
+          posts = [];
+        };
+      });
+      setPostInfo(postsWrapper);
+    };
+
+    getReviewsInfo();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(0.594792 * window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const componentWidth = Math.max(800, windowWidth);
+  console.log(componentWidth);
+
+  const handlePrevClick = () => {
+    if (leftOffSet >= 0) return;
+    setLeftOffSet((prevOffset) => prevOffset + componentWidth);
+  }
+
+  const handleNextClick = () => {
+    if (leftOffSet <= -(postInfo.length - 1) * componentWidth) return;
+    setLeftOffSet((prevOffset) => prevOffset - componentWidth);
+  }
+
   return (
     <HomePage>
-      <Carousel />
+      <Banner />
       <CategoryNav />
       <PagePart>
         <ContentArea>
@@ -35,13 +102,19 @@ export default function Home() {
           </MoreButton>
         </ContentArea>
         <PostArea>
-          <Post className="" url={image} name="test" grade={3} />
-          <Post className="" url={image} name="test" grade={3} />
-          <Post className="" url={image} name="test" grade={3} />
-          <Post className="" url={image} name="test" grade={3} />
-          <Post className="" url={image} name="test" grade={3} />
-          <ShiftButton className="" direction="left" state="disable" onClick={()=>{}} />
-          <ShiftButton className="" direction="right" state="enable" onClick={()=>{}} />
+          <LeftShiftButton className="" direction="left" state={leftOffSet >= 0 ? "disable" : "enable"} onClick={handlePrevClick} />
+          <Carousel>
+            <ImgWrapper multi={postInfo.length} leftOffSet={leftOffSet}>
+              {postInfo.map((postWrapper, outerIdx) => (
+                <PostWrapper key={outerIdx}>
+                  {postWrapper.map((post, innerIdx) => (
+                    <Link to={`/posts/detail/${post.reviewId}`} key={innerIdx} style={{width: '20%'}}><Post className="" url={post.productImage} name={post.productName} grade={post.grade} /></Link>
+                  ))}
+                </PostWrapper>
+              ))}
+            </ImgWrapper>
+          </Carousel>
+          <RightShiftButton className="" direction="right" state={leftOffSet <= -(postInfo.length - 1) * componentWidth ? "disable" : "enable"} onClick={handleNextClick} />
         </PostArea>
       </PagePart>
       <PagePart style={{"marginTop": "20px"}}>

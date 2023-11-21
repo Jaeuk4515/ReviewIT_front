@@ -14,23 +14,6 @@ const Card = styled.div`
   background-color: #F5F5F5;
 `
 
-const Carousel = styled.div`
-  overflow: hidden;
-  width: 280px;
-  height: 280px;
-  margin: 0 20px 0 60px;
-  border-radius: 20px;
-  box-shadow: 0 0 5px #C4C4C4;
-`
-
-const ImgWrapper = styled.div<{ multi: number, leftOffSet: number }>`
-  display: flex;
-  width: ${props => 280 * props.multi}px;
-  position: relative;
-  left: ${props => props.leftOffSet}px;
-  transition: .35s;
-` 
-
 const ReviewImg = styled(ImageCard)`
   width: 280px;
   height: 280px;
@@ -98,4 +81,4 @@ const ProductLink = styled.span`
   width: 70%;
 `
 
-export { Card, Carousel, ImgWrapper, ReviewImg, PrevButton, NextButton, VerticalDivider, ReviewInfo, InfoArea, LinkArea, ProductName, ProductLink }
+export { Card, ReviewImg, PrevButton, NextButton, VerticalDivider, ReviewInfo, InfoArea, LinkArea, ProductName, ProductLink }

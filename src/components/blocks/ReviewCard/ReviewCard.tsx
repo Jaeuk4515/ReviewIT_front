@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Stars from "../Stars/Stars";
-import { Card, Carousel, ImgWrapper, ReviewImg, PrevButton, NextButton, VerticalDivider, ReviewInfo, InfoArea, LinkArea, ProductName, ProductLink } from "./ReviewCard.styles";
+import { Card, ReviewImg, PrevButton, NextButton, VerticalDivider, ReviewInfo, InfoArea, LinkArea, ProductName, ProductLink } from "./ReviewCard.styles";
 import ImageModal from "../ImageModal/ImageModal";
 import { MoreIcon } from "../../pages/Home/Home.styles";
 
@@ -12,18 +12,6 @@ interface ReviewCardType {
 }
 
 export default function ReviewCard({ urls, name, link, grade }: ReviewCardType) {
-  // const [ leftOffSet, setLeftOffSet ] = useState(0);
-
-  // const handlePrevClick = () => {
-  //   if (leftOffSet >= 0) return;
-  //   setLeftOffSet((prevOffset) => prevOffset + 280)
-  // }
-
-  // const handleNextClick = () => {
-  //   if (leftOffSet <= -(urls.length - 1) * 280) return;
-  //   setLeftOffSet((prevOffset) => prevOffset - 280);
-  // }
-
   const [ urlsIndex, setUrlsIndex ] = useState(0);
   const [ imgModal, setImgModal ] = useState(false);
 
@@ -40,14 +28,6 @@ export default function ReviewCard({ urls, name, link, grade }: ReviewCardType) 
   return (
     <Card>
       <div style={{position: "relative"}}>
-        {/* <PrevButton className="" direction="left" state={leftOffSet >= 0 ? "disable" : "enable"} onClick={handlePrevClick} />
-        <Carousel>
-          <ImgWrapper multi={urls.length} leftOffSet={leftOffSet}>
-            {urls.map((url, idx) => <ReviewImg key={idx} className="" url={url} />
-            )}
-          </ImgWrapper>
-        </Carousel>
-        <NextButton className="" direction="right" state={leftOffSet <= -(urls.length - 1) * 280 ? "disable" : "enable"} onClick={handleNextClick} /> */}
         <PrevButton className="" direction="left" state={urlsIndex <= 0 ? "disable" : "enable"} onClick={handlePrevClick} />
         <ReviewImg className="" url={urls[urlsIndex]} onClick={() => { setImgModal(true) }} />
         <NextButton className="" direction="right" state={urlsIndex >= urls.length - 1 ? "disable" : "enable"} onClick={handleNextClick} />
