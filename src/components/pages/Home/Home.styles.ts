@@ -94,9 +94,23 @@ const PostArea = styled.div`
   position: relative;
 `
 
+// const Carousel = styled.div`
+//   overflow: hidden;
+//   width: 100%;
+// `
+
 const Carousel = styled.div`
-  overflow: hidden;
+  display: flex;
+  overflow: auto;
   width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
 `
 
 const ImgWrapper = styled.div<{ multi: number, leftOffSet: number }>`
@@ -113,11 +127,11 @@ const PostWrapper = styled.div`
 `
 
 const LeftShiftButton = styled(PrevButton)`
-  top: 85px; left: -25px;
+  top: 65px; left: -25px;
 `
 
 const RightShiftButton = styled(NextButton)`
-  top: 85px; right: -25px;
+  top: 65px; right: -25px;
 `
 
 export { HomePage, Banner, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, Carousel, ImgWrapper, PostWrapper, LeftShiftButton, RightShiftButton }

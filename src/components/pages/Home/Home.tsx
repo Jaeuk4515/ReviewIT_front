@@ -25,14 +25,17 @@ import review from "../../../assets/icons/review_icon.svg";
 import thumbs_up from "../../../assets/icons/thumbs_up.svg"
 import thumbs_down from "../../../assets/icons/thumbs_down.svg"
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { PostObject } from "../Review/Review";
 
 export default function Home() {
-  const [ postInfo, setPostInfo ] = useState<PostObject[][]>([]);
-  const [ leftOffSet, setLeftOffSet ] = useState(0);
-  const [ windowWidth, setWindowWidth ] = useState(0.594792 * window.innerWidth);
+  // const [ postInfo, setPostInfo ] = useState<PostObject[][]>([]);
+  const [ postInfo, setPostInfo ] = useState<PostObject[]>([]);
+  const [ scrollPosition, setScrollPosition ] = useState(0);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  // const [ leftOffSet, setLeftOffSet ] = useState(0);
+  // const [ windowWidth, setWindowWidth ] = useState(0.594792 * window.innerWidth);
   const navigate = useNavigate();
   
   const goToReviews = (status: "good" | "bad") => () => {
@@ -40,48 +43,76 @@ export default function Home() {
     if (status === "bad") navigate("/posts/bad-review");
   }
 
+  console.log(scrollPosition);
+
   useEffect(() => {
     const getReviewsInfo = async () => {
       const response = await axios.get("http://localhost:3001/review/?page=1&perPage=20");
-      let postsWrapper: PostObject[][] = [];
-      let posts: PostObject[] = [];
-      response.data.thumbnailInfo.map((info: PostObject) => {
-        posts.push(info);
-        if (posts.length === 5) {
-          postsWrapper.push(posts);
-          posts = [];
-        };
-      });
-      setPostInfo(postsWrapper);
+      // let postsWrapper: PostObject[][] = [];
+      // let posts: PostObject[] = [];
+      // response.data.thumbnailInfo.map((info: PostObject) => {
+      //   posts.push(info);
+      //   if (posts.length === 5) {
+      //     postsWrapper.push(posts);
+      //     posts = [];
+      //   };
+      // });
+      // setPostInfo(postsWrapper);
+      setPostInfo(response.data.thumbnailInfo);
     };
 
     getReviewsInfo();
   }, []);
 
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowWidth(0.594792 * window.innerWidth);
+  //   };
+
+  //   window.addEventListener('resize', handleResize);
+
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, []);
+
+  // const componentWidth = Math.max(800, windowWidth);
+  // console.log(componentWidth);
+
+  // const handlePrevClick = () => {
+  //   if (leftOffSet >= 0) return;
+  //   setLeftOffSet((prevOffset) => prevOffset + componentWidth);
+  // }
+
+  // const handleNextClick = () => {
+  //   if (leftOffSet <= -(postInfo.length - 1) * componentWidth) return;
+  //   setLeftOffSet((prevOffset) => prevOffset - componentWidth);
+  // }
+
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(0.594792 * window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const componentWidth = Math.max(800, windowWidth);
-  console.log(componentWidth);
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth"
+      });
+    }
+  }, [scrollPosition]);
 
   const handlePrevClick = () => {
-    if (leftOffSet >= 0) return;
-    setLeftOffSet((prevOffset) => prevOffset + componentWidth);
-  }
+    if (scrollPosition === 0) return;
+    if (carouselRef.current) {
+      const newScrollPosition = scrollPosition - carouselRef.current.clientWidth;
+      setScrollPosition(newScrollPosition);
+    };
+  };
 
   const handleNextClick = () => {
-    if (leftOffSet <= -(postInfo.length - 1) * componentWidth) return;
-    setLeftOffSet((prevOffset) => prevOffset - componentWidth);
-  }
+    if (carouselRef.current) {
+      if (scrollPosition >= carouselRef.current.clientWidth * 3) return;
+      const newScrollPosition = scrollPosition + carouselRef.current.clientWidth;
+      setScrollPosition(newScrollPosition);
+    };
+  };
 
   return (
     <HomePage>
@@ -102,7 +133,7 @@ export default function Home() {
           </MoreButton>
         </ContentArea>
         <PostArea>
-          <LeftShiftButton className="" direction="left" state={leftOffSet >= 0 ? "disable" : "enable"} onClick={handlePrevClick} />
+          {/* <LeftShiftButton className="" direction="left" state={leftOffSet >= 0 ? "disable" : "enable"} onClick={handlePrevClick} />
           <Carousel>
             <ImgWrapper multi={postInfo.length} leftOffSet={leftOffSet}>
               {postInfo.map((postWrapper, outerIdx) => (
@@ -114,7 +145,21 @@ export default function Home() {
               ))}
             </ImgWrapper>
           </Carousel>
-          <RightShiftButton className="" direction="right" state={leftOffSet <= -(postInfo.length - 1) * componentWidth ? "disable" : "enable"} onClick={handleNextClick} />
+          <RightShiftButton className="" direction="right" state={leftOffSet <= -(postInfo.length - 1) * componentWidth ? "disable" : "enable"} onClick={handleNextClick} /> */}
+          <LeftShiftButton className="" direction="left" state={scrollPosition === 0 ? "disable" : "enable"} onClick={handlePrevClick} />
+          <Carousel ref={carouselRef}>
+            {postInfo.map((post, index) => (
+              <Link to={`/posts/detail/${post.reviewId}`} key={index} style={{ flex: "0 0 auto", width: "20%" }}>
+                <Post className="" url={post.productImage} name={post.productName} grade={post.grade} />
+              </Link>
+            ))}
+          </Carousel>
+          <RightShiftButton 
+            className="" 
+            direction="right" 
+            state={carouselRef.current ? scrollPosition >= carouselRef.current.scrollWidth - carouselRef.current.clientWidth ? "disable" : "enable" : "disable"} 
+            onClick={handleNextClick} 
+          />
         </PostArea>
       </PagePart>
       <PagePart style={{"marginTop": "20px"}}>
