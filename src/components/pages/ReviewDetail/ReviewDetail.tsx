@@ -1,22 +1,20 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
 import Comment from "../../atoms/Comment/Comment";
 import Likey from "../../atoms/Likey/Likey";
 import CommentForm from "../../blocks/CommentForm/CommentForm";
 import CommentItem, { CommentItemType } from "../../blocks/CommentItem/CommentItem";
 import { Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
 import ReviewCard from "../../blocks/ReviewCard/ReviewCard";
-import { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewTitle, ContentText, ExtraInfoWrapper, ExtraInfo, CommentArea } from "./ReviewDetail.styles";
+import { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, DeleteIcon, ContentText, ExtraInfoWrapper, ExtraInfo, CommentArea } from "./ReviewDetail.styles";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { content } from "../ReviewCreate/ReviewCreate";
 import getUserInfoById from "../../../services/getUserInfoById";
+import options from "../../../assets/icons/options.svg";
+import update from "../../../assets/icons/update.svg";
+import trash from "../../../assets/icons/delete.svg";
+import getUserId from "../../../services/getUserId";
 
-// interface reviewContentType extends CommentItemType, PostObject {
-//   productLink: string;
-//   commentAmount: number;
-//   likeyAmount: number;
-//   isLogin: boolean;
-// }
 interface ReviewInfo extends Omit<content, 'productImages'> {
   likey: number;
   createdAt: string;
@@ -27,6 +25,7 @@ interface ReviewInfo extends Omit<content, 'productImages'> {
 
 export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   const param = useParams();
+  const [ searchParams, setSearchParams ] = useSearchParams();
   const [ reviewInfo, setReviewInfo ] = useState<ReviewInfo>({
     userId: "",
     nickname: "",
@@ -41,13 +40,14 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
     likey: 0,
     createdAt: ""
   });
-  
-  console.log(reviewInfo);
+  const [ userId, setUserId ] = useState("");
+  const [ isModal, setIsModal ] = useState(false);
 
   useEffect(() => {
     const getReviewInfo = async () => {
       const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
       const { nickname, userImage } = await getUserInfoById(response.data.userId);
+      const userId = await getUserId();
       const date = new Date(response.data.createdAt);
       setReviewInfo({
         ...response.data,
@@ -55,6 +55,7 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
         nickname: nickname,
         userImage: userImage
       });
+      setUserId(userId);
     };
 
     getReviewInfo();
@@ -68,10 +69,17 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
           <UserName>{reviewInfo.nickname}</UserName>
           <WritedTime>{reviewInfo.createdAt}</WritedTime>
         </UserInfoArea>
-        <Link to="/posts"><ListButton>목록</ListButton></Link>
+        <Link to={`/posts/${searchParams.get("page")}`}><ListButton>목록</ListButton></Link>
       </UserInfoWrapper>
       <PostContent>
-        <ReviewTitle>{reviewInfo.reviewTitle}</ReviewTitle>
+        <ReviewHeader>
+          <ReviewTitle>{reviewInfo.reviewTitle}</ReviewTitle>
+          {userId === reviewInfo.userId && <OptionIcon category={options} onClick={ () => { setIsModal(!isModal) } } />}
+          {isModal && <MiniModal>
+            <ButtonTitle><UpdateIcon category={update} /><p style={{paddingTop: "3px"}}>수정</p></ButtonTitle>
+            <ButtonTitle><UpdateIcon category={trash} /><p style={{paddingTop: "3px"}}>삭제</p></ButtonTitle>
+          </MiniModal>}
+        </ReviewHeader>
         <ReviewCard urls={reviewInfo.productImages} name={reviewInfo.productName} grade={reviewInfo.grade} link={reviewInfo.productLink} />
         <ContentText>{reviewInfo.reviewContent}</ContentText>
         <ExtraInfoWrapper>

@@ -4,7 +4,7 @@ import CategoryNav from "../../blocks/CategoryNav/CategoryNav";
 import RecommendCard from "../../blocks/RecommendCard/RecommendCard";
 import { ContentArea } from "../Home/Home.styles";
 import { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, NumberArea, NumberMark } from "./Review.styled";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import getPageArray from "../../../services/getPageArray";
 
@@ -27,8 +27,9 @@ export type PostObject = {
 
 export default function Review() {
   const [ postInfo, setPostInfo ] = useState<PostObject[]>([]);
+  const { pageNumber } = useParams();
   const [ pageInfo, setPageInfo ] = useState({
-    page: 1,
+    page: Number(pageNumber),
     perPage: 5,
     totalPage: 0
   });
@@ -104,7 +105,7 @@ export default function Review() {
       <Search color="white" width="500px" height="50px" />
       <ReviewPostArea>
         {postInfo.map(({ reviewId, productImage, productName, grade }, idx) => {
-          return <Link to={`/posts/detail/${reviewId}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>
+          return <Link to={`/posts/detail/${reviewId}?page=${pageInfo.page}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>
         })}
       </ReviewPostArea>
       <PaginationArea>

@@ -34,7 +34,7 @@ function App() {
       element: <Home />
     },
     {
-      path: "/posts",
+      path: "/posts/:pageNumber",
       element: <Review />
     },
     {
