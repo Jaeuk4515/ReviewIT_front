@@ -11,6 +11,7 @@ import ReviewCreate from './components/pages/ReviewCreate/ReviewCreate';
 import ChangePassword from './components/pages/ChangePassword/ChangePassword';
 import { Route, Routes } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import ReviewUpdate from './components/pages/ReviewUpdate/ReviewUpdate';
 
 interface AuthContextType {
   isLogin: boolean;
@@ -36,6 +37,10 @@ function App() {
     {
       path: "/posts/:pageNumber",
       element: <Review />
+    },
+    {
+      path: "/posts/update/:pId",
+      element: <ReviewUpdate />
     },
     {
       path: "/posts/good-review",

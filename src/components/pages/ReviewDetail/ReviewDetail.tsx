@@ -6,7 +6,7 @@ import CommentItem, { CommentItemType } from "../../blocks/CommentItem/CommentIt
 import { Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
 import ReviewCard from "../../blocks/ReviewCard/ReviewCard";
 import { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, DeleteIcon, ContentText, ExtraInfoWrapper, ExtraInfo, CommentArea } from "./ReviewDetail.styles";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { content } from "../ReviewCreate/ReviewCreate";
 import getUserInfoById from "../../../services/getUserInfoById";
@@ -43,11 +43,13 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   const [ userId, setUserId ] = useState("");
   const [ isModal, setIsModal ] = useState(false);
 
+  console.log(reviewInfo);
+
   useEffect(() => {
     const getReviewInfo = async () => {
       const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
       const { nickname, userImage } = await getUserInfoById(response.data.userId);
-      const userId = await getUserId();
+      
       const date = new Date(response.data.createdAt);
       setReviewInfo({
         ...response.data,
@@ -55,11 +57,21 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
         nickname: nickname,
         userImage: userImage
       });
-      setUserId(userId);
     };
 
     getReviewInfo();
   }, []);
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      if (isLogin) {
+        const userId = await getUserId();
+        setUserId(userId);
+      };
+    };
+
+    checkLogin();
+  }, [isLogin]);
 
   return (
     <ReviewDetailPage>
@@ -74,9 +86,9 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
       <PostContent>
         <ReviewHeader>
           <ReviewTitle>{reviewInfo.reviewTitle}</ReviewTitle>
-          {userId === reviewInfo.userId && <OptionIcon category={options} onClick={ () => { setIsModal(!isModal) } } />}
+          {(isLogin && userId === reviewInfo.userId) && <OptionIcon category={options} onClick={ () => { setIsModal(!isModal) } } />}
           {isModal && <MiniModal>
-            <ButtonTitle><UpdateIcon category={update} /><p style={{paddingTop: "3px"}}>수정</p></ButtonTitle>
+            <Link to={`/posts/update/${param.pId}`}><ButtonTitle><UpdateIcon category={update} /><p style={{paddingTop: "3px"}}>수정</p></ButtonTitle></Link>
             <ButtonTitle><UpdateIcon category={trash} /><p style={{paddingTop: "3px"}}>삭제</p></ButtonTitle>
           </MiniModal>}
         </ReviewHeader>

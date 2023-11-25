@@ -120,7 +120,7 @@ export default function ReviewCreate() {
     formData.append("productName", content.productName);
     formData.append("productLink", content.productLink);
     formData.append("reviewContent", content.reviewContent);
-    formData.append("grade", content.grade.toString()); // formData는 문자열만 가능 
+    formData.append("grade", content.grade.toString());  // formData는 문자열만 가능 
     formData.append("userId", content.userId);
     // 이미지 파일 추가
     if (content.productImages) {
@@ -158,10 +158,11 @@ export default function ReviewCreate() {
   const imagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imgFiles = e.target.files;
     if (!imgFiles) return;
-    let imgUrls = [];
+    let imgUrls = showImages;  // 기존에 업로드 했던 이미지 보존 
     for (let i = 0; i < imgFiles.length; i++) {
+      if (imgUrls.length >= 4) break;  // 이미지 개수는 최대 4개
       imgUrls.push(URL.createObjectURL(imgFiles[i]));
-    }
+    };
     console.log(imgUrls);
     setShowImages(imgUrls);
     setContent({
@@ -245,7 +246,7 @@ export default function ReviewCreate() {
           <TextArea color="white" width="100%" height="400px" fontSize="18px" name="reviewContent" value={content.reviewContent} onChange={handleChange} />
         </InputArea>
         <ButtonArea>
-          <CompleteButton buttontype="cancel">취소</CompleteButton>
+          <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>
           <CompleteButton buttontype="write" type="submit">등록</CompleteButton>
         </ButtonArea>
         { alertModal && <AlertModal setAlertModal={setAlertModal} />}
