@@ -14,6 +14,7 @@ import options from "../../../assets/icons/options.svg";
 import update from "../../../assets/icons/update.svg";
 import trash from "../../../assets/icons/delete.svg";
 import getUserId from "../../../services/getUserId";
+import AlertModal from "../../blocks/AlertModal/AlertModal";
 
 interface ReviewInfo extends Omit<content, 'productImages'> {
   likey: number;
@@ -42,6 +43,7 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   });
   const [ userId, setUserId ] = useState("");
   const [ isModal, setIsModal ] = useState(false);
+  const [ alertModal, setAlertModal ] = useState(false);
 
   console.log(reviewInfo);
 
@@ -86,11 +88,17 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
       <PostContent>
         <ReviewHeader>
           <ReviewTitle>{reviewInfo.reviewTitle}</ReviewTitle>
-          {(isLogin && userId === reviewInfo.userId) && <OptionIcon category={options} onClick={ () => { setIsModal(!isModal) } } />}
-          {isModal && <MiniModal>
-            <Link to={`/posts/update/${param.pId}`}><ButtonTitle><UpdateIcon category={update} /><p style={{paddingTop: "3px"}}>수정</p></ButtonTitle></Link>
-            <ButtonTitle><UpdateIcon category={trash} /><p style={{paddingTop: "3px"}}>삭제</p></ButtonTitle>
-          </MiniModal>}
+          { (isLogin && userId === reviewInfo.userId) && <OptionIcon category={options} onClick={ () => { setIsModal(!isModal) } } /> }
+          {
+            isModal && 
+            <>
+              <MiniModal>
+                <Link to={`/posts/update/${param.pId}`}><ButtonTitle><UpdateIcon category={update} /><p style={{paddingTop: "3px"}}>수정</p></ButtonTitle></Link>
+                <ButtonTitle onClick={() => setAlertModal(true)}><UpdateIcon category={trash} /><p style={{paddingTop: "3px"}}>삭제</p></ButtonTitle>
+              </MiniModal>
+              { alertModal && <AlertModal mode="deleteAlert" setAlertModal={setAlertModal} reviewId={param.pId} /> }
+            </>
+          }
         </ReviewHeader>
         <ReviewCard urls={reviewInfo.productImages} name={reviewInfo.productName} grade={reviewInfo.grade} link={reviewInfo.productLink} />
         <ContentText>{reviewInfo.reviewContent}</ContentText>

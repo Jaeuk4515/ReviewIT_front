@@ -108,10 +108,10 @@ export default function ReviewCreate() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
-    // if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
-    //   setAlertModal(true);
-    //   return;
-    // };
+    if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
+      setAlertModal(true);
+      return;
+    };
     
     // 함수로 빼기
     const formData = new FormData();
@@ -249,7 +249,7 @@ export default function ReviewCreate() {
           <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>
           <CompleteButton buttontype="write" type="submit">등록</CompleteButton>
         </ButtonArea>
-        { alertModal && <AlertModal setAlertModal={setAlertModal} />}
+        { alertModal && <AlertModal mode="createAlert" setAlertModal={setAlertModal} /> }
       </ReviewCreatePage>
     </starContext.Provider>
   )

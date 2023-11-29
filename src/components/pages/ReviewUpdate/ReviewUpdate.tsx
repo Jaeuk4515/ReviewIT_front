@@ -181,10 +181,10 @@ export default function ReviewUpdate() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { reviewTitle, category, productName, productLink, productImages, newProductImages, reviewContent } = newContent;
-    // if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
-    //   setAlertModal(true);
-    //   return;
-    // };
+    if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
+      setAlertModal(true);
+      return;
+    };
     
     const formData = new FormData();
 
@@ -302,7 +302,7 @@ export default function ReviewUpdate() {
           <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>
           <CompleteButton buttontype="write" type="submit">등록</CompleteButton>
         </ButtonArea>
-        { alertModal && <AlertModal setAlertModal={setAlertModal} />}
+        { alertModal && <AlertModal mode="createAlert" setAlertModal={setAlertModal} />}
       </ReviewCreatePage>
     </updateContext.Provider>
   )

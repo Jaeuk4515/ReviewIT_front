@@ -6,7 +6,6 @@ import Footer from './components/blocks/Footer/Footer';
 import Review from './components/pages/Review/Review';
 import Recommend from './components/pages/Recommend/Recommend';
 import ReviewDetail from './components/pages/ReviewDetail/ReviewDetail';
-import image from "./assets/icons/image.webp"
 import ReviewCreate from './components/pages/ReviewCreate/ReviewCreate';
 import ChangePassword from './components/pages/ChangePassword/ChangePassword';
 import { Route, Routes } from 'react-router-dom';
