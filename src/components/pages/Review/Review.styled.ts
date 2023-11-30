@@ -5,6 +5,7 @@ import { SubmitButton } from "../../blocks/CommentForm/CommentForm.styles";
 
 const ReviewPage = styled(HomePage)`
   margin-top: 15px;
+  gap: 4rem;
 `
 
 const ReviewPostArea = styled.div`
@@ -13,7 +14,7 @@ const ReviewPostArea = styled.div`
   gap: 2%;
   width: 60%;
   min-width: 800px;
-  margin-top: 20px;
+  margin-top: -30px;
 `
 
 const GridPost = styled(Post)`

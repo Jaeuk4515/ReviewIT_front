@@ -2,8 +2,6 @@ import styled from "styled-components";
 import { Logo } from "../../blocks/AuthModal/AuthModal.styles";
 import { FooterText } from "../../blocks/Footer/Footer.styles";
 import right from "../../../assets/icons/right.svg";
-import DirectionButton from "../../atoms/DirectionButton/DirectionButton";
-import Post from "../../blocks/Post/Post";
 import { NextButton, PrevButton } from "../../blocks/ReviewCard/ReviewCard.styles";
 
 const HomePage = styled.div`
@@ -11,7 +9,7 @@ const HomePage = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 3.5rem;
+  gap: 5rem;
   margin-bottom: 100px;
 `
 
@@ -106,11 +104,11 @@ const Carousel = styled.div`
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
   &::-webkit-scrollbar {
-    width: 6px;
-  }
+    display: none;
+  };
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
-  }
+  };
 `
 
 const ImgWrapper = styled.div<{ multi: number, leftOffSet: number }>`

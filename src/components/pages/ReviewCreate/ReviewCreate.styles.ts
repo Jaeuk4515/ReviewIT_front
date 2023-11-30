@@ -80,6 +80,13 @@ const OptionBox = styled.div<{on: string}>`
   top: 40px; left: -1.5px;
   z-index: 10;
   background-color: white;
+  overflow: auto;
+`
+
+const OptionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `
 
 const Option = styled.div`
@@ -187,6 +194,7 @@ export {
   SelectedValue, 
   Arrow, 
   OptionBox, 
+  OptionWrapper,
   Option, 
   ImageInfoArea, 
   InputPicture,

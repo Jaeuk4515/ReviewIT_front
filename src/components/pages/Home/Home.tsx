@@ -21,6 +21,7 @@ import {
   RightShiftButton 
 } from "./Home.styles";
 import RecommendCard from "../../blocks/RecommendCard/RecommendCard";
+import hot from "../../../assets/icons/hot.svg";
 import review from "../../../assets/icons/review_icon.svg";
 import thumbs_up from "../../../assets/icons/thumbs_up.svg"
 import thumbs_down from "../../../assets/icons/thumbs_down.svg"
@@ -79,7 +80,6 @@ export default function Home() {
   return (
     <HomePage>
       <Banner />
-      <CategoryNav />
       <PagePart>
         <ContentArea>
           <PageText>
@@ -87,12 +87,25 @@ export default function Home() {
               <PageTitleText>리뷰</PageTitleText>
               <PageIcon url={review} />
             </PageTitle>
-            <PageDes>제품들의 사용 후기를 찾아보세요!</PageDes>
+            <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
           </PageText>
           <MoreButton>
-            <Link to="/posts/1"><MoreText>더보기</MoreText></Link>
+            <Link to="/posts/1"><MoreText>전체 리뷰</MoreText></Link>
             <MoreIcon />
           </MoreButton>
+        </ContentArea>
+        {/* <div style={{display: "flex", justifyContent: "center"}}><CategoryNav /></div> */}
+        <CategoryNav />
+      </PagePart>
+      <PagePart>
+        <ContentArea>
+          <PageText>
+            <PageTitle>
+              <PageTitleText>핫 리뷰</PageTitleText>
+              <PageIcon url={hot} />
+            </PageTitle>
+            <PageDes>많은 사람들에게 도움이 된 인기 리뷰들이에요</PageDes>
+          </PageText>
         </ContentArea>
         <PostArea>
           <LeftShiftButton className="" direction="left" state={scrollPosition === 0 ? "disable" : "enable"} onClick={handlePrevClick} />
@@ -116,10 +129,10 @@ export default function Home() {
           <PageTitle>
             <PageTitleText>추천</PageTitleText>
             <PageIcon url={thumbs_up} />
-            <PageTitleText style={{"marginLeft": "10px"}}>비추천</PageTitleText>
+            <PageTitleText style={{"marginLeft": "7px"}}>비추천</PageTitleText>
             <PageIcon url={thumbs_down} />
           </PageTitle>
-          <PageDes>제품들의 사용 후기를 찾아보세요!</PageDes>
+          <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
         </PageText>
         <ContentArea>
           <RecommendCard status="good" onClick={goToReviews("good")} />

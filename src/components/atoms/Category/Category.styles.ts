@@ -2,22 +2,23 @@ import styled from "styled-components";
 
 const CategoryArea = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: .8rem;
   cursor: pointer;
+  margin-right: 7px;
 `
 
-const ImgWrapper = styled.div`
-  width: 80px;
-  height: 80px;
+const CategoryButton = styled.div`
+  height: 45px;
+  width: 85px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 25px;
-  box-shadow: 0 0 5px #C4C4C4;
+  box-shadow: 0 0 4px #C4C4C4;
+  gap: .5rem;
+  padding: 0 20px;
 `
 
 const Img = styled.div<{category: string}>`
@@ -25,12 +26,15 @@ const Img = styled.div<{category: string}>`
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  width: 50px;
-  height: 50px;
+  width: 22px;
+  height: 22px;
 `
 
-const Name = styled.span`
-
+const Name = styled.span<{padding: string}>`
+  font-size: 20px;
+  height: 25px;
+  line-height: 25px;
+  padding-left: ${props => props.padding};
 `
 
-export { CategoryArea, ImgWrapper, Img, Name }
+export { CategoryArea, CategoryButton, Img, Name }

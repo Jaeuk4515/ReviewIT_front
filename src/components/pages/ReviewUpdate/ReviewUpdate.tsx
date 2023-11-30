@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { content } from "../ReviewCreate/ReviewCreate";
+import { categoryList, categoryType, content } from "../ReviewCreate/ReviewCreate";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { 
@@ -23,7 +23,8 @@ import {
   ImageUploadButton,
   ImageInput,
   ButtonArea,
-  CompleteButton
+  CompleteButton,
+  OptionWrapper
 } from "../ReviewCreate/ReviewCreate.styles";
 import Input from "../../atoms/Input/Input";
 import Stars from "../../blocks/Stars/Stars";
@@ -101,7 +102,7 @@ export default function ReviewUpdate() {
     setOption(!option);
   };
 
-  const changeCategory = (name: "컴퓨터" | "노트북" | "핸드폰" | "가전제품") => {
+  const changeCategory = (name: categoryType) => {
     setNewContent({
       ...newContent,
       category: name, 
@@ -248,10 +249,15 @@ export default function ReviewUpdate() {
                 <Seleted><SelectedValue>{newContent.category}</SelectedValue></Seleted>
                 <Arrow category={arrow} onClick={handleOption} />
                 <OptionBox on={option.toString()}>
-                  <Option onClick={() => changeCategory("컴퓨터")}>컴퓨터</Option>
+                  {/* <Option onClick={() => changeCategory("컴퓨터")}>컴퓨터</Option>
                   <Option onClick={() => changeCategory("노트북")}>노트북</Option>
                   <Option onClick={() => changeCategory("핸드폰")}>핸드폰</Option>
-                  <Option onClick={() => changeCategory("가전제품")}>가전제품</Option>
+                  <Option onClick={() => changeCategory("가전제품")}>가전제품</Option> */}
+                  <OptionWrapper>
+                    {categoryList.map((name, idx) => (
+                      <Option key={idx} onClick={() => changeCategory(name as categoryType)}>{name}</Option>
+                    ))}
+                  </OptionWrapper>
                 </OptionBox>
               </SelectBox>
             </InputArea>

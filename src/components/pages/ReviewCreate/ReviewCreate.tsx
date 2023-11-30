@@ -10,6 +10,7 @@ import {
   SelectedValue, 
   Arrow, 
   OptionBox, 
+  OptionWrapper,
   Option,
   ImageInfoArea,
   InputPicture,
@@ -60,6 +61,9 @@ export const starContext = createContext<{ content: content; setContent: React.D
   },
   setContent: () => {},
 });
+
+export const categoryList = [ "컴퓨터", "노트북", "핸드폰", "모니터", "키보드", "마우스", "태블릿" ];
+export type categoryType = "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿";
 
 export default function ReviewCreate() {
   const [ option, setOption ] = useState(false);
@@ -145,7 +149,7 @@ export default function ReviewCreate() {
     setOption(!option);
   }
 
-  const changeCategory = (name: "컴퓨터" | "노트북" | "핸드폰" | "가전제품") => {
+  const changeCategory = (name: categoryType) => {
     setContent({
       ...content,
       category: name, 
@@ -195,10 +199,11 @@ export default function ReviewCreate() {
                 <Seleted><SelectedValue>{content.category}</SelectedValue></Seleted>
                 <Arrow category={arrow} onClick={handleOption} />
                 <OptionBox on={option.toString()}>
-                  <Option onClick={() => changeCategory("컴퓨터")}>컴퓨터</Option>
-                  <Option onClick={() => changeCategory("노트북")}>노트북</Option>
-                  <Option onClick={() => changeCategory("핸드폰")}>핸드폰</Option>
-                  <Option onClick={() => changeCategory("가전제품")}>가전제품</Option>
+                  <OptionWrapper>
+                    {categoryList.map((name, idx) => (
+                      <Option key={idx} onClick={() => changeCategory(name as categoryType)}>{name}</Option>
+                    ))}
+                  </OptionWrapper>
                 </OptionBox>
               </SelectBox>
             </InputArea>

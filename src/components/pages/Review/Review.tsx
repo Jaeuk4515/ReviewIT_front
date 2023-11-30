@@ -15,16 +15,6 @@ export type PostObject = {
   grade: 1 | 2 | 3 | 4 | 5;
 }
 
-// export const posts: PostObject[] = [];
-// for (let i = 0; i < 15; i++) {
-//   posts.push({
-//     productImage: image,
-//     productName: `test${i}`,
-//     grade: Math.ceil(Math.random()*5) as 1 | 2 | 3 | 4 | 5,
-//     content: ""
-//   })
-// }
-
 export default function Review() {
   const [ postInfo, setPostInfo ] = useState<PostObject[]>([]);
   const { pageNumber } = useParams();
@@ -97,14 +87,14 @@ export default function Review() {
 
   return (
     <ReviewPage>
-      <ContentArea style={{"width": "60%", "minWidth": "800px"}}>
+      <ContentArea style={{width: "60%", minWidth: "800px", marginBottom: "20px"}}>
         <RecommendCard status="good" onClick={goToReviews("good")} />
         <RecommendCard status="bad" onClick={goToReviews("bad")} />
       </ContentArea>
-      <CategoryNav />
       <Search color="white" width="500px" height="50px" />
+      <div style={{width: "60%", minWidth: "800px"}}><CategoryNav /></div>
       <ReviewPostArea>
-        {postInfo.map(({ reviewId, productImage, productName, grade }, idx) => {
+        {postInfo.map(({ reviewId, productImage, productName, grade }) => {
           return <Link to={`/posts/detail/${reviewId}?page=${pageInfo.page}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>
         })}
       </ReviewPostArea>
