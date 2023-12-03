@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, useLocation } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -22,7 +24,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ScrollToTop />
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -16,6 +16,7 @@ interface AuthContextType {
   isLogin: boolean;
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 export const authContext = createContext<AuthContextType | undefined>(undefined);
 
 const cookies = new Cookies();

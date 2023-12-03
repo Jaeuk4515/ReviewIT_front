@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Star from "../../atoms/Star/Star";
 import { StarWrapper } from "./Stars.styles";
-import { starContext } from "../../pages/ReviewCreate/ReviewCreate";
-import { updateContext } from "../../pages/ReviewUpdate/ReviewUpdate";
+import { useDispatch } from "react-redux";
+import { setGrade } from "../../../store/contentSlice";
+import { setNewGrade } from "../../../store/newContentSlice";
 
 interface StarsType {
   mode: "view" | "edit";
@@ -17,19 +18,12 @@ export default function Stars({ mode, grade }: StarsType) {
     "empty",
     "empty"
   ]);
-  const { content, setContent } = useContext(starContext);
-  const { newContent, setNewContent } = useContext(updateContext);
+  const dispatch = useDispatch();
   
   useEffect(() => {
-    mode === "edit" && !grade ?
-      setContent({
-        ...content,
-        grade: starStatus.filter(el => el === "full").length as 0 | 1 | 2 | 3 | 4 | 5,
-      })
-    : setNewContent({
-      ...newContent,
-      grade: starStatus.filter(el => el === "full").length as 0 | 1 | 2 | 3 | 4 | 5,
-    })
+    mode === "edit" && !grade 
+    ? dispatch(setGrade(starStatus.filter(el => el === "full").length as 0 | 1 | 2 | 3 | 4 | 5))  // 리뷰 생성일때
+    : dispatch(setNewGrade(starStatus.filter(el => el === "full").length as 0 | 1 | 2 | 3 | 4 | 5))  // 리뷰 수정일때
   }, [starStatus]);
 
   useEffect(() => {
@@ -48,13 +42,13 @@ export default function Stars({ mode, grade }: StarsType) {
       newStarStatus[i] = "empty";
     }
     setStarStatus(newStarStatus);
-  }
+  };
 
   if (mode === "view" && grade) {
     for (let i = 0; i < grade!; i++) {
       starStatus[i] = "full";
     };
-  }
+  };
   // const handleClick = (index: number) => {
   //   // 클릭한 별까지만 상태를 업데이트
   //   setStarStatus(prev => prev.map((_, i) => (i <= index ? "full" : "empty")));

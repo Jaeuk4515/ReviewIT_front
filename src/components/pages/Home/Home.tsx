@@ -15,8 +15,8 @@ import {
   MoreIcon, 
   PostArea, 
   Carousel, 
-  ImgWrapper, 
-  PostWrapper, 
+  // ImgWrapper, 
+  // PostWrapper, 
   LeftShiftButton, 
   RightShiftButton 
 } from "./Home.styles";
@@ -28,10 +28,15 @@ import thumbs_down from "../../../assets/icons/thumbs_down.svg"
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { PostObject } from "../Review/Review";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
+import { setPostInfo } from "../../../store/postInfoSlice";
+// import { PostObject } from "../Review/Review";
 
 export default function Home() {
-  const [ postInfo, setPostInfo ] = useState<PostObject[]>([]);
+  // const [ postInfo, setPostInfo ] = useState<PostObject[]>([]);
+  const postInfo = useSelector((state: RootState) => state.postInfo);
+  const dispatch = useDispatch();
   const [ scrollPosition, setScrollPosition ] = useState(0);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -46,7 +51,8 @@ export default function Home() {
   useEffect(() => {
     const getReviewsInfo = async () => {
       const response = await axios.get("http://localhost:3001/review/?page=1&perPage=20");
-      setPostInfo(response.data.thumbnailInfo);
+      // setPostInfo(response.data.thumbnailInfo);
+      dispatch(setPostInfo(response.data.thumbnailInfo));
     };
 
     getReviewsInfo();

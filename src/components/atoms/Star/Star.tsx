@@ -1,6 +1,4 @@
 import { StyledStar } from "./Star.styles";
-import { starContext } from "../../pages/ReviewCreate/ReviewCreate";
-import { useContext, useEffect, useState } from "react";
 
 interface StarType {
   mode: "view" | "edit";

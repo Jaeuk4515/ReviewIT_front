@@ -111,18 +111,18 @@ const Carousel = styled.div`
   };
 `
 
-const ImgWrapper = styled.div<{ multi: number, leftOffSet: number }>`
-  display: flex;
-  width: ${props => props.multi * 100}%;
-  position: relative;
-  left: ${props => props.leftOffSet}px;
-  transition: .35s;
-`
+// const ImgWrapper = styled.div<{ multi: number, leftOffSet: number }>`
+//   display: flex;
+//   width: ${props => props.multi * 100}%;
+//   position: relative;
+//   left: ${props => props.leftOffSet}px;
+//   transition: .35s;
+// `
 
-const PostWrapper = styled.div`
-  display: flex;
-  width: 100%;
-`
+// const PostWrapper = styled.div`
+//   display: flex;
+//   width: 100%;
+// `
 
 const LeftShiftButton = styled(PrevButton)`
   top: 65px; left: -25px;
@@ -132,4 +132,4 @@ const RightShiftButton = styled(NextButton)`
   top: 65px; right: -25px;
 `
 
-export { HomePage, Banner, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, Carousel, ImgWrapper, PostWrapper, LeftShiftButton, RightShiftButton }
+export { HomePage, Banner, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, Carousel, LeftShiftButton, RightShiftButton }

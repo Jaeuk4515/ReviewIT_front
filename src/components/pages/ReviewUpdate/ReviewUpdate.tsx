@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from "react";
-import { categoryList, categoryType, content } from "../ReviewCreate/ReviewCreate";
+import { useEffect, useState } from "react";
+import { categoryList, categoryType } from "../ReviewCreate/ReviewCreate";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { 
@@ -35,43 +35,14 @@ import arrow from "../../../assets/icons/bottom-arrow.svg";
 import x_button from "../../../assets/icons/x-button.svg";
 import camera from "../../../assets/icons/camera.svg";
 import { Img } from "../../atoms/Category/Category.styles";
-
-interface ReviewInfo extends Omit<content, "productImages"> {
-  productImages: string[];
-  newProductImages: FileList | null;
-  deletedProductImages: string[];
-}
-
-export const updateContext = createContext<{ newContent: ReviewInfo; setNewContent: React.Dispatch<React.SetStateAction<ReviewInfo>>; }>({
-  newContent: {
-    userId: "",
-    reviewTitle: "",
-    category: "",
-    productName: "",
-    productLink: "",
-    productImages: [],
-    newProductImages: null,
-    deletedProductImages: [],
-    reviewContent: "",
-    grade: 0,
-  },
-  setNewContent: () => {},
-});
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
+import { setNewContent, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setNewProductImages, setDeletedProductImages, setReviewContent } from "../../../store/newContentSlice";
 
 export default function ReviewUpdate() {
   const param = useParams();
-  const [ newContent, setNewContent ] = useState<ReviewInfo>({
-    userId: "",
-    reviewTitle: "",
-    category: "",
-    productName: "",
-    productLink: "",
-    productImages: [],
-    newProductImages: null,
-    deletedProductImages: [],
-    reviewContent: "",
-    grade: 0,
-  });
+  const newContent = useSelector((state: RootState) => state.newContent);
+  const dispatch = useDispatch();
   const [ option, setOption ] = useState(false);
   const [ alertModal, setAlertModal ] = useState(false);
   const [ showImages, setShowImages ] = useState<string[]>([]);
@@ -82,38 +53,26 @@ export default function ReviewUpdate() {
   useEffect(() => {
     const getReviewInfo = async () => {
       const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
-      setNewContent({
-        ...response.data
-      });
+      dispatch(setNewContent(response.data));
       setShowImages(response.data.productImages);
     };
 
     getReviewInfo();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewContent({
-      ...newContent,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleOption = () => {
     setOption(!option);
   };
 
   const changeCategory = (name: categoryType) => {
-    setNewContent({
-      ...newContent,
-      category: name, 
-    });
+    dispatch(setCategory(name));
     setOption(!option);
   };
 
   const imagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imgFiles = e.target.files;
     if (!imgFiles) return;
-    let imgUrls = showImages;  // 기존에 업로드 했던 이미지 보존 
+    let imgUrls = [ ...showImages ];  // 기존에 업로드 했던 이미지 보존 
     const filesArray = Array.from(imgFiles);  // 새로 추가된 파일 배열로 변환
     for (let i = 0; i < imgFiles.length; i++) {
       if (imgUrls.length >= 4) {
@@ -140,10 +99,7 @@ export default function ReviewUpdate() {
 
     console.log('실제로 새로 추가된 이미지 : ', filesArray);
 
-    setNewContent({
-      ...newContent,
-      newProductImages: newImgFiles
-    });
+    dispatch(setNewProductImages(newImgFiles));
   };
 
   const handleDeleteImage = (idx: number) => {
@@ -156,22 +112,16 @@ export default function ReviewUpdate() {
 
     // 미리보기 이미지 중 삭제한게 수정페이지에서 새로 추가한 이미지가 아닌 기존 이미지면 deletedProductImages에 추가하고 productImages 에서는 제거 
     if (showImages[idx].slice(0, 4) !== "blob") {
-      let deletedImage = newContent.deletedProductImages || [];
+      let deletedImage = [...(newContent.deletedProductImages || [])];
       let productImages = newContent.productImages || [];
       deletedImage.push(showImages[idx]);
       const newProductImages = productImages.filter(image => !deletedImage.includes(image));
-      setNewContent({
-        ...newContent,
-        productImages: newProductImages,
-        deletedProductImages: deletedImage
-      });
+      dispatch(setProductImages(newProductImages));
+      dispatch(setDeletedProductImages(deletedImage));
     } else {  // 미리보기 이미지 중 삭제한게 수정페이지에서 새로 추가한 이미지라면 newContent의 newProductImages 에서 제거 
       // 현재 미리보기 이미지 리스트(showImages)에서의 인덱스(idx)와 실제 newContent.newProductImages 에서의 인덱스(index)를 맞추기 위해 idx 에서 prevImageCount 를 빼줌 
       const updatedImages = newContent.newProductImages ? Array.from(newContent.newProductImages).filter((_, index) => index !== idx - prevImageCount) : null;
-      setNewContent({
-        ...newContent,
-        newProductImages: updatedImages as FileList | null
-      });
+      dispatch(setNewProductImages(updatedImages as FileList | null));
     }
 
     // 미리보기 이미지 갱신
@@ -222,6 +172,8 @@ export default function ReviewUpdate() {
       };
     };
 
+    console.log(formData);
+
     // 서버로 전송
     const response = await axios.patch(`http://localhost:3001/review/update/${param.pId}`, formData, {
       headers: {
@@ -235,13 +187,12 @@ export default function ReviewUpdate() {
   };
 
   return (
-    <updateContext.Provider value={{ newContent, setNewContent }}>
       <ReviewCreatePage onSubmit={handleSubmit}>
         <ReviewInfoArea>
           <TextInfoArea>
             <InputArea>
               <h3>제목</h3>
-              <Input type="text" className="" color="white" width="100%" height="40px" name="reviewTitle" value={newContent.reviewTitle} onChange={handleChange} />
+              <Input type="text" className="" color="white" width="100%" height="40px" name="reviewTitle" value={newContent.reviewTitle} onChange={(e) => { dispatch(setReviewTitle(e.target.value)) }} />
             </InputArea>
             <InputArea>
               <h3>카테고리</h3>
@@ -249,10 +200,6 @@ export default function ReviewUpdate() {
                 <Seleted><SelectedValue>{newContent.category}</SelectedValue></Seleted>
                 <Arrow category={arrow} onClick={handleOption} />
                 <OptionBox on={option.toString()}>
-                  {/* <Option onClick={() => changeCategory("컴퓨터")}>컴퓨터</Option>
-                  <Option onClick={() => changeCategory("노트북")}>노트북</Option>
-                  <Option onClick={() => changeCategory("핸드폰")}>핸드폰</Option>
-                  <Option onClick={() => changeCategory("가전제품")}>가전제품</Option> */}
                   <OptionWrapper>
                     {categoryList.map((name, idx) => (
                       <Option key={idx} onClick={() => changeCategory(name as categoryType)}>{name}</Option>
@@ -263,11 +210,11 @@ export default function ReviewUpdate() {
             </InputArea>
             <InputArea>
               <h3>제품명</h3>
-              <Input type="text" className="" color="white" width="100%" height="40px" name="productName" value={newContent.productName} onChange={handleChange} />
+              <Input type="text" className="" color="white" width="100%" height="40px" name="productName" value={newContent.productName} onChange={(e) => { dispatch(setProductName(e.target.value)) }} />
             </InputArea>
             <InputArea>
               <h3>제품 링크</h3>
-              <Input type="text" className="" color="white" width="100%" height="40px" name="productLink" value={newContent.productLink} onChange={handleChange} />
+              <Input type="text" className="" color="white" width="100%" height="40px" name="productLink" value={newContent.productLink} onChange={(e) => { dispatch(setProductLink(e.target.value)) }} />
             </InputArea>
             <InputArea><h3>별점</h3><Stars mode="edit" grade={newContent.grade} /></InputArea>
           </TextInfoArea>
@@ -302,7 +249,7 @@ export default function ReviewUpdate() {
         </ReviewInfoArea>
         <InputArea style={{"width": "50%", "minWidth": "800px"}}>
           <h3>리뷰</h3>
-          <TextArea color="white" width="100%" height="400px" fontSize="18px" name="reviewContent" value={newContent.reviewContent} onChange={handleChange} />
+          <TextArea color="white" width="100%" height="400px" fontSize="18px" name="reviewContent" value={newContent.reviewContent} onChange={(e) => { dispatch(setReviewContent(e.target.value)) }} />
         </InputArea>
         <ButtonArea>
           <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>
@@ -310,6 +257,5 @@ export default function ReviewUpdate() {
         </ButtonArea>
         { alertModal && <AlertModal mode="createAlert" setAlertModal={setAlertModal} />}
       </ReviewCreatePage>
-    </updateContext.Provider>
   )
 }

@@ -7,16 +7,13 @@ import { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, Numb
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import getPageArray from "../../../services/getPageArray";
-
-export type PostObject = {
-  reviewId: string;
-  productImage: string;
-  productName: string;
-  grade: 1 | 2 | 3 | 4 | 5;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
+import { setPostInfo } from "../../../store/postInfoSlice";
 
 export default function Review() {
-  const [ postInfo, setPostInfo ] = useState<PostObject[]>([]);
+  const postInfo = useSelector((state: RootState) => state.postInfo);
+  const dispatch = useDispatch();
   const { pageNumber } = useParams();
   const [ pageInfo, setPageInfo ] = useState({
     page: Number(pageNumber),
@@ -39,12 +36,11 @@ export default function Review() {
     const getReviewsInfo = async () => {
       setButtonType("");
       const response = await axios.get(`http://localhost:3001/review/?page=${pageInfo.page}&perPage=${pageInfo.perPage}`);
-      // console.log(response.data);
       setPageInfo({
         ...pageInfo,
         totalPage: response.data.totalPage
       });
-      setPostInfo(response.data.thumbnailInfo);
+      dispatch(setPostInfo(response.data.thumbnailInfo));
     };
 
     getReviewsInfo();
