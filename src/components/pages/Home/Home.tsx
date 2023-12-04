@@ -96,7 +96,7 @@ export default function Home() {
             <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
           </PageText>
           <MoreButton>
-            <Link to="/posts/1"><MoreText>전체 리뷰</MoreText></Link>
+            <Link to="/posts?page=1&perPage=5"><MoreText>전체 리뷰</MoreText></Link>
             <MoreIcon />
           </MoreButton>
         </ContentArea>

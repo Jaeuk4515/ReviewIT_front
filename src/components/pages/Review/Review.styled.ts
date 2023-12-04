@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { HomePage, PostArea } from "../Home/Home.styles";
 import Post from "../../blocks/Post/Post";
 import { SubmitButton } from "../../blocks/CommentForm/CommentForm.styles";
+import { Img } from "../../atoms/Category/Category.styles";
 
 const ReviewPage = styled(HomePage)`
   margin-top: 15px;
@@ -25,16 +26,33 @@ const GridPost = styled(Post)`
 
 const PaginationArea = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 320px;
+  justify-content: center;
+  align-items: center;
   margin-top: 30px;
+  gap: .3rem;
 `
 
-const ShiftButton = styled(SubmitButton)`
+// const ShiftButton = styled(SubmitButton)`
+//   background-color: #E8F2FF;
+//   color: #256FFF;
+//   width: 13%;
+//   height: 35px;
+// `
+
+const ShiftButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #E8F2FF;
-  color: #256FFF;
-  width: 13%;
-  height: 35px;
+  border-radius: 10px;
+  height: 30px;
+  cursor: pointer;
+  aspect-ratio: 1;
+`
+
+const ShiftIcon = styled(Img)`
+  width: 14px;
+  height: 14px;
 `
 
 const NumberArea = styled.div`
@@ -44,6 +62,7 @@ const NumberArea = styled.div`
   gap: .6rem;
   width: 70%;
   height: 35px;
+  margin: 0 10px;
 `
 
 const NumberMark = styled.div<{focus: "on" | "off"}>`
@@ -58,4 +77,4 @@ const NumberMark = styled.div<{focus: "on" | "off"}>`
   cursor: pointer;
 `
 
-export { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, NumberArea, NumberMark }
+export { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, ShiftIcon, NumberArea, NumberMark }

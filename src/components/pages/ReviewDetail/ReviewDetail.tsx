@@ -15,6 +15,8 @@ import update from "../../../assets/icons/update.svg";
 import trash from "../../../assets/icons/delete.svg";
 import getUserId from "../../../services/getUserId";
 import AlertModal from "../../blocks/AlertModal/AlertModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
 
 interface ReviewInfo extends Omit<content, 'productImages'> {
   likey: number;
@@ -26,7 +28,7 @@ interface ReviewInfo extends Omit<content, 'productImages'> {
 
 export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   const param = useParams();
-  const [ searchParams, setSearchParams ] = useSearchParams();
+  const pageInfo = useSelector((state: RootState) => state.page);
   const [ reviewInfo, setReviewInfo ] = useState<ReviewInfo>({
     userId: "",
     nickname: "",
@@ -83,7 +85,7 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
           <UserName>{reviewInfo.nickname}</UserName>
           <WritedTime>{reviewInfo.createdAt}</WritedTime>
         </UserInfoArea>
-        <Link to={`/posts/${searchParams.get("page")}`}><ListButton>목록</ListButton></Link>
+        <Link to={`/posts?page=${pageInfo.page}&perPage=${pageInfo.perPage}`}><ListButton>목록</ListButton></Link>
       </UserInfoWrapper>
       <PostContent>
         <ReviewHeader>

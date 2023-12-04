@@ -131,8 +131,8 @@ export default function ReviewUpdate() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { reviewTitle, category, productName, productLink, productImages, newProductImages, reviewContent } = newContent;
-    if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
+    const { reviewTitle, category, productName, productLink, reviewContent } = newContent;
+    if (!reviewTitle || !productName || !productLink || !reviewContent || !category || showImages.length <= 0) {
       setAlertModal(true);
       return;
     };

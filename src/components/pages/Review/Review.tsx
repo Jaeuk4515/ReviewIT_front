@@ -3,83 +3,45 @@ import Search from "../../atoms/Search/Search";
 import CategoryNav from "../../blocks/CategoryNav/CategoryNav";
 import RecommendCard from "../../blocks/RecommendCard/RecommendCard";
 import { ContentArea } from "../Home/Home.styles";
-import { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, NumberArea, NumberMark } from "./Review.styled";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, ShiftIcon, NumberArea, NumberMark } from "./Review.styled";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import getPageArray from "../../../services/getPageArray";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
 import { setPostInfo } from "../../../store/postInfoSlice";
+import { setPageInfo } from "../../../store/pageSlice";
+import PageControl from "../../../services/pageControl";
+import next from "../../../assets/icons/next.svg";
+import last from "../../../assets/icons/last.svg";
+import prev from "../../../assets/icons/prev.svg";
+import first from "../../../assets/icons/first.svg";
 
 export default function Review() {
   const postInfo = useSelector((state: RootState) => state.postInfo);
   const dispatch = useDispatch();
-  const { pageNumber } = useParams();
-  const [ pageInfo, setPageInfo ] = useState({
-    page: Number(pageNumber),
-    perPage: 5,
-    totalPage: 0
-  });
-  const [ pageCycle, setPageCycle ] = useState(1);
-  const [ buttonType, setButtonType ] = useState("");
-  const pageArray = getPageArray(pageCycle, pageInfo.totalPage);
+  const [ searchParams, setSearchParams ] = useSearchParams();
+  const page = Number(searchParams.get("page"));
+  const perPage = Number(searchParams.get("perPage"));
+  const pageInfo = useSelector((state: RootState) => state.page);
+  const pageArray = getPageArray(page, pageInfo.totalPage);
   const navigate = useNavigate();
+  const pageController = new PageControl(page, pageInfo, searchParams, setSearchParams);
   
   const goToReviews = (status: "good" | "bad") => () => {
     if (status === "good") navigate("/posts/good-review");
     if (status === "bad") navigate("/posts/bad-review");
-  }
-
-  console.log(postInfo, pageInfo, pageArray, pageCycle);
+  };
 
   useEffect(() => {
     const getReviewsInfo = async () => {
-      setButtonType("");
-      const response = await axios.get(`http://localhost:3001/review/?page=${pageInfo.page}&perPage=${pageInfo.perPage}`);
-      setPageInfo({
-        ...pageInfo,
-        totalPage: response.data.totalPage
-      });
+      const response = await axios.get(`http://localhost:3001/review/?page=${page}&perPage=${perPage}`);
+      dispatch(setPageInfo({ page: page, perPage: perPage, totalPage: response.data.totalPage }));
       dispatch(setPostInfo(response.data.thumbnailInfo));
     };
 
     getReviewsInfo();
-  }, [pageInfo.page, pageInfo.perPage]);
-
-  useEffect(() => {
-    if (buttonType === "prev") {
-      handlePageChange(pageArray[4]);
-      return;
-    }
-    if (buttonType === "next") {
-      handlePageChange(pageArray[0]);
-      return;
-    }
-  }, [pageCycle])
-
-  const handlePageChange = (newPage: number) => {
-    setPageInfo((prev) => ({...prev, page: newPage}));
-  };
-
-  const handlePrevButtonClick = () => {
-    if (pageInfo.page === 1) return;
-    if (pageInfo.page === pageArray[0]) {
-      setPageCycle(prev => prev - 1);
-      setButtonType("prev");
-      return;
-    }
-    handlePageChange(pageInfo.page - 1);
-  };
-
-  const handleNextButtonClick = () => {
-    if (pageInfo.page === pageInfo.totalPage) return;
-    if (pageInfo.page === pageArray[4]) {
-      setPageCycle(prev => prev + 1);
-      setButtonType("next");
-      return;
-    } 
-    handlePageChange(pageInfo.page + 1);
-  };
+  }, [page, perPage]);
 
   return (
     <ReviewPage>
@@ -91,24 +53,26 @@ export default function Review() {
       <div style={{width: "60%", minWidth: "800px"}}><CategoryNav /></div>
       <ReviewPostArea>
         {postInfo.map(({ reviewId, productImage, productName, grade }) => {
-          return <Link to={`/posts/detail/${reviewId}?page=${pageInfo.page}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>
+          return <Link to={`/posts/detail/${reviewId}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>
         })}
       </ReviewPostArea>
       <PaginationArea>
-      <ShiftButton onClick={handlePrevButtonClick}>이전</ShiftButton>
-      <NumberArea>
-        {pageArray.map(pageNumber => (
-          <NumberMark
-            key={pageNumber}
-            focus={pageNumber === pageInfo.page ? "on" : "off"}
-            onClick={() => handlePageChange(pageNumber)}
-          >
-            {pageNumber}
-          </NumberMark>
-        ))}
-      </NumberArea>
-      <ShiftButton onClick={handleNextButtonClick}>다음</ShiftButton>
-    </PaginationArea>
+        <ShiftButton onClick={pageController.moveToFirstPage}><ShiftIcon category={first} /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToPrevPage}><ShiftIcon category={prev} /></ShiftButton>
+        <NumberArea>
+          {pageArray.map(pageNumber => (
+            <NumberMark
+              key={pageNumber}
+              focus={pageNumber === page ? "on" : "off"}
+              onClick={() => pageController.handlePageChange(pageNumber)}
+            >
+              {pageNumber}
+            </NumberMark>
+          ))}
+        </NumberArea>
+        <ShiftButton onClick={pageController.moveToNextPage}><ShiftIcon category={next} /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToLastPage}><ShiftIcon category={last} /></ShiftButton>
+      </PaginationArea>
     </ReviewPage>
-    )
+  )
 }

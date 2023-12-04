@@ -1,16 +1,13 @@
-export default function getPageArray(pageCycle: number, totalPage: number) {
+export default function getPageArray(page: number, totalPage: number) {
   const pages: number[] = [];
-  const fullPageNumber = Math.floor(totalPage / 5);
+  
+  // 페이지 그룹의 시작 페이지 계산
+  const startPage = Math.floor((page - 1) / 5) * 5 + 1;
 
-  if (pageCycle <= fullPageNumber) {
-    for (let i = 1; i <= 5; i++) {
-      pages.push((pageCycle-1) * 5 + i);
-    };
-  } else {
-    for (let i = 1; i <= totalPage % 5; i++) {
-      pages.push((pageCycle-1) * 5 + i);
-    }
-  }
+  // 시작 페이지부터 시작해서 totalPage까지 배열에 추가
+  for (let i = startPage; i <= totalPage && i < startPage + 5; i++) {
+    pages.push(i);
+  };
 
   return pages;
 }

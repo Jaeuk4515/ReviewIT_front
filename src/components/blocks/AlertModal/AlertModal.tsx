@@ -5,6 +5,8 @@ import alert from "../../../assets/icons/alert.svg";
 import { ButtonArea } from "../Header/Header.styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
 
 interface AlertModalType {
   mode: "createAlert" | "deleteAlert";
@@ -14,11 +16,12 @@ interface AlertModalType {
 
 export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModalType) {
   const navigate = useNavigate();
+  const pageInfo = useSelector((state: RootState) => state.page);
 
   const handleDelete = async () => {
     const response = await axios.delete(`http://localhost:3001/review/delete/${reviewId}`);
     if (response.data.message === "success") {
-      navigate(-1);
+      navigate(`/posts?page=${pageInfo.page}&perPage=${pageInfo.perPage}`);
     };
   };
 

@@ -82,11 +82,11 @@ export default function ReviewCreate() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
-    if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
-      setAlertModal(true);
-      return;
-    };
+    // const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
+    // if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
+    //   setAlertModal(true);
+    //   return;
+    // };
     
     // 함수로 빼기
     const formData = new FormData();
