@@ -14,6 +14,11 @@ const Card = styled.div`
   border: 1.5px solid rgba(182, 182, 182, .5);
   border-radius: 15px;
   cursor: pointer;
+  transition: .35s;
+
+  &:hover {
+    transform: scale(1.04);
+  }
 `
 
 const Icon = styled.div<{status: "good" | "bad"}>`

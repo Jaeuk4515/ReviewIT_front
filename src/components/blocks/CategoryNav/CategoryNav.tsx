@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import Category from "../../atoms/Category/Category";
 import { CategoryNavBar, NavBar } from "./CategoryNav.styles";
 

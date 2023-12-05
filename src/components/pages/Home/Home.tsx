@@ -1,8 +1,7 @@
 import CategoryNav from "../../blocks/CategoryNav/CategoryNav";
 import Post from "../../blocks/Post/Post";
 import { 
-  HomePage, 
-  Banner, 
+  HomePage,
   PagePart, 
   ContentArea, 
   PageText, 
@@ -31,12 +30,12 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
 import { setPostInfo } from "../../../store/postInfoSlice";
-// import { PostObject } from "../Review/Review";
+import Banner from "../../blocks/Banner/Banner";
 
 export default function Home() {
-  // const [ postInfo, setPostInfo ] = useState<PostObject[]>([]);
   const postInfo = useSelector((state: RootState) => state.postInfo);
   const dispatch = useDispatch();
+  const [ currentImageIndex, setCurrentImageIndex ] = useState(1);
   const [ scrollPosition, setScrollPosition ] = useState(0);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -51,12 +50,19 @@ export default function Home() {
   useEffect(() => {
     const getReviewsInfo = async () => {
       const response = await axios.get("http://localhost:3001/review/?page=1&perPage=20");
-      // setPostInfo(response.data.thumbnailInfo);
       dispatch(setPostInfo(response.data.thumbnailInfo));
     };
 
     getReviewsInfo();
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex(prevIndex => prevIndex === 3 ? 1 : prevIndex + 1);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [currentImageIndex]);
 
   useEffect(() => {
     if (carouselRef.current) {
@@ -85,7 +91,7 @@ export default function Home() {
 
   return (
     <HomePage>
-      <Banner />
+      <Banner banner_num={currentImageIndex} setCurrentImageIndex={setCurrentImageIndex} />
       <PagePart>
         <ContentArea>
           <PageText>
@@ -100,7 +106,6 @@ export default function Home() {
             <MoreIcon />
           </MoreButton>
         </ContentArea>
-        {/* <div style={{display: "flex", justifyContent: "center"}}><CategoryNav /></div> */}
         <CategoryNav />
       </PagePart>
       <PagePart>

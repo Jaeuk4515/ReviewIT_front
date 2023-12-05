@@ -21,10 +21,13 @@ const ProductName = styled.span`
   font-weight: bold;
   font-size: 17px;
   width: 150px;
+  height: 21px;
+  line-height: 21px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
+  margin-top: 5px;
 `
 
 export { PostArea, ProductImg, ProductName }

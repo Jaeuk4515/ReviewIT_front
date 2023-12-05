@@ -13,14 +13,6 @@ const HomePage = styled.div`
   margin-bottom: 100px;
 `
 
-const Banner = styled.div`
-  width: 65%;
-  min-width: 800px;
-  height: 370px;
-  border-radius: 15px;
-  background-color: #D9D9D9;
-`
-
 const PagePart = styled.div`
   display: flex;
   flex-direction: column;
@@ -99,6 +91,7 @@ const PostArea = styled.div`
 
 const Carousel = styled.div`
   display: flex;
+  align-items: center;
   overflow: auto;
   width: 100%;
   scrollbar-width: thin;
@@ -132,4 +125,4 @@ const RightShiftButton = styled(NextButton)`
   top: 65px; right: -25px;
 `
 
-export { HomePage, Banner, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, Carousel, LeftShiftButton, RightShiftButton }
+export { HomePage, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, Carousel, LeftShiftButton, RightShiftButton }

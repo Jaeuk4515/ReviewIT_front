@@ -10,7 +10,6 @@ const CategoryNavBar = styled.div`
 `
 
 const NavBar = styled.div`
-  // height: 100%;
   padding: 5px;
   display: flex;
   gap: .8rem;

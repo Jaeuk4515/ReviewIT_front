@@ -7,6 +7,11 @@ const CategoryArea = styled.div`
   gap: .8rem;
   cursor: pointer;
   margin-right: 7px;
+  transition: .35s;
+
+  &:hover {
+    transform: scale(1.06);
+  }
 `
 
 const CategoryButton = styled.div`
