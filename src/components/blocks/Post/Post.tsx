@@ -14,7 +14,7 @@ export default function Post({ className, url, name, grade }: PostType) {
     <PostArea className={className}>
       <ProductImg className="" url={url} />
       <ProductName>{name}</ProductName>
-      <Stars grade={grade} />
+      <Stars mode="view" grade={grade} />
     </PostArea>
   )
 }

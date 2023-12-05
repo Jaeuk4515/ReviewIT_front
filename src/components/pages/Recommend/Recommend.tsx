@@ -4,8 +4,7 @@ import good from "../../../assets/icons/good.svg";
 import bad from "../../../assets/icons/bad.svg";
 import Search from "../../atoms/Search/Search";
 import { GridPost, ReviewPostArea } from "../Review/Review.styled";
-import Pagination from "../../blocks/Pagination/Pagination";
-import { posts } from "../Review/Review";
+// import { posts } from "../Review/Review";
 
 export default function Recommend({ pageType }: {pageType: "recommend" | "non-recommend"}) {
   return (
@@ -18,11 +17,11 @@ export default function Recommend({ pageType }: {pageType: "recommend" | "non-re
       </TitleArea>
       <Search color="white" width="500px" height="50px" />
       <ReviewPostArea>
-        {posts.map(({ productUrl, productName, grade }, idx) => {
+        {/* {posts.map(({ productUrl, productName, grade }, idx) => {
           return <GridPost className="" key={idx} url={productUrl} name={productName} grade={grade} />
-        })}
+        })} */}
       </ReviewPostArea>
-      <Pagination />
+      {/* <Pagination /> */}
     </RecommendPage>
   )
 }

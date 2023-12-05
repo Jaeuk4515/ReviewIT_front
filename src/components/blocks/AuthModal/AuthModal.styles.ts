@@ -5,25 +5,21 @@ import { SubmitButton } from "../CommentForm/CommentForm.styles";
 import Divider from "../../atoms/Divider/Divider";
 import google from "../../../assets/icons/google.svg"
 
-interface modalType {
-  modalType: "login" | "signup";
-}
-
 const ModalBg = styled.div`
   position: fixed;
   top: 0; bottom: 0;
   left: 0; right: 0;
   background: rgba(0, 0, 0, 0.6);
-  background-filter: blur(2px);
+  backdrop-filter: blur(2px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2000;
 `
 
-const Modal = styled.form<modalType>`
+const Modal = styled.form<{modaltype: "login" | "signup"}>`
   width: 420px;
-  height: ${props => props.modalType === "login" ? "630px" : "658px"};
+  height: ${props => props.modaltype === "login" ? "645px" : "700px"};
   border: 1px solid #C4C4C4;
   border-radius: 20px;
   display: flex;
@@ -64,6 +60,14 @@ const InputBox = styled(Input)`
   &::placeholder {
     color: #A8A8A8;
   }
+`
+
+const ErrorText = styled.span`
+  height: 14px;
+  width: 100%;
+  color: #ff1919;
+  font-size: 10.5px;
+  padding-left: 20px;
 `
 
 const ModalButton = styled(SubmitButton)`
@@ -130,4 +134,4 @@ const GoogleLoginText = styled(NormalText)`
   font-size: 20px;
 `
 
-export { ModalBg, Modal, Logo, ModalTitle, InputArea, InputBox, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink, ModalDivider, GoogleLoginButton, GoogleLogo, GoogleLoginText }
+export { ModalBg, Modal, Logo, ModalTitle, InputArea, InputBox, ErrorText, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink, ModalDivider, GoogleLoginButton, GoogleLogo, GoogleLoginText }

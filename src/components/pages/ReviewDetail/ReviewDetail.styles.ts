@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { SubmitButton } from "../../blocks/CommentForm/CommentForm.styles";
-import { HomePage } from "../Home/Home.styles";
+import { HomePage, PageTitle } from "../Home/Home.styles";
+import { Img } from "../../atoms/Category/Category.styles";
 
 const ReviewDetailPage = styled(HomePage)`
   gap: 2rem;
@@ -29,12 +30,60 @@ const PostContent = styled.div`
   align-items: center;
   width: 50%;
   min-width: 855px;
-  gap: 2rem;
+  gap: 2.5rem;
+`
+
+const ReviewHeader = styled.div`
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;
+  padding: 0 40px 0 30px;
+  box-sizing: border-box;
+  margin-bottom: -10px;
+  position: relative;
 `
 
 const ReviewTitle = styled.h2`
-  width: 100%; 
-  padding-left: 6%;
+`
+
+const OptionIcon = styled(Img)`
+  width: 25px;
+  heigth: 25px;
+  cursor: pointer;
+`
+
+const MiniModal = styled.div`
+  width: 100px;
+  height: 70px;
+  background-color: white;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  box-shadow: 0 0 5px #C4C4C4;
+  position: absolute;
+  top: 35px; right: 28px;
+  z-index: 20;
+  gap: .4rem;
+`
+
+const ButtonTitle = styled(PageTitle)`
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .4;
+  }
+`
+
+const UpdateIcon = styled(OptionIcon)`
+  width: 16px;
+  height: 18px;
+`
+
+const DeleteIcon = styled(UpdateIcon)`
 `
 
 const ContentText = styled.p`
@@ -42,6 +91,7 @@ const ContentText = styled.p`
   min-width: 787px;
   font-size: 18px;
   line-height: 30px;
+  margin-top: 25px;
 `
 
 const ExtraInfoWrapper = styled(UserInfoWrapper)`
@@ -59,4 +109,4 @@ const CommentArea = styled(PostContent)`
   gap: 1.5rem;
 `
 
-export { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewTitle, ContentText, ExtraInfoWrapper, ExtraInfo, CommentArea }
+export { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, DeleteIcon, ContentText, ExtraInfoWrapper, ExtraInfo, CommentArea }

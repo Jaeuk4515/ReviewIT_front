@@ -2,24 +2,15 @@ import styled from "styled-components";
 import { Logo } from "../../blocks/AuthModal/AuthModal.styles";
 import { FooterText } from "../../blocks/Footer/Footer.styles";
 import right from "../../../assets/icons/right.svg";
-import DirectionButton from "../../atoms/DirectionButton/DirectionButton";
-import Post from "../../blocks/Post/Post";
+import { NextButton, PrevButton } from "../../blocks/ReviewCard/ReviewCard.styles";
 
 const HomePage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 3.5rem;
+  gap: 5rem;
   margin-bottom: 100px;
-`
-
-const Carousel = styled.div`
-  width: 65%;
-  min-width: 800px;
-  height: 370px;
-  border-radius: 15px;
-  background-color: #D9D9D9;
 `
 
 const PagePart = styled.div`
@@ -93,11 +84,45 @@ const PostArea = styled.div`
   position: relative;
 `
 
-const ShiftButton = styled(DirectionButton)`
-  position: absolute;
-  right: ${props => props.direction === "left" ? "" : "-45px"};
-  left: ${props => props.direction === "left" ? "-45px" : ""};
-  top: 60px;
+// const Carousel = styled.div`
+//   overflow: hidden;
+//   width: 100%;
+// `
+
+const Carousel = styled.div`
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  &::-webkit-scrollbar {
+    display: none;
+  };
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  };
 `
 
-export { HomePage, Carousel, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, ShiftButton }
+// const ImgWrapper = styled.div<{ multi: number, leftOffSet: number }>`
+//   display: flex;
+//   width: ${props => props.multi * 100}%;
+//   position: relative;
+//   left: ${props => props.leftOffSet}px;
+//   transition: .35s;
+// `
+
+// const PostWrapper = styled.div`
+//   display: flex;
+//   width: 100%;
+// `
+
+const LeftShiftButton = styled(PrevButton)`
+  top: 65px; left: -25px;
+`
+
+const RightShiftButton = styled(NextButton)`
+  top: 65px; right: -25px;
+`
+
+export { HomePage, PagePart, ContentArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, Carousel, LeftShiftButton, RightShiftButton }

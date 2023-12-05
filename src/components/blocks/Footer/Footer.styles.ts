@@ -8,6 +8,7 @@ const FooterWrapper = styled(HeaderWrapper)`
   border-bottom: 0;
   border-top: 1px solid rgba(0, 0, 0, .05);
   background-color: #f3f7ff;
+  z-index: 10;
 `
 
 const FooterArea = styled(HeaderArea)`
@@ -34,8 +35,8 @@ const ContactIconArea = styled.div`
   width: 170px;
 `
 
-const ContactIcon = styled(Logo)<{iconType: string}>`
-  background-image: url(${props => props.iconType});
+const ContactIcon = styled(Logo)<{icontype: string}>`
+  background-image: url(${props => props.icontype});
   width: 30px;
   height: 30px;
 `

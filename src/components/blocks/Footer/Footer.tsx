@@ -11,10 +11,10 @@ export default function Footer() {
         <IconArea>
           <FooterLogo />
           <ContactIconArea>
-            <ContactIcon iconType={facebook} />
-            <ContactIcon iconType={instagram} />
-            <ContactIcon iconType={youtube} />
-            <ContactIcon iconType={mail} />
+            <ContactIcon icontype={facebook} />
+            <ContactIcon icontype={instagram} />
+            <ContactIcon icontype={youtube} />
+            <ContactIcon icontype={mail} />
           </ContactIconArea>
         </IconArea>
         <FooterTextArea>

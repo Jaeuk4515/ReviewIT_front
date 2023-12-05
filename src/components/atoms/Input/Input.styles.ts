@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const InputBox = styled.input<{color: string, width: string, height: string}>`
+const InputBox = styled.input<{color: string, width: string, height: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void}>`
   width: ${props => props.width};
   height: ${props => props.height};
   background-color: ${props => props.color};

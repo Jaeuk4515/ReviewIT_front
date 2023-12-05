@@ -1,9 +1,18 @@
 import { Card, Icon, Description, Title, Des, RightIcon } from "./RecommendCard.styles";
 import right from "../../../assets/icons/right.svg";
 
-export default function RecommendCard({ status }: {status: "good" | "bad"}) {
+interface RecommendCardType {
+  status: "good" | "bad",
+  onClick(): void,
+}
+
+export default function RecommendCard({ status, onClick }: RecommendCardType) {
+  const handleClick = () => {
+    onClick();
+  }
+
   return (
-    <Card>
+    <Card onClick={handleClick}>
       <Icon status={status} />
       <Description>
         <Title>{status === "good" ? "강추!!" : "비추.."}</Title>

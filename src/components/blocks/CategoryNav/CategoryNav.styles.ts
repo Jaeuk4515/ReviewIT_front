@@ -1,8 +1,22 @@
 import styled from "styled-components";
 
-const NavBar = styled.div`
+const CategoryNavBar = styled.div`
+  width: 100%;
+  position: relative;
   display: flex;
-  gap: 2.4rem;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
 `
 
-export { NavBar }
+const NavBar = styled.div`
+  padding: 5px;
+  display: flex;
+  gap: .8rem;
+  align-items: center;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  align-content: center;
+`
+
+export { CategoryNavBar, NavBar }
