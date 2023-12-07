@@ -12,7 +12,7 @@ const CategoryNavBar = styled.div`
 const NavBar = styled.div`
   padding: 5px;
   display: flex;
-  gap: .8rem;
+  gap: .6rem;
   align-items: center;
   box-sizing: border-box;
   flex-wrap: wrap;

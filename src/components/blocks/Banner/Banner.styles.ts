@@ -60,7 +60,7 @@ const ButtonNav = styled.div`
   align-items: center;
   width: 50px;
   position: absolute;
-  bottom: 10px;
+  bottom: 13px;
 `
 
 const ShiftButton = styled.div<{active: "on" | "off"}>`

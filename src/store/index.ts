@@ -1,15 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import postInfoSlice from "./postInfoSlice";
-import contentSlice from "./contentSlice";
-import newContentSlice from "./newContentSlice";
-import pageSlice from "./pageSlice";
+import postInfoSlice from "./slices/postInfoSlice";
+import contentSlice from "./slices/contentSlice";
+import newContentSlice from "./slices/newContentSlice";
+import pageSlice from "./slices/pageSlice";
+import categorySlice from "./slices/categorySlice";
 
 const store = configureStore({
   reducer: {
     postInfo: postInfoSlice,
     content: contentSlice,
     newContent: newContentSlice,
-    page: pageSlice
+    page: pageSlice,
+    category: categorySlice
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false,

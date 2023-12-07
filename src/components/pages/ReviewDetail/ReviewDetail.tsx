@@ -29,6 +29,7 @@ interface ReviewInfo extends Omit<content, 'productImages'> {
 export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   const param = useParams();
   const pageInfo = useSelector((state: RootState) => state.page);
+  const { category } = useSelector((state: RootState) => state.category);
   const [ reviewInfo, setReviewInfo ] = useState<ReviewInfo>({
     userId: "",
     nickname: "",
@@ -47,7 +48,7 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   const [ isModal, setIsModal ] = useState(false);
   const [ alertModal, setAlertModal ] = useState(false);
 
-  console.log(reviewInfo);
+  console.log(pageInfo, category);
 
   useEffect(() => {
     const getReviewInfo = async () => {
@@ -85,7 +86,7 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
           <UserName>{reviewInfo.nickname}</UserName>
           <WritedTime>{reviewInfo.createdAt}</WritedTime>
         </UserInfoArea>
-        <Link to={`/posts?page=${pageInfo.page}&perPage=${pageInfo.perPage}`}><ListButton>목록</ListButton></Link>
+        <Link to={`/posts?category=${category}&page=${pageInfo.page}&perPage=${pageInfo.perPage}&reset=no`}><ListButton>목록</ListButton></Link>
       </UserInfoWrapper>
       <PostContent>
         <ReviewHeader>

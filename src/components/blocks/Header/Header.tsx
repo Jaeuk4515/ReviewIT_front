@@ -2,9 +2,12 @@ import { HeaderWrapper, HeaderArea, HeaderLogo, ButtonArea, HeaderButton, WriteR
 // import image from '../../../assets/icons/image.webp';
 import { useEffect, useState } from "react";
 import AuthModal from "../AuthModal/AuthModal";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import getUserInfo from "../../../services/getUserInfo";
 import ProfileModal from "../ProfileModal/ProfileModal";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
+import { resetCategory } from "../../../store/slices/categorySlice";
 
 export default function Header({ isLogin }: {isLogin: boolean}) {
   const [ modal, setModal ] = useState<"login" | "signup" | "">("");
@@ -15,24 +18,8 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
   })
   const [ profileModal, setProfileModal ] = useState(false);
   const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/create");
-  }
-
-  const handleLogin = () => {
-    setModal("login");
-  }
-
-  const handleSignup = () => {
-    setModal("signup");
-  }
-
-  const handleProfileModal = () => {
-    setProfileModal(!profileModal);
-  }
-
-  // console.log("header profileModal : ", profileModal);
+  const { category } = useSelector((state: RootState) => state.category);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isLogin) {
@@ -49,24 +36,30 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
     }
   }, [isLogin]);
 
+  const moveToHome = () => {
+    // 리뷰 페이지의 카테고리가 클릭된 상태에서 홈 화면 이동시 카테고리 state 초기화 -> 안하면 홈 화면의 카테고리 버튼이 활성화 되어있음 
+    if (category !== "none") dispatch(resetCategory());
+    navigate("/");
+  }
+
   return (
     <HeaderWrapper>
       <HeaderArea>
-        <Link to="/"><HeaderLogo /></Link>
+        <HeaderLogo onClick={moveToHome} />
         {
           !isLogin ? 
           <ButtonArea>
-            <HeaderButton buttontype="login" onClick={handleLogin}>로그인</HeaderButton>
-            <HeaderButton buttontype="signup" onClick={handleSignup}>회원가입</HeaderButton>
+            <HeaderButton buttontype="login" onClick={() => { setModal("login") }}>로그인</HeaderButton>
+            <HeaderButton buttontype="signup" onClick={() => { setModal("signup") }}>회원가입</HeaderButton>
             {modal && <AuthModal modalType={modal} state={modal} setState={setModal} />}
           </ButtonArea> : 
           <ButtonArea>
-            <WriteReviewButton onClick={handleClick}>
+            <WriteReviewButton onClick={() => { navigate("/create") }}>
               <WriteIcon />
               리뷰작성
             </WriteReviewButton>
             <div style={{position: "relative"}}>
-              <Profile className="" url={userData.userImage} onClick={handleProfileModal} />
+              <Profile className="" url={userData.userImage} onClick={() => { setProfileModal(!profileModal) }} />
               {profileModal && <ProfileModal userData={userData} setProfileModal={setProfileModal} />}
             </div>
           </ButtonArea>

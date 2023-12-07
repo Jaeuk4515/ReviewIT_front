@@ -38,7 +38,7 @@ import AlertModal from "../../blocks/AlertModal/AlertModal";
 import { Img } from "../../atoms/Category/Category.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
-import { setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setReviewContent } from "../../../store/contentSlice";
+import { setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setReviewContent } from "../../../store/slices/contentSlice";
 
 export interface content {
   userId: string;

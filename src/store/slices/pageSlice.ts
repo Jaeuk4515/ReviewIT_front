@@ -7,8 +7,8 @@ export interface PageObject {
 };
 
 const initialState = {
-  page: 0,
-  perPage: 0,
+  page: 1,
+  perPage: 5,
   totalPage: 0
 };
 

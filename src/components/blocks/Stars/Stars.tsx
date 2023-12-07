@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Star from "../../atoms/Star/Star";
 import { StarWrapper } from "./Stars.styles";
 import { useDispatch } from "react-redux";
-import { setGrade } from "../../../store/contentSlice";
-import { setNewGrade } from "../../../store/newContentSlice";
+import { setGrade } from "../../../store/slices/contentSlice";
+import { setNewGrade } from "../../../store/slices/newContentSlice";
 
 interface StarsType {
   mode: "view" | "edit";

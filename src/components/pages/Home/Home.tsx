@@ -29,7 +29,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
-import { setPostInfo } from "../../../store/postInfoSlice";
+import { setPostInfo } from "../../../store/slices/postInfoSlice";
 import Banner from "../../blocks/Banner/Banner";
 
 export default function Home() {
@@ -102,11 +102,11 @@ export default function Home() {
             <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
           </PageText>
           <MoreButton>
-            <Link to="/posts?page=1&perPage=5"><MoreText>전체 리뷰</MoreText></Link>
+            <Link to="/posts?category=none&page=1&perPage=5&reset=yes"><MoreText>전체 리뷰</MoreText></Link>
             <MoreIcon />
           </MoreButton>
         </ContentArea>
-        <CategoryNav />
+        <CategoryNav from="home" />
       </PagePart>
       <PagePart>
         <ContentArea>
