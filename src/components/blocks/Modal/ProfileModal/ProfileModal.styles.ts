@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "../../atoms/Button/Button";
+import Button from "../../../atoms/Button/Button";
 
 const Ballon = styled.div`
   width: 240px;

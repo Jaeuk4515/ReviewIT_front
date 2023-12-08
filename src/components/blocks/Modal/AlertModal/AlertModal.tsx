@@ -1,12 +1,12 @@
 import { Logo, ModalBg, ModalButton } from "../AuthModal/AuthModal.styles";
 import { ModalBox } from "../SuccessModal/SuccessModal.styles";
 import { ModalText, AlertIcon } from "./AlertModal.styles";
-import alert from "../../../assets/icons/alert.svg";
-import { ButtonArea } from "../Header/Header.styles";
+import alert from "../../../../assets/icons/alert.svg";
+import { ButtonArea } from "../../Header/Header.styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
+import { RootState } from "../../../../store/RootState";
 
 interface AlertModalType {
   mode: "createAlert" | "deleteAlert";

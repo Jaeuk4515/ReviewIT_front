@@ -30,7 +30,7 @@ import Input from "../../atoms/Input/Input";
 import Stars from "../../blocks/Stars/Stars";
 import { PageDes, PageTitle } from "../Home/Home.styles";
 import TextArea from "../../atoms/TextArea/TextArea";
-import AlertModal from "../../blocks/AlertModal/AlertModal";
+import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import arrow from "../../../assets/icons/bottom-arrow.svg";
 import x_button from "../../../assets/icons/x-button.svg";
 import camera from "../../../assets/icons/camera.svg";

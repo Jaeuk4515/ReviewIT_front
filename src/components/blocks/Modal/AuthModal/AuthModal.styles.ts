@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import logo from "../../../assets/icons/logo.svg";
-import Input from "../../atoms/Input/Input";
-import { SubmitButton } from "../CommentForm/CommentForm.styles";
-import Divider from "../../atoms/Divider/Divider";
-import google from "../../../assets/icons/google.svg"
+import logo from "../../../../assets/icons/logo.svg";
+import Input from "../../../atoms/Input/Input";
+import { SubmitButton } from "../../CommentForm/CommentForm.styles";
+import Divider from "../../../atoms/Divider/Divider";
+import google from "../../../../assets/icons/google.svg"
 
 const ModalBg = styled.div`
   position: fixed;

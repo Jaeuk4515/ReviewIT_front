@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ModalBg } from "../AuthModal/AuthModal.styles";
+import { ModalBg } from "../Modal/AuthModal/AuthModal.styles";
 import { NextButton, PrevButton } from "../ReviewCard/ReviewCard.styles";
 import { FullImage, ModalPrevButton, ModalNextButton } from "./ImageModal.styles";
 

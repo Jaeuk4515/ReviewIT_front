@@ -95,18 +95,39 @@ const ContentText = styled.p`
 `
 
 const ExtraInfoWrapper = styled(UserInfoWrapper)`
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 40px;
+`
+
+const LikeyButton = styled.div`
+  width: 35px;
+  height: 30px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(1.08);
+  }
+`
+
+const LikeyIcon = styled(Img)`
+  width: 22px;
+  height: 18px;
 `
 
 const ExtraInfo = styled.div`
   display: flex;
   gap: 1rem;
-  padding-right: 20px;
+  margin-right: 20px;
 `
 
 const CommentArea = styled(PostContent)`
   gap: 1.5rem;
 `
 
-export { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, DeleteIcon, ContentText, ExtraInfoWrapper, ExtraInfo, CommentArea }
+export { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, DeleteIcon, ContentText, ExtraInfoWrapper, LikeyButton, LikeyIcon, ExtraInfo, CommentArea }

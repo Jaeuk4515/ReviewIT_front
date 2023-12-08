@@ -21,7 +21,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SuccessModal from "../SuccessModal/SuccessModal";
-import { authContext } from "../../../App";
+import { authContext } from "../../../../App";
 
 interface AuthModalType {
   modalType: "login" | "signup";

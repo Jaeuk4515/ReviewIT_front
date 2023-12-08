@@ -1,4 +1,4 @@
-import { InputArea, InputBox, ModalTitle } from "../../blocks/AuthModal/AuthModal.styles";
+import { InputArea, InputBox, ModalTitle } from "../../blocks/Modal/AuthModal/AuthModal.styles";
 import { ChangePasswordPage, PasswordForm, ButtonArea, Btn } from "./ChangePassword.styles";
 
 export default function ChangePassword() {

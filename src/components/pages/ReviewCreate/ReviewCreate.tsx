@@ -34,7 +34,7 @@ import x_button from "../../../assets/icons/x-button.svg";
 import getUserInfo from "../../../services/getUserInfo";
 import { authContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
-import AlertModal from "../../blocks/AlertModal/AlertModal";
+import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import { Img } from "../../atoms/Category/Category.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";

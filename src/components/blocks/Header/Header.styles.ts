@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Logo } from "../AuthModal/AuthModal.styles";
+import { Logo } from "../Modal/AuthModal/AuthModal.styles";
 import { SubmitButton } from "../CommentForm/CommentForm.styles";
 import write from "../../../assets/icons/write.svg";
 import UserProfile from "../../atoms/UserProfile/UserProfile";

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Ballon, ButtonArea, MyPageButton, LogoutButton, InfoArea } from "./ProfileModal.styles";
 import axios from "axios";
-import { authContext } from "../../../App";
+import { authContext } from "../../../../App";
 
 type UserData = {
   nickname: string;
