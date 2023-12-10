@@ -38,7 +38,7 @@ import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import { Img } from "../../atoms/Category/Category.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
-import { setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setReviewContent } from "../../../store/slices/contentSlice";
+import { setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setReviewContent, resetContent } from "../../../store/slices/contentSlice";
 
 export interface content {
   userId: string;
@@ -63,7 +63,7 @@ export default function ReviewCreate() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 로그인 중인데 리뷰 작성 페이지에서 브라우저를 새로고침 하면 isLogin이 false로 되서 튕김.. 왜이런지 모르겠다. 리렌더링 되도 그러네
+    // 로그인 중인데 리뷰 작성 페이지에서 브라우저를 새로고침 하면 isLogin이 false로 되서 튕김.. 왜이런지 모르겠다. 리렌더링 되도 그러네. 이 if문을 주석처리하면 안그럼 
     // if (!isLogin) { 
     //   alert("로그인이 필요한 서비스입니다.");
     //   navigate("/");
@@ -77,8 +77,7 @@ export default function ReviewCreate() {
     getData();
   }, []);
 
-  console.log(content);
-  console.log('alertModal : ', alertModal);
+  console.log("Review isLogin : ", isLogin);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -112,7 +111,7 @@ export default function ReviewCreate() {
     console.log(response);
     if (response.data.message === 'success') {
       navigate(`/posts/detail/${response.data.reviewId}`);
-      // console.log(response.data.reivewId);
+      dispatch(resetContent());
     }
   }
 

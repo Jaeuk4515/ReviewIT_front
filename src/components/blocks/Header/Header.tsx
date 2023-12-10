@@ -1,5 +1,4 @@
 import { HeaderWrapper, HeaderArea, HeaderLogo, ButtonArea, HeaderButton, WriteReviewButton, WriteIcon, Profile } from "./Header.styles";
-// import image from '../../../assets/icons/image.webp';
 import { useEffect, useState } from "react";
 import AuthModal from "../Modal/AuthModal/AuthModal";
 import { useNavigate } from "react-router-dom";
@@ -29,8 +28,6 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
       getData();
     }
   }, [isLogin, reviewInfo.likey]);
-
-  console.log(user);
 
   const moveToHome = () => {
     // 리뷰 페이지의 카테고리가 클릭된 상태에서 홈 화면 이동시 카테고리 state 초기화 -> 안하면 홈 화면의 카테고리 버튼이 활성화 되어있음 

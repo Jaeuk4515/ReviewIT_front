@@ -41,8 +41,8 @@ export default function Home() {
   const navigate = useNavigate();
   
   const goToReviews = (status: "good" | "bad") => () => {
-    if (status === "good") navigate("/posts/good-review");
-    if (status === "bad") navigate("/posts/bad-review");
+    if (status === "good") navigate("/posts/recommendation/good-product?page=1&perPage=5");
+    if (status === "bad") navigate("/posts/recommendation/bad-product?page=1&perPage=5");
   }
 
   console.log(scrollPosition, carouselRef.current ? carouselRef.current.scrollWidth : 0);

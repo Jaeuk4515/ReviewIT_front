@@ -43,12 +43,12 @@ function App() {
       element: <ReviewUpdate />
     },
     {
-      path: "/posts/good-review",
-      element: <Recommend pageType='recommend' />
+      path: "/posts/recommendation/good-product",
+      element: <Recommend pageType='good-product' />
     },
     {
-      path: "/posts/bad-review",
-      element: <Recommend pageType='non-recommend' />
+      path: "/posts/recommendation/bad-product",
+      element: <Recommend pageType='bad-product' />
     },
     {
       path: "/posts/detail/:pId",
@@ -64,7 +64,7 @@ function App() {
     },
   ]
 
-  console.log("isLogin : ", isLogin);
+  console.log("App isLogin : ", isLogin);
   
   return (
     <>

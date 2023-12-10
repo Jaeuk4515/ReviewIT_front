@@ -26,6 +26,9 @@ const contentSlice = createSlice({
   name: 'content',
   initialState,
   reducers: {
+    resetContent: (state) => {
+      return initialState;
+    },
     setUserId: (state, action: PayloadAction<string>) => {
       state.userId = action.payload;
     },
@@ -53,5 +56,5 @@ const contentSlice = createSlice({
   }
 });
 
-export const { setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setGrade, setProductImages, setReviewContent } = contentSlice.actions;
+export const { resetContent, setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setGrade, setProductImages, setReviewContent } = contentSlice.actions;
 export default contentSlice.reducer;

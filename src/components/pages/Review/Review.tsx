@@ -34,8 +34,8 @@ export default function Review() {
   const pageController = new PageControl(page, pageInfo, searchParams, setSearchParams);
   
   const goToReviews = (status: "good" | "bad") => () => {
-    if (status === "good") navigate("/posts/good-review");
-    if (status === "bad") navigate("/posts/bad-review");
+    if (status === "good") navigate("/posts/recommendation/good-product?page=1&perPage=5");
+    if (status === "bad") navigate("/posts/recommendation/bad-product?page=1&perPage=5");
   };
 
   const setCategoryQuery = (newCategory: category) => {
@@ -83,7 +83,6 @@ export default function Review() {
     getReviewsInfo();
   }, [category]);
 
-  console.log(reset);
   return (
     <ReviewPage>
       <ContentArea style={{width: "60%", minWidth: "800px", marginBottom: "20px"}}>

@@ -36,7 +36,6 @@ const PageText = styled.div`
 
 const PageTitle = styled.div`
   display: flex;
-  // align-items: center;
   gap: .7rem;
 `
 
