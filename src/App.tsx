@@ -11,6 +11,7 @@ import ChangePassword from './components/pages/ChangePassword/ChangePassword';
 import { Route, Routes } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import ReviewUpdate from './components/pages/ReviewUpdate/ReviewUpdate';
+import MyPage from './components/pages/MyPage/MyPage';
 
 interface AuthContextType {
   isLogin: boolean;
@@ -62,6 +63,10 @@ function App() {
       path: "/new-password",
       element: <ChangePassword />
     },
+    {
+      path: "/mypage",
+      element: <MyPage />
+    }
   ]
 
   console.log("App isLogin : ", isLogin);

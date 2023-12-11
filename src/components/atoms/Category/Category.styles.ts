@@ -14,9 +14,9 @@ const CategoryArea = styled.div`
   }
 `
 
-const CategoryButton = styled.div<{active: "on" | "off"}>`
+const CategoryButton = styled.div<{active: "on" | "off", width: string | undefined}>`
   height: 45px;
-  width: 130px;
+  width: ${props => props.width ? props.width : "130px"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,6 +26,7 @@ const CategoryButton = styled.div<{active: "on" | "off"}>`
   gap: .5rem;
   padding: 0 20px;
   box-sizing: border-box;
+  background-color: white;
 `
 
 const Img = styled.div<{category: string}>`

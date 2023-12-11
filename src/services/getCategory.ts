@@ -5,6 +5,8 @@ import monitor from "../assets/icons/monitor.svg";
 import keyboard from "../assets/icons/keyboard.svg";
 import mouse from "../assets/icons/mouse.svg";
 import tablet from "../assets/icons/tablet.svg";
+import review_write from "../assets/icons/review_write.svg";
+import review_likey from "../assets/icons/review_likey.svg";
 
 export default function getCategory(categoryName: string) {
   let svg = "";
@@ -30,6 +32,12 @@ export default function getCategory(categoryName: string) {
       break;
     case "태블릿":
       svg = tablet;
+      break;
+    case "작성한 리뷰":
+      svg = review_write;
+      break;
+    case "좋아요 한 리뷰":
+      svg = review_likey;
       break;
   };
 
