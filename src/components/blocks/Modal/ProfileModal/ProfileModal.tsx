@@ -3,6 +3,8 @@ import { Ballon, ButtonArea, MyPageButton, LogoutButton, InfoArea } from "./Prof
 import axios from "axios";
 import { authContext } from "../../../../App";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/RootState";
 
 type UserData = {
   nickname: string;
@@ -18,6 +20,7 @@ interface ProfileModalType {
 export default function ProfileModal({ userData, setProfileModal }: ProfileModalType) {
   const { isLogin, setIsLogin } = useContext(authContext)!;
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user);
 
   const logout = async () => {
     const response = await axios.get("http://localhost:3001/user/logout", { withCredentials: true });
@@ -28,7 +31,7 @@ export default function ProfileModal({ userData, setProfileModal }: ProfileModal
   };
 
   const moveToMyPage = () => {
-    navigate("/mypage");
+    navigate(`/mypage/${user._id}?category=write_review`);
     setProfileModal(false);
   };
 

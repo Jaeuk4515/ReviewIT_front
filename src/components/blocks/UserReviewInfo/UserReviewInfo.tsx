@@ -1,19 +1,29 @@
 import { DateInfo, InfoCard, ProductImage, ReviewInfo, TextInfo } from "./UserReviewInfo.styles";
 import monitor from "../../../assets/icons/monitor.svg";
 import Stars from "../Stars/Stars";
+import { ProductImg } from "../Post/Post.styles";
 
-export default function UserReviewInfo() {
+interface UserReviewInfoType {
+  productImage: string;
+  reviewTitle: string;
+  productName: string;
+  grade: number;
+  createdAt: string;
+  onClick: () => void;
+}
+
+export default function UserReviewInfo({ productImage, reviewTitle, productName, grade, createdAt, onClick }: UserReviewInfoType) {
   return (
-    <InfoCard>
-      <ProductImage category={monitor} />
+    <InfoCard onClick={onClick}>
+      <ProductImage className="" url={productImage} />
       <ReviewInfo>
         <TextInfo>
-          <span style={{fontSize: "21px", fontWeight: "bold"}}>리뷰 제목</span>
-          <span style={{fontSize: "19px"}}>제품명</span>
+          <span style={{fontSize: "20px", fontWeight: "bold"}}>{reviewTitle}</span>
+          <span style={{fontSize: "18px"}}>{productName}</span>
         </TextInfo>
-        <Stars mode="view" grade={3} />
+        <Stars mode="view" grade={grade} />
       </ReviewInfo>
-      <DateInfo><span style={{fontSize: "15px", color: "#929292"}}>2023. 12. 9.</span></DateInfo>
+      <DateInfo><span style={{fontSize: "15px", color: "#929292"}}>{createdAt}</span></DateInfo>
     </InfoCard>
   )
 }

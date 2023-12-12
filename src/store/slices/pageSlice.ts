@@ -16,11 +16,14 @@ const pageSlice = createSlice({
   name: "page",
   initialState,
   reducers: {
+    resetPage: (state) => {
+      return initialState;
+    },
     setPageInfo: (state, action: PayloadAction<PageObject>) => {
       return action.payload;
     }
   }
 });
 
-export const { setPageInfo } = pageSlice.actions;
+export const { resetPage, setPageInfo } = pageSlice.actions;
 export default pageSlice.reducer;

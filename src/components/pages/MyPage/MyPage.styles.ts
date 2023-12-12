@@ -34,14 +34,41 @@ const ProfileUpdateCard = styled.div`
   border: 1px solid rgba(0, 0, 0, .1);
   border-radius: 15px;
   background-color: white;
-  gap: 5rem;
+  gap: 6rem;
 `
 
 const UserImage = styled(Img)`
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   border: 1px solid rgba(0, 0, 0, .1);
-  border-radius: 80px;
+  border-radius: 100px;
+  position: relative;
+`
+
+const UserImageCover = styled.div`
+  width: 180px;
+  height: 180px;
+  border-radius: 100px;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);  // opacity는 자식요소들의 투명도까지 바꿈. UserImageCover의 배경만 투명도 조절 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0; left: 0;
+`
+
+const InitButton = styled.div`
+  background-color: #EAEAEA;
+  color: black;
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
 `
 
 const InputAndButtonArea = styled.div`
@@ -50,6 +77,7 @@ const InputAndButtonArea = styled.div`
   align-items: flex-end;
   gap: 2.5rem;
   width: 45%;
+  margin-top: 20px;
 `
 
 const UpdateButton = styled.div`
@@ -71,6 +99,7 @@ const UserReviewArea = styled(InputAndButtonArea)`
   align-items: center;
   width: 90%;
   gap: 1.5rem;
+  margin: 0;
 `
 
 const ReviewOptionArea = styled.div`
@@ -80,4 +109,4 @@ const ReviewOptionArea = styled.div`
   justify-content: flex-start;
 `
 
-export { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, InputAndButtonArea, UpdateButton, SlimDivider, UserReviewArea, ReviewOptionArea };
+export { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InitButton, InputAndButtonArea, UpdateButton, SlimDivider, UserReviewArea, ReviewOptionArea };

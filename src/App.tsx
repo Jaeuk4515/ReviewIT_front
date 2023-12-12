@@ -64,8 +64,8 @@ function App() {
       element: <ChangePassword />
     },
     {
-      path: "/mypage",
-      element: <MyPage />
+      path: "/mypage/:userId",
+      element: <MyPage isLogin={isLogin} />
     }
   ]
 

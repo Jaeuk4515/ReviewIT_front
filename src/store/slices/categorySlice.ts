@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface CategoryType {
-  category: "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "none";
+  category: "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "작성한 리뷰" | "좋아요 한 리뷰" | "none";
 }
 
 const initialState: CategoryType = { 
@@ -15,7 +15,7 @@ const categorySlice = createSlice({
     resetCategory: (state) => {
       return initialState;
     },
-    setCategory: (state, action: PayloadAction<"컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "none">) => {
+    setCategory: (state, action: PayloadAction<"컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "작성한 리뷰" | "좋아요 한 리뷰" | "none">) => {
       state.category = action.payload;
     }
   }
