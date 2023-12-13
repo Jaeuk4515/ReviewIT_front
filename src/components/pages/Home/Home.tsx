@@ -45,12 +45,12 @@ export default function Home() {
     if (status === "bad") navigate("/posts/recommendation/bad-product?page=1&perPage=5");
   }
 
-  console.log(scrollPosition, carouselRef.current ? carouselRef.current.scrollWidth : 0);
+  // console.log(scrollPosition, carouselRef.current ? carouselRef.current.scrollWidth : 0);
 
   useEffect(() => {
     const getReviewsInfo = async () => {
-      const response = await axios.get("http://localhost:3001/review/?page=1&perPage=20");
-      dispatch(setPostInfo(response.data.thumbnailInfo));
+      const response = await axios.get("http://localhost:3001/review/topReviews");
+      dispatch(setPostInfo(response.data));
     };
 
     getReviewsInfo();
@@ -112,7 +112,7 @@ export default function Home() {
         <ContentArea>
           <PageText>
             <PageTitle>
-              <PageTitleText>핫 리뷰</PageTitleText>
+              <PageTitleText>베스트 리뷰</PageTitleText>
               <PageIcon url={hot} />
             </PageTitle>
             <PageDes>많은 사람들에게 도움이 된 인기 리뷰들이에요</PageDes>
