@@ -1,14 +1,13 @@
-import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Comment from "../../atoms/Comment/Comment";
 import Likey from "../../atoms/Likey/Likey";
 import CommentForm from "../../blocks/CommentForm/CommentForm";
-import CommentItem, { CommentItemType } from "../../blocks/CommentItem/CommentItem";
+import CommentItem from "../../blocks/CommentItem/CommentItem";
 import { Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
 import ReviewCard from "../../blocks/ReviewCard/ReviewCard";
-import { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, DeleteIcon, ContentText, ExtraInfoWrapper, LikeyButton, LikeyIcon, ExtraInfo, CommentArea } from "./ReviewDetail.styles";
-import { useContext, useEffect, useState } from "react";
+import { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, ContentText, ExtraInfoWrapper, LikeyButton, LikeyIcon, ExtraInfo, CommentArea } from "./ReviewDetail.styles";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { content } from "../ReviewCreate/ReviewCreate";
 import getUserInfoById from "../../../services/getUserInfoById";
 import options from "../../../assets/icons/options.svg";
 import update from "../../../assets/icons/update.svg";
@@ -20,6 +19,14 @@ import gray_heart from "../../../assets/icons/gray_heart.svg";
 import red_heart from "../../../assets/icons/red_heart.svg";
 import { setLikey, setReviewInfo } from "../../../store/slices/reviewInfoSlice";
 import RequireLoginModal from "../../blocks/Modal/RequireLoginModal/RequireLoginModal";
+import user_default from "../../../assets/icons/user_default.svg";
+
+export interface CommentInfo {
+  commentId: string;
+  userId: string;
+  text: string;
+  createdAt: string;
+};
 
 export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   const param = useParams();
@@ -32,6 +39,7 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   const user = useSelector((state: RootState) => state.user);
   const [ isLike, setIsLike ] = useState(false);
   const [ loginRequired, setLoginRequired ] = useState(false);
+  const [ commentInfo, setCommentInfo ] = useState<CommentInfo[]>([]);
 
   useEffect(() => {
     const getReviewInfo = async () => {
@@ -46,7 +54,13 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
       }));
     };
 
+    const getCommentData = async () => {
+      const response = await axios.get(`http://localhost:3001/comment/${param.pId}`);
+      setCommentInfo(response.data);
+    };
+
     getReviewInfo();
+    getCommentData();
   }, []);
 
   useEffect(() => {
@@ -104,15 +118,16 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
           <LikeyButton onClick={handleLikeButtonClick}><LikeyIcon category={isLike ? red_heart : gray_heart} /></LikeyButton>
           {loginRequired && <RequireLoginModal setLoginRequired={setLoginRequired} />}
           <ExtraInfo>
-            <Comment amount={0} />
+            <Comment amount={commentInfo.length} />
             <Likey amount={reviewInfo.likey} />
           </ExtraInfo>
         </ExtraInfoWrapper>
       </PostContent>
-      <CommentForm isLogin={isLogin} url={reviewInfo.userImage} />
+      <CommentForm isLogin={isLogin} url={!isLogin ? user_default : user.userImage} uId={user._id} rId={param.pId!} commentInfo={commentInfo} setCommentInfo={setCommentInfo} />
       <CommentArea>
-        {/* <CommentItem userImageUrl={userImageUrl} userName={userName} time={time} text={text} />
-        <CommentItem userImageUrl={userImageUrl} userName={userName} time={time} text={text} /> */}
+        {commentInfo.map(({ commentId, userId, text, createdAt }) => (
+          <CommentItem cId={commentId} userId={userId} text={text} createdAt={createdAt} commentInfo={commentInfo} setCommentInfo={setCommentInfo} isLogin={isLogin} />
+        ))}
       </CommentArea>
     </ReviewDetailPage>
   )

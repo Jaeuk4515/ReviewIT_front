@@ -1,19 +1,55 @@
-import { CommentArea, UserInfoArea, Profile, UserName, WritedTime, CommentText } from "./CommentItem.styles";
+import { useEffect, useState } from "react";
+import { CommentArea, UserInfoArea, Profile, UserName, WritedTime, CommentText, DeleteButton } from "./CommentItem.styles";
+import axios from "axios";
+import trash from "../../../assets/icons/delete.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
+import { CommentInfo } from "../../pages/ReviewDetail/ReviewDetail";
 
 export interface CommentItemType {
-  userImageUrl: string,
-  userName: string,
-  time: string,
-  text: string
+  cId: string;
+  userId: string;
+  text: string;
+  createdAt: string;
+  commentInfo: CommentInfo[];
+  setCommentInfo: React.Dispatch<React.SetStateAction<CommentInfo[]>>;
+  isLogin: boolean;
 }
 
-export default function CommentItem({ userImageUrl, userName, time, text }: CommentItemType) {
+interface UserInfo {
+  userImage: string;
+  nickname: string;
+}
+
+export default function CommentItem({ cId, userId, text, createdAt, commentInfo, setCommentInfo, isLogin }: CommentItemType) {
+  const user = useSelector((state: RootState) => state.user);
+  const [ userInfo, setUserInfo ] = useState<UserInfo>({
+    userImage: "",
+    nickname: ""
+  });
+  
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const response = await axios.post("http://localhost:3001/user/getUserInfo", { _id: userId });
+      const { userImage, nickname } = response.data;
+      setUserInfo({ userImage, nickname });
+    };
+
+    getUserInfo();
+  }, []);
+
+  const deleteComment = () => {
+    let newCommentInfo = commentInfo.filter(comment => comment.commentId !== cId);
+    setCommentInfo(newCommentInfo);
+  };
+
   return (
     <CommentArea>
+      {(isLogin && user._id === userId) && <DeleteButton category={trash} onClick={deleteComment} />}
       <UserInfoArea>
-        <Profile className="" url={userImageUrl} onClick={()=>{}} />
-        <UserName>{userName}</UserName>
-        <WritedTime>{time}</WritedTime>
+        <Profile className="" url={userInfo.userImage} onClick={()=>{}} />
+        <UserName>{userInfo.nickname}</UserName>
+        <WritedTime>{createdAt}</WritedTime>
       </UserInfoArea>
       <CommentText>{text}</CommentText>
     </CommentArea>

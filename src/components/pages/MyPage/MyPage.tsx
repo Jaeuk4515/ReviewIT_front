@@ -45,13 +45,13 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
   }, [isLogin]);
 
   useEffect(() => {
-    dispatch(setCategory("작성한 리뷰"));
+    dispatch(setCategory("내가 쓴 리뷰"));
   }, []);
 
   useEffect(() => {
     // userId가 현재 user의 id인 리뷰들 가져오는 api 호출 
     const getMyReviews = async () => {
-      if (category.category === "작성한 리뷰") {
+      if (category.category === "내가 쓴 리뷰") {
         const response = await axios.get(`http://localhost:3001/review/myReviews/${param.userId}?category=write_review`);
         setReviewInfo(response.data);
       };
@@ -144,8 +144,9 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
         <SlimDivider className="" width="93%" />
         <UserReviewArea>
           <ReviewOptionArea>
-            <Category categoryName="작성한 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("작성한 리뷰")) }} width="170px" />
+            <Category categoryName="내가 쓴 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 리뷰")) }} width="175px" />
             <Category categoryName="좋아요 한 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("좋아요 한 리뷰")) }} width="195px" />
+            <Category categoryName="내가 쓴 댓글" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 댓글")) }} width="175px" />
           </ReviewOptionArea>
           {reviewInfo.map(({ reviewId, productImage, reviewTitle, productName, grade, createdAt }) => (
             <UserReviewInfo key={reviewId} productImage={productImage} reviewTitle={reviewTitle} productName={productName} grade={grade} createdAt={createdAt} onClick={() => moveToReviewDetail(reviewId)} />

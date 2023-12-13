@@ -106,7 +106,7 @@ const ReviewOptionArea = styled.div`
   width: 100%;
   display: flex;
   gap: 1rem;
-  justify-content: flex-start;
+  justify-content: center;
 `
 
 export { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InitButton, InputAndButtonArea, UpdateButton, SlimDivider, UserReviewArea, ReviewOptionArea };

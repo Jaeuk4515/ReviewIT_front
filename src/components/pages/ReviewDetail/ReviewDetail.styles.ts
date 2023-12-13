@@ -49,7 +49,7 @@ const ReviewTitle = styled.h2`
 
 const OptionIcon = styled(Img)`
   width: 25px;
-  heigth: 25px;
+  height: 25px;
   cursor: pointer;
 `
 
@@ -127,7 +127,8 @@ const ExtraInfo = styled.div`
 `
 
 const CommentArea = styled(PostContent)`
-  gap: 1.5rem;
+  gap: 1rem;
+  margin-top: 10px;
 `
 
 export { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, DeleteIcon, ContentText, ExtraInfoWrapper, LikeyButton, LikeyIcon, ExtraInfo, CommentArea }
