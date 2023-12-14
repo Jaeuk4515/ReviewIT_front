@@ -1,4 +1,4 @@
-import { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InputAndButtonArea, UpdateButton, SlimDivider, UserReviewArea, ReviewOptionArea, InitButton } from "./MyPage.styles"
+import { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InputAndButtonArea, UpdateButton, SlimDivider, UserReviewArea, ReviewOptionArea, InitButton, CommentCard } from "./MyPage.styles"
 import { FileBox, ImageInput, ImageUploadButton, InputArea } from "../ReviewCreate/ReviewCreate.styles";
 import Input from "../../atoms/Input/Input";
 import Category from "../../atoms/Category/Category";
@@ -13,9 +13,16 @@ import { PostObject } from "../../../store/slices/postInfoSlice";
 import { resetPage } from "../../../store/slices/pageSlice";
 import { setNickname, setUserImage } from "../../../store/slices/userSlice";
 import user_default from "../../../assets/icons/user_default.svg";
+import { CommentText, Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
 
 interface ReviewInfo extends PostObject {
   reviewTitle: string;
+  createdAt: string;
+}
+
+interface CommentInfo {
+  reviewId: string;
+  text: string;
   createdAt: string;
 }
 
@@ -31,6 +38,7 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
   const category = useSelector((state: RootState) => state.category);
   const param = useParams();
   const [ reviewInfo, setReviewInfo ] = useState<ReviewInfo[]>([]);
+  const [ commentInfo, setCommentInfo ] = useState<CommentInfo[]>([]);
   const navigate = useNavigate();
   const [ userInfo, setUserInfo ] = useState<UserInfo>({
     userImage: null,
@@ -54,10 +62,17 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
       if (category.category === "내가 쓴 리뷰") {
         const response = await axios.get(`http://localhost:3001/review/myReviews/${param.userId}?category=write_review`);
         setReviewInfo(response.data);
+        setCommentInfo([]);
       };
       if (category.category === "좋아요 한 리뷰") {
         const response = await axios.get(`http://localhost:3001/review/myReviews/${param.userId}?category=like_review`);
         setReviewInfo(response.data);
+        setCommentInfo([]);
+      };
+      if (category.category === "내가 쓴 댓글") {
+        const response = await axios.get(`http://localhost:3001/review/myReviews/${param.userId}?category=write_comment`);
+        setReviewInfo([]);
+        setCommentInfo(response.data);
       };
     };
 
@@ -66,6 +81,7 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
 
   // console.log(userInfo, showImage);
   // console.log('user: ', user);
+  console.log(commentInfo);
 
   const imagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imgFile = e.target.files && e.target.files[0];
@@ -141,7 +157,7 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
             <UpdateButton onClick={handleSubmit}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>저장</span></UpdateButton>
           </InputAndButtonArea>
         </ProfileUpdateCard>
-        <SlimDivider className="" width="93%" />
+        <SlimDivider className="" width="80%" minWidth="700px" />
         <UserReviewArea>
           <ReviewOptionArea>
             <Category categoryName="내가 쓴 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 리뷰")) }} width="175px" />
@@ -150,6 +166,17 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
           </ReviewOptionArea>
           {reviewInfo.map(({ reviewId, productImage, reviewTitle, productName, grade, createdAt }) => (
             <UserReviewInfo key={reviewId} productImage={productImage} reviewTitle={reviewTitle} productName={productName} grade={grade} createdAt={createdAt} onClick={() => moveToReviewDetail(reviewId)} />
+          ))}
+          {commentInfo.map(({ reviewId, text, createdAt }) => (
+            <CommentCard onClick={() => moveToReviewDetail(reviewId)}>
+              {/* {(isLogin && user._id === userId) && <DeleteButton category={trash} onClick={deleteComment} />} */}
+              <UserInfoArea>
+                <Profile className="" url={user.userImage} onClick={()=>{}} />
+                <UserName>{user.nickname}</UserName>
+                <WritedTime>{createdAt}</WritedTime>
+              </UserInfoArea>
+              <CommentText>{text}</CommentText>
+            </CommentCard>
           ))}
         </UserReviewArea>
       </InfoArea>

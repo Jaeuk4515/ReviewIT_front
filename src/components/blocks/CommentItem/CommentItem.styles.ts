@@ -6,11 +6,11 @@ const CommentArea = styled.div`
   display: flex;
   flex-direction: column;
   // gap: .8rem;
-  justify-content: space-between;
+  justify-content: center;
   width: 790px;
   min-height: 100px;
   height: auto;
-  padding: 16px 16px;
+  padding: 16px 20px;
   box-sizing: border-box;
   background-color: #F8F8F8;
   border-radius: 15px;
@@ -44,7 +44,7 @@ const WritedTime = styled.span`
 `
 
 const CommentText = styled.p`
-  margin: 0;
+  margin: 12px 0 0 0;
   padding: 0 10px;
   width: 97%;
   height: auto;

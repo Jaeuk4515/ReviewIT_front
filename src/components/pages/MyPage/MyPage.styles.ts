@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Img } from "../../atoms/Category/Category.styles";
 import Divider from "../../atoms/Divider/Divider";
+import { CommentArea } from "../../blocks/CommentItem/CommentItem.styles";
 
 const MyPageArea = styled.div`
   width: 100%;
@@ -19,14 +20,15 @@ const InfoArea = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #F8F8F8;
-  padding: 30px;
+  padding: 50px 30px;
   box-sizing: border-box;
   gap: 2rem;
   border-radius: 15px;
 `
 
 const ProfileUpdateCard = styled.div`
-  width: 90%;
+  width: 80%;
+  min-width: 700px;
   height: 230px;
   display: flex;
   justify-content: center;
@@ -97,7 +99,7 @@ const SlimDivider = styled(Divider)`
 
 const UserReviewArea = styled(InputAndButtonArea)`
   align-items: center;
-  width: 90%;
+  width: 80%;
   gap: 1.5rem;
   margin: 0;
 `
@@ -109,4 +111,14 @@ const ReviewOptionArea = styled.div`
   justify-content: center;
 `
 
-export { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InitButton, InputAndButtonArea, UpdateButton, SlimDivider, UserReviewArea, ReviewOptionArea };
+const CommentCard = styled(CommentArea)`
+  width: 100%;
+  min-width: 700px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, .1); 
+  border-radius: 30px; 
+  padding: 16px 30px;
+  cursor: pointer;
+`
+
+export { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InitButton, InputAndButtonArea, UpdateButton, SlimDivider, UserReviewArea, ReviewOptionArea, CommentCard };

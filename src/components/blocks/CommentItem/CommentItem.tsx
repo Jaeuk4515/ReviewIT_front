@@ -38,9 +38,12 @@ export default function CommentItem({ cId, userId, text, createdAt, commentInfo,
     getUserInfo();
   }, []);
 
-  const deleteComment = () => {
-    let newCommentInfo = commentInfo.filter(comment => comment.commentId !== cId);
-    setCommentInfo(newCommentInfo);
+  const deleteComment = async () => {
+    const response = await axios.delete(`http://localhost:3001/comment/delete/${cId}`);
+    if (response.data.message === "success") {
+      let newCommentInfo = commentInfo.filter(comment => comment.commentId !== cId);
+      setCommentInfo(newCommentInfo);
+    };
   };
 
   return (

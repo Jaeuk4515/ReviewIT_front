@@ -1,25 +1,27 @@
 import styled from "styled-components";
-import { Img } from "../../atoms/Category/Category.styles";
 import { InputAndButtonArea } from "../../pages/MyPage/MyPage.styles";
 import { ProductImg } from "../Post/Post.styles";
 
 const InfoCard = styled(InputAndButtonArea)`
   width: 100%;
+  min-width: 700px;
   height: 140px;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, .1);
   border-radius: 30px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 0;
   cursor: pointer;
+  gap: 0;
 `
 
 const ProductImage = styled(ProductImg)`
-  width: 110px;
-  height: 110px;
+  width: 115px;
+  height: 115px;
+  margin-left: 35px;
 `
 
 const ReviewInfo = styled.div`
@@ -43,6 +45,7 @@ const DateInfo = styled.div`
   height: 100px;
   display: flex;
   justify-content: flex-end;
+  margin-right: 45px;
 `
 
 export { InfoCard, ProductImage, ReviewInfo, TextInfo, DateInfo };
