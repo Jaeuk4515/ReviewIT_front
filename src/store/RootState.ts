@@ -14,4 +14,5 @@ export interface RootState {
   category: CategoryType;
   user: User;
   reviewInfo: ReviewInfo;
+  searchText: string;
 }

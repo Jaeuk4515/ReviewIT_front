@@ -32,6 +32,8 @@ export default function Review() {
   const pageArray = getPageArray(page, pageInfo.totalPage);
   const navigate = useNavigate();
   const pageController = new PageControl(page, pageInfo, searchParams, setSearchParams);
+  const [ isSearching, setIsSearching ] = useState(false);
+  const searchText = useSelector((state: RootState) => state.searchText);
   
   const goToReviews = (status: "good" | "bad") => () => {
     if (status === "good") navigate("/posts/recommendation/good-product?page=1&perPage=5");
@@ -46,15 +48,23 @@ export default function Review() {
   const setResetQuery = (newReset: string) => {
     searchParams.set("reset", newReset);
     setSearchParams(searchParams);
-  }
+  };
 
   useEffect(() => {
     const getReviewsInfo = async () => {
       let response;
       if (category === "none") {
-        response = await axios.get(`http://localhost:3001/review?page=${page}&perPage=${perPage}`);
+        if (isSearching) {  // 검색인 경우 (카테고리 선택 X)
+          response = await axios.get(`http://localhost:3001/review/search/${searchText}?page=${page}&perPage=${perPage}`);
+        } else {  // 전체 조회 (검색 X)
+          response = await axios.get(`http://localhost:3001/review?page=${page}&perPage=${perPage}`);
+        };
       } else {
-        response = await axios.get(`http://localhost:3001/review/category/${category}?page=${page}&perPage=${perPage}`);
+        if (isSearching) {  // 검색인 경우 (카테고리 선택 O)
+          response = await axios.get(`http://localhost:3001/review/search/${searchText}?category=${category}&page=${page}&perPage=${perPage}`);
+        } else {  // 전체 조회 (검색 X)
+          response = await axios.get(`http://localhost:3001/review/category/${category}?page=${page}&perPage=${perPage}`);
+        };
       };
       dispatch(setPageInfo({ page: page, perPage: perPage, totalPage: response.data.totalPage }));
       dispatch(setPostInfo(response.data.thumbnailInfo));
@@ -68,16 +78,24 @@ export default function Review() {
       if (reset === "yes") {
         let response;
         if (category === "none") {
-          response = await axios.get(`http://localhost:3001/review?page=${1}&perPage=${5}`);
+          if (isSearching) {  // 검색인 경우 (카테고리 선택 X)
+            response = await axios.get(`http://localhost:3001/review/search/${searchText}?page=${1}&perPage=${pageInfo.perPage}`);
+          } else {  // 전체 조회 (검색 X)
+            response = await axios.get(`http://localhost:3001/review?page=${1}&perPage=${pageInfo.perPage}`);
+          };
           dispatch(resetCategory());
         } else {
-          response = await axios.get(`http://localhost:3001/review/category/${category}?page=${1}&perPage=${5}`);
+          if (isSearching) {  // 검색인 경우 (카테고리 선택 O)
+            response = await axios.get(`http://localhost:3001/review/search/${searchText}?category=${category}&page=${1}&perPage=${pageInfo.perPage}`);
+          } else {  // 전체 조회 (검색 X)
+            response = await axios.get(`http://localhost:3001/review/category/${category}?page=${1}&perPage=${pageInfo.perPage}`);
+          };
           dispatch(setCategory(category as category));
         };
         dispatch(setPageInfo({ page: 1, perPage: 5, totalPage: response.data.totalPage }));
         dispatch(setPostInfo(response.data.thumbnailInfo));
         pageController.handlePageChange(1);
-      }
+      };
     };
 
     getReviewsInfo();
@@ -89,7 +107,7 @@ export default function Review() {
         <RecommendCard status="good" onClick={goToReviews("good")} />
         <RecommendCard status="bad" onClick={goToReviews("bad")} />
       </ContentArea>
-      <Search color="white" width="500px" height="50px" />
+      <Search color="white" width="500px" height="50px" mode="whole" isSearching={isSearching} setIsSearching={setIsSearching} pageController={pageController} />
       <div style={{width: "60%", minWidth: "800px"}}><CategoryNav setCategoryQuery={setCategoryQuery} setResetQuery={setResetQuery} /></div>
       <ReviewPostArea>
         {postInfo.map(({ reviewId, productImage, productName, grade }) => {

@@ -4,7 +4,7 @@ import good from "../../../assets/icons/good.svg";
 import bad from "../../../assets/icons/bad.svg";
 import Search from "../../atoms/Search/Search";
 import { GridPost, ReviewPostArea } from "../Review/Review.styled";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +28,7 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
   const pageArray = getPageArray(page, pageInfo.totalPage);
   const pageController = new PageControl(page, pageInfo, searchParams, setSearchParams);
   const dispatch = useDispatch();
+  const [ isSearching, setIsSearching ] = useState(false);
 
   useEffect(() => {
     const getReviewInfo = async () => {
@@ -51,7 +52,7 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
           <MoreIcon />
         </MoreButton>
       </TitleArea>
-      <Search color="white" width="500px" height="50px" />
+      <Search color="white" width="500px" height="50px" mode={pageType} isSearching={isSearching} setIsSearching={setIsSearching} pageController={pageController} />
       <ReviewPostArea>
         {postInfo.map(({ reviewId, productImage, productName, grade }) => {
           return <Link to={`/posts/detail/${reviewId}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>

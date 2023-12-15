@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { InputBox } from "../Input/Input.styles";
 import search from "../../../assets/icons/search.svg";
+import { ReactComponent as X } from "../../../assets/icons/white_x.svg";
 
-const SearchArea = styled.div<{width: string, height: string}>`
+const SearchArea = styled.form<{width: string, height: string}>`
   position: relative;
   width: ${props => props.width};
   height: ${props => props.height};
@@ -17,6 +18,7 @@ const SearchBox = styled(InputBox)`
   padding: 0 20px 0 20px;
   caret-color: #89CFF3;
   font-size: 20px;
+  position: relative;
 
   &:focus {
     outline: none;
@@ -27,7 +29,25 @@ const SearchBox = styled(InputBox)`
   }
 `
 
-const IconArea = styled.div`
+const CancelButton = styled.div`
+  width: 22px;
+  height: 22px;
+  border-radius: 10px;
+  background-color: #B7B7B7;
+  position: absolute;
+  top: 14px; right: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`
+
+const XIcon = styled(X)`
+  width: 9px;
+  height: 9px;
+`
+
+const IconArea = styled.button`
   width: 14%;
   height: 100%;
   border-radius: 0 30px 30px 0;
@@ -42,4 +62,4 @@ const IconArea = styled.div`
   cursor: pointer;
 `
 
-export { SearchArea, SearchBox, IconArea }
+export { SearchArea, SearchBox, CancelButton, XIcon, IconArea }

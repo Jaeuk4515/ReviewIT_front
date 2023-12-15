@@ -6,6 +6,7 @@ import pageSlice from "./slices/pageSlice";
 import categorySlice from "./slices/categorySlice";
 import userSlice from "./slices/userSlice";
 import reviewInfoSlice from "./slices/reviewInfoSlice";
+import searchTextSlice from "./slices/searchTextSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
     page: pageSlice,
     category: categorySlice,
     user: userSlice,
-    reviewInfo: reviewInfoSlice
+    reviewInfo: reviewInfoSlice,
+    searchText: searchTextSlice
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false,
