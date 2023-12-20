@@ -8,9 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
 import { resetCategory } from "../../../store/slices/categorySlice";
 import { setUser } from "../../../store/slices/userSlice";
+import { setModal } from "../../../store/slices/modalSlice";
 
 export default function Header({ isLogin }: {isLogin: boolean}) {
-  const [ modal, setModal ] = useState<"login" | "signup" | "">("");
+  const { modal } = useSelector((state: RootState) => state.modal);
   const user = useSelector((state: RootState) => state.user);
   const [ profileModal, setProfileModal ] = useState(false);
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
     // 리뷰 페이지의 카테고리가 클릭된 상태에서 홈 화면 이동시 카테고리 state 초기화 -> 안하면 홈 화면의 카테고리 버튼이 활성화 되어있음 
     if (category !== "none") dispatch(resetCategory());
     navigate("/");
-  }
+  };
 
   return (
     <HeaderWrapper>
@@ -42,9 +43,9 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
         {
           !isLogin ? 
           <ButtonArea>
-            <HeaderButton buttontype="login" onClick={() => { setModal("login") }}>로그인</HeaderButton>
-            <HeaderButton buttontype="signup" onClick={() => { setModal("signup") }}>회원가입</HeaderButton>
-            {modal && <AuthModal modalType={modal} state={modal} setState={setModal} />}
+            <HeaderButton buttontype="login" onClick={() => { dispatch(setModal("login")) }}>로그인</HeaderButton>
+            <HeaderButton buttontype="signup" onClick={() => { dispatch(setModal("signup")) }}>회원가입</HeaderButton>
+            {modal && <AuthModal />}
           </ButtonArea> : 
           <ButtonArea>
             <WriteReviewButton onClick={() => { navigate("/create") }}>

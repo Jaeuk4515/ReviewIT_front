@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useReducer, useState } from "react";
 import { 
   ModalBg,
   Modal, 
@@ -12,24 +12,17 @@ import {
   FindPasswordText, 
   ModalTypeToggle, 
   NormalText, 
-  ToggleLink, 
-  ModalDivider, 
-  GoogleLoginButton, 
-  GoogleLogo, 
-  GoogleLoginText 
+  ToggleLink,
 } from "./AuthModal.styles";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import { authContext } from "../../../../App";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../store/RootState";
+import { setModal } from "../../../../store/slices/modalSlice";
 
-interface AuthModalType {
-  modalType: "login" | "signup";
-  state: "login" | "signup" | "";
-  setState(state: "login" | "signup" | ""): void;
-}
-
-type stateObj = {
+type StateObj = {
   userInfo: {
     nickname: string;
     email: string;
@@ -39,16 +32,16 @@ type stateObj = {
     nicknameError: string;
     emailError: string;
     passwordError: string;
-  }
-}
+  };
+};
 
 type Action = 
   { type: "infoUpdate"; payload: { name: string; value: string; } }
   | { type: "errorUpdate"; payload: { name: string; value: string; } }
-  | { type: "infoInit"; payload: stateObj }
-  | { type: "errorInit"; payload: stateObj['inputError'] }
+  | { type: "infoInit"; payload: StateObj }
+  | { type: "errorInit"; payload: StateObj['inputError'] };
 
-const reducer = (state: stateObj, action: Action) => {
+const reducer = (state: StateObj, action: Action) => {
   switch (action.type) {
     case "infoUpdate":
       return { ...state, userInfo: { ...state.userInfo, [ action.payload.name ]: action.payload.value } };
@@ -60,8 +53,8 @@ const reducer = (state: stateObj, action: Action) => {
       return { ...state, inputError: action.payload }
     default:
       return state;
-  }
-}
+  };
+};
 
 const initialState = {
   userInfo: {
@@ -74,11 +67,12 @@ const initialState = {
     emailError: "",
     passwordError: ""
   }
-}
+};
 
-export default function AuthModal({ modalType, state, setState }: AuthModalType) {
+export default function AuthModal() {
   const navigate = useNavigate();
-  const [ modal, setModal ] = useState<"login" | "signup">(modalType);
+  const { modal } = useSelector((state: RootState) => state.modal);
+  const Dispatch = useDispatch();
   const [ inputInfo, dispatch ] = useReducer(reducer, initialState);
   const [ success, setSuccess ] = useState(false);
   const { isLogin, setIsLogin } = useContext(authContext)!;
@@ -95,32 +89,30 @@ export default function AuthModal({ modalType, state, setState }: AuthModalType)
         dispatch({ type: "errorUpdate", payload: { name: "nicknameError", value: "공백은 포함될 수 없습니다." } });
       } else {
         dispatch({ type: "errorUpdate", payload: { name: "nicknameError", value: "" } });
-      }
+      };
       if (emailWhitespace) {
         dispatch({ type: "errorUpdate", payload: { name: "emailError", value: "공백은 포함될 수 없습니다." } });
       } else {
         dispatch({ type: "errorUpdate", payload: { name: "emailError", value: "" } });
-      }
+      };
       if (passwordWhitespace) {
         dispatch({ type: "errorUpdate", payload: { name: "passwordError", value: "공백은 포함될 수 없습니다." } });
       } else {
         dispatch({ type: "errorUpdate", payload: { name: "passwordError", value: "" } });
-      }
-    }
-  }
+      };
+    };
+  };
 
   const handleModal = () => {
-    if (modal === "login") setModal("signup");
-    if (modal === "signup") setModal("login");
+    if (modal === "login") Dispatch(setModal("signup"));
+    if (modal === "signup") Dispatch(setModal("login"));
     dispatch({ type: "infoInit", payload: initialState });
-  }
+  };
 
   const handleClick = () => {
     navigate("/new-password");
-    setState("");
-  }
-
-  console.log(inputInfo.inputError);
+    Dispatch(setModal(""));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     if (modal === "signup") {
@@ -140,7 +132,7 @@ export default function AuthModal({ modalType, state, setState }: AuthModalType)
           dispatch({ type: "errorUpdate", payload: error });
         });
         return;
-      }
+      };
 
       const response = await axios.post("http://localhost:3001/user/register", inputInfo.userInfo, {
         headers: {
@@ -153,20 +145,19 @@ export default function AuthModal({ modalType, state, setState }: AuthModalType)
       if (response.data.message === '사용중인 이메일입니다.') {
         dispatch({ type: 'errorUpdate', payload: { name: "emailError", value: response.data.message } });
         return;
-      }
+      };
 
       if (response.data.message === '사용중인 닉네임입니다.') {
         dispatch({ type: 'errorUpdate', payload: { name: "nicknameError", value: response.data.message } });
         return;
-      }
+      };
 
       if (response.data.message === "success") {
-        console.log("회원가입 성공!");
         setSuccess(true);
         dispatch({ type: "infoInit", payload: initialState });
         return;
-      }
-    }
+      };
+    };
 
     if (modal === "login") {
       e.preventDefault();
@@ -183,24 +174,22 @@ export default function AuthModal({ modalType, state, setState }: AuthModalType)
       if (response.data.message === "가입되지 않은 회원입니다.") {
         dispatch({ type: "errorUpdate", payload: { name: "emailError", value: response.data.message } });
         return;
-      }
+      };
       if (response.data.message === "비밀번호가 일치하지 않습니다.") {
         console.log('1');
         dispatch({ type: "errorUpdate", payload: { name: "passwordError", value: response.data.message } });
         return;
-      }
-      setState("");
+      };
+      Dispatch(setModal(""));
       setIsLogin(true);
-    }
-  }
-
-  console.log(inputInfo.userInfo);
+    };
+  };
 
   return (
     <>
     {!success ? 
-      <ModalBg onClick={() => { setState("") }}>
-        <Modal modaltype={modal} onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit} >
+      <ModalBg onClick={() => { Dispatch(setModal("")) }}>
+        <Modal modaltype={modal as "login" | "signup"} onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit} >
           <Logo />
           <ModalTitle>{modal === "login" ? "로그인" : "회원가입"}</ModalTitle>
           <InputArea>
@@ -221,13 +210,8 @@ export default function AuthModal({ modalType, state, setState }: AuthModalType)
               <ToggleLink onClick={handleModal}>{modal === "login" ? "회원가입" : "로그인"}</ToggleLink>
             </ModalTypeToggle>
           </TextArea>
-          <ModalDivider className="" width="350px" />
-          <GoogleLoginButton>
-            <GoogleLogo />
-            <GoogleLoginText>구글 계정으로 로그인</GoogleLoginText>
-          </GoogleLoginButton>
         </Modal>
-      </ModalBg> : <SuccessModal setmodal={setModal} setmodaltype={setState} setsuccess={setSuccess} />
+      </ModalBg> : <SuccessModal setsuccess={setSuccess} mode="signup" />
     }
     </>
   )

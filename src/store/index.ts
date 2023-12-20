@@ -7,6 +7,7 @@ import categorySlice from "./slices/categorySlice";
 import userSlice from "./slices/userSlice";
 import reviewInfoSlice from "./slices/reviewInfoSlice";
 import searchTextSlice from "./slices/searchTextSlice";
+import modalSlice from "./slices/modalSlice";
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
     category: categorySlice,
     user: userSlice,
     reviewInfo: reviewInfoSlice,
-    searchText: searchTextSlice
+    searchText: searchTextSlice,
+    modal: modalSlice
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false,

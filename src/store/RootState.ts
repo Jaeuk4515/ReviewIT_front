@@ -1,5 +1,6 @@
 import { CategoryType } from './slices/categorySlice';
 import { ContentState } from './slices/contentSlice';
+import { ModalType } from './slices/modalSlice';
 import { newContentState } from './slices/newContentSlice';
 import { PageObject } from './slices/pageSlice';
 import { PostObject } from './slices/postInfoSlice';
@@ -15,4 +16,5 @@ export interface RootState {
   user: User;
   reviewInfo: ReviewInfo;
   searchText: string;
+  modal: ModalType;
 }

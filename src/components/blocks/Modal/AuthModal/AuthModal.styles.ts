@@ -19,7 +19,7 @@ const ModalBg = styled.div`
 
 const Modal = styled.form<{modaltype: "login" | "signup"}>`
   width: 420px;
-  height: ${props => props.modaltype === "login" ? "645px" : "700px"};
+  height: ${props => props.modaltype === "login" ? "550px" : "605px"};
   border: 1px solid #C4C4C4;
   border-radius: 20px;
   display: flex;
