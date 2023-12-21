@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { HeaderArea, HeaderLogo, HeaderWrapper } from "../Header/Header.styles";
-import { Logo } from "../AuthModal/AuthModal.styles";
+import { Logo } from "../Modal/AuthModal/AuthModal.styles";
 
 
 const FooterWrapper = styled(HeaderWrapper)`

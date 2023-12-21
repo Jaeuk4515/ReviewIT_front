@@ -1,4 +1,4 @@
-import { PageObject } from "../store/pageSlice";
+import { PageObject } from "../store/slices/pageSlice";
 
 class PageControl {
   constructor(

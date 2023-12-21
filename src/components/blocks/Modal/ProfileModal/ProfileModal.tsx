@@ -1,7 +1,10 @@
 import { useContext, useEffect } from "react";
 import { Ballon, ButtonArea, MyPageButton, LogoutButton, InfoArea } from "./ProfileModal.styles";
 import axios from "axios";
-import { authContext } from "../../../App";
+import { authContext } from "../../../../App";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/RootState";
 
 type UserData = {
   nickname: string;
@@ -16,14 +19,22 @@ interface ProfileModalType {
 
 export default function ProfileModal({ userData, setProfileModal }: ProfileModalType) {
   const { isLogin, setIsLogin } = useContext(authContext)!;
+  const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user);
 
   const logout = async () => {
     const response = await axios.get("http://localhost:3001/user/logout", { withCredentials: true });
     if (response.data.message === "success") {
       setIsLogin(false);
       setProfileModal(false);
-    }
-  }
+    };
+  };
+
+  const moveToMyPage = () => {
+    navigate(`/mypage/${user._id}?category=write_review`);
+    setProfileModal(false);
+  };
+
   return (
     <Ballon>
       <InfoArea>
@@ -31,7 +42,7 @@ export default function ProfileModal({ userData, setProfileModal }: ProfileModal
         <h4>{userData.email}</h4>
       </InfoArea>
       <ButtonArea>
-        <MyPageButton>마이페이지</MyPageButton>
+        <MyPageButton onClick={moveToMyPage}>마이페이지</MyPageButton>
         <LogoutButton onClick={logout}>로그아웃</LogoutButton>
       </ButtonArea>
     </Ballon>

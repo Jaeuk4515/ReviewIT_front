@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Img } from "../../atoms/Category/Category.styles";
+import { Img } from "../../../atoms/Category/Category.styles";
 import { ModalTitle } from "../AuthModal/AuthModal.styles";
 
 const ModalText = styled(ModalTitle)`

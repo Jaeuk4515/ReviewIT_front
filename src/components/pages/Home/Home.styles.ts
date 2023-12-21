@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Logo } from "../../blocks/AuthModal/AuthModal.styles";
+import { Logo } from "../../blocks/Modal/AuthModal/AuthModal.styles";
 import { FooterText } from "../../blocks/Footer/Footer.styles";
 import right from "../../../assets/icons/right.svg";
 import { NextButton, PrevButton } from "../../blocks/ReviewCard/ReviewCard.styles";
@@ -36,7 +36,6 @@ const PageText = styled.div`
 
 const PageTitle = styled.div`
   display: flex;
-  // align-items: center;
   gap: .7rem;
 `
 

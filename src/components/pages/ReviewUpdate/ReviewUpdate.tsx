@@ -30,14 +30,14 @@ import Input from "../../atoms/Input/Input";
 import Stars from "../../blocks/Stars/Stars";
 import { PageDes, PageTitle } from "../Home/Home.styles";
 import TextArea from "../../atoms/TextArea/TextArea";
-import AlertModal from "../../blocks/AlertModal/AlertModal";
+import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import arrow from "../../../assets/icons/bottom-arrow.svg";
 import x_button from "../../../assets/icons/x-button.svg";
 import camera from "../../../assets/icons/camera.svg";
 import { Img } from "../../atoms/Category/Category.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
-import { setNewContent, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setNewProductImages, setDeletedProductImages, setReviewContent } from "../../../store/newContentSlice";
+import { setNewContent, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setNewProductImages, setDeletedProductImages, setReviewContent } from "../../../store/slices/newContentSlice";
 
 export default function ReviewUpdate() {
   const param = useParams();

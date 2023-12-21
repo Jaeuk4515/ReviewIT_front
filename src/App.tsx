@@ -11,6 +11,8 @@ import ChangePassword from './components/pages/ChangePassword/ChangePassword';
 import { Route, Routes } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import ReviewUpdate from './components/pages/ReviewUpdate/ReviewUpdate';
+import MyPage from './components/pages/MyPage/MyPage';
+import ErrorPage from './components/pages/404ErrorPage/404ErrorPage';
 
 interface AuthContextType {
   isLogin: boolean;
@@ -43,12 +45,12 @@ function App() {
       element: <ReviewUpdate />
     },
     {
-      path: "/posts/good-review",
-      element: <Recommend pageType='recommend' />
+      path: "/posts/recommendation/good-product",
+      element: <Recommend pageType='good-product' />
     },
     {
-      path: "/posts/bad-review",
-      element: <Recommend pageType='non-recommend' />
+      path: "/posts/recommendation/bad-product",
+      element: <Recommend pageType='bad-product' />
     },
     {
       path: "/posts/detail/:pId",
@@ -62,9 +64,17 @@ function App() {
       path: "/new-password",
       element: <ChangePassword />
     },
+    {
+      path: "/mypage/:userId",
+      element: <MyPage isLogin={isLogin} />
+    },
+    {
+      path: "/error/not_found",
+      element: <ErrorPage />
+    }
   ]
 
-  console.log("isLogin : ", isLogin);
+  console.log("App isLogin : ", isLogin);
   
   return (
     <>

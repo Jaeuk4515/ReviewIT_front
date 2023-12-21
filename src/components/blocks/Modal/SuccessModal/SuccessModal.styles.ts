@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { PageTitle } from "../../pages/Home/Home.styles";
+import { PageTitle } from "../../../pages/Home/Home.styles";
 import { Logo } from "../AuthModal/AuthModal.styles";
-import { ButtonArea } from "../Header/Header.styles";
-import success from "../../../assets/icons/success.svg";
+import { ButtonArea } from "../../Header/Header.styles";
+import success from "../../../../assets/icons/success.svg";
 
 const ModalBox = styled.div`
   width: 420px;

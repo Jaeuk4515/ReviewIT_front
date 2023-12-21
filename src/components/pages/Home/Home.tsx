@@ -29,7 +29,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
-import { setPostInfo } from "../../../store/postInfoSlice";
+import { setPostInfo } from "../../../store/slices/postInfoSlice";
 import Banner from "../../blocks/Banner/Banner";
 
 export default function Home() {
@@ -41,16 +41,16 @@ export default function Home() {
   const navigate = useNavigate();
   
   const goToReviews = (status: "good" | "bad") => () => {
-    if (status === "good") navigate("/posts/good-review");
-    if (status === "bad") navigate("/posts/bad-review");
+    if (status === "good") navigate("/posts/recommendation/good-product?page=1&perPage=5");
+    if (status === "bad") navigate("/posts/recommendation/bad-product?page=1&perPage=5");
   }
 
-  console.log(scrollPosition, carouselRef.current ? carouselRef.current.scrollWidth : 0);
+  // console.log(scrollPosition, carouselRef.current ? carouselRef.current.scrollWidth : 0);
 
   useEffect(() => {
     const getReviewsInfo = async () => {
-      const response = await axios.get("http://localhost:3001/review/?page=1&perPage=20");
-      dispatch(setPostInfo(response.data.thumbnailInfo));
+      const response = await axios.get("http://localhost:3001/review/topReviews");
+      dispatch(setPostInfo(response.data));
     };
 
     getReviewsInfo();
@@ -102,17 +102,17 @@ export default function Home() {
             <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
           </PageText>
           <MoreButton>
-            <Link to="/posts?page=1&perPage=5"><MoreText>전체 리뷰</MoreText></Link>
+            <Link to="/posts?category=none&page=1&perPage=5&reset=yes"><MoreText>전체 리뷰</MoreText></Link>
             <MoreIcon />
           </MoreButton>
         </ContentArea>
-        <CategoryNav />
+        <CategoryNav from="home" />
       </PagePart>
       <PagePart>
         <ContentArea>
           <PageText>
             <PageTitle>
-              <PageTitleText>핫 리뷰</PageTitleText>
+              <PageTitleText>베스트 리뷰</PageTitleText>
               <PageIcon url={hot} />
             </PageTitle>
             <PageDes>많은 사람들에게 도움이 된 인기 리뷰들이에요</PageDes>
