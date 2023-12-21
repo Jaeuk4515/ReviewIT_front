@@ -6,7 +6,7 @@ import getUserInfo from "../../../services/getUserInfo";
 import ProfileModal from "../Modal/ProfileModal/ProfileModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
-import { resetCategory } from "../../../store/slices/categorySlice";
+import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
 import { setUser } from "../../../store/slices/userSlice";
 import { setModal } from "../../../store/slices/modalSlice";
 
@@ -36,6 +36,12 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
     navigate("/");
   };
 
+  const moveToCreate = () => {
+    // 마이페이지에 있다가 리뷰 작성 페이지에서 리뷰 생성 후 목록 버튼 누르면 category가 "내가 쓴 리뷰" 인 상태여서 리뷰 목록이 안나옴 -> 이를 방지하기위해 리뷰 작성 페이지 진입 시 category를 none으로 변경 
+    dispatch(setCategory("none"));
+    navigate("/create");
+  };
+
   return (
     <HeaderWrapper>
       <HeaderArea>
@@ -48,7 +54,7 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
             {modal && <AuthModal />}
           </ButtonArea> : 
           <ButtonArea>
-            <WriteReviewButton onClick={() => { navigate("/create") }}>
+            <WriteReviewButton onClick={moveToCreate}>
               <WriteIcon />
               리뷰작성
             </WriteReviewButton>

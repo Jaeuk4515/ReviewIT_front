@@ -12,6 +12,7 @@ import { Route, Routes } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import ReviewUpdate from './components/pages/ReviewUpdate/ReviewUpdate';
 import MyPage from './components/pages/MyPage/MyPage';
+import ErrorPage from './components/pages/404ErrorPage/404ErrorPage';
 
 interface AuthContextType {
   isLogin: boolean;
@@ -66,6 +67,10 @@ function App() {
     {
       path: "/mypage/:userId",
       element: <MyPage isLogin={isLogin} />
+    },
+    {
+      path: "/error/not_found",
+      element: <ErrorPage />
     }
   ]
 

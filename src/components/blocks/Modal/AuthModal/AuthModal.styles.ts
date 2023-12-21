@@ -2,8 +2,6 @@ import styled from "styled-components";
 import logo from "../../../../assets/icons/logo.svg";
 import Input from "../../../atoms/Input/Input";
 import { SubmitButton } from "../../CommentForm/CommentForm.styles";
-import Divider from "../../../atoms/Divider/Divider";
-import google from "../../../../assets/icons/google.svg"
 
 const ModalBg = styled.div`
   position: fixed;
@@ -106,32 +104,4 @@ const ToggleLink = styled.span`
   cursor: pointer;
 `
 
-const ModalDivider = styled(Divider)`
-  border: 1px solid rgba(0, 0, 0, .1);
-`
-
-const GoogleLoginButton = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 2rem;
-  border: 1px solid rgba(0, 0, 0, .1);
-  border-radius: 10px;
-  width: 328px;
-  height: 45px;
-  margin-top: 15px;
-  cursor: pointer;
-`
-
-const GoogleLogo = styled(Logo)`
-  background-image: url(${google});
-  width: 35px;
-  height: 35px;
-  margin-left: 30px;
-`
-
-const GoogleLoginText = styled(NormalText)`
-  font-size: 20px;
-`
-
-export { ModalBg, Modal, Logo, ModalTitle, InputArea, InputBox, ErrorText, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink, ModalDivider, GoogleLoginButton, GoogleLogo, GoogleLoginText }
+export { ModalBg, Modal, Logo, ModalTitle, InputArea, InputBox, ErrorText, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink }

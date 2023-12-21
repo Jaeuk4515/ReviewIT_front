@@ -18,12 +18,12 @@ export default function ReviewCard({ urls, name, link, grade }: ReviewCardType) 
   const handlePrevClick = () => {
     if (urlsIndex <= 0) return;
     setUrlsIndex(prevIndex => prevIndex - 1);
-  }
+  };
 
   const handleNextClick = () => {
     if (urlsIndex >= urls.length - 1) return;
     setUrlsIndex(prevIndex => prevIndex + 1);
-  }
+  };
 
   return (
     <Card>

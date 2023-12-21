@@ -78,6 +78,7 @@ export default function ReviewCreate() {
   }, []);
 
   console.log("Review isLogin : ", isLogin);
+  console.log(content);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

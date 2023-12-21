@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Comment from "../../atoms/Comment/Comment";
 import Likey from "../../atoms/Likey/Likey";
 import CommentForm from "../../blocks/CommentForm/CommentForm";
@@ -40,18 +40,31 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
   const [ isLike, setIsLike ] = useState(false);
   const [ loginRequired, setLoginRequired ] = useState(false);
   const [ commentInfo, setCommentInfo ] = useState<CommentInfo[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getReviewInfo = async () => {
-      const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
-      const { nickname, userImage } = await getUserInfoById(response.data.userId);
-      const date = new Date(response.data.createdAt);
-      dispatch(setReviewInfo({
-        ...response.data,
-        createdAt: `${date.toLocaleDateString('ko-KR')} ${date.toLocaleTimeString('ko-KR')}`,
-        nickname: nickname,
-        userImage: userImage
-      }));
+      try {
+        const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
+        const { nickname, userImage } = await getUserInfoById(response.data.userId);
+        const date = new Date(response.data.createdAt);
+        dispatch(setReviewInfo({
+          ...response.data,
+          createdAt: `${date.toLocaleDateString('ko-KR')} ${date.toLocaleTimeString('ko-KR')}`,
+          nickname: nickname,
+          userImage: userImage
+        }));
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.data.message === "internal error") {
+            // if (window.confirm("존재하지 않는 페이지입니다!")) {
+            //   window.close();
+            // }
+            navigate("/error/not_found");
+          }
+        }
+        console.log(error);
+      }
     };
 
     const getCommentData = async () => {

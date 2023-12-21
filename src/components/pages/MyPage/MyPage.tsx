@@ -1,4 +1,4 @@
-import { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InputAndButtonArea, UpdateButton, SlimDivider, UserReviewArea, ReviewOptionArea, InitButton, CommentCard } from "./MyPage.styles"
+import { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InputAndButtonArea, ButtonArea, UpdateButton, DeleteIdButton, SlimDivider, UserReviewArea, ReviewOptionArea, InitButton, CommentCard } from "./MyPage.styles"
 import { FileBox, ImageInput, ImageUploadButton, InputArea } from "../ReviewCreate/ReviewCreate.styles";
 import Input from "../../atoms/Input/Input";
 import Category from "../../atoms/Category/Category";
@@ -14,6 +14,7 @@ import { resetPage } from "../../../store/slices/pageSlice";
 import { setNickname, setUserImage } from "../../../store/slices/userSlice";
 import user_default from "../../../assets/icons/user_default.svg";
 import { CommentText, Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
+import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 
 interface ReviewInfo extends PostObject {
   reviewTitle: string;
@@ -45,7 +46,7 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
     nickname: user.nickname
   });
   const [ showImage, setShowImage ] = useState("");
-  // 유저가 새로 입력한 프사, 닉네임 서버로 보내서 서버에서 db정보 업데이트 한 후 응답으로 user 객체 보냄. 그걸로 user state 업데이트 해줘서 마이페이지 화면 및 헤더에 바로 반영하기 
+  const [ deleteModal, setDeleteModal ] = useState(false);
 
   // 왜 로그인중인데도 새로고침하면 튕기냐 -> 리뷰 생성 페이지에서 로그인중인데 새로고침하면 튕기는거랑 똑같은듯. 새로고침하면 isLogin이 false로 되는거같은데.. ㅅㅂ 
   useEffect(() => {
@@ -79,10 +80,6 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
     getMyReviews();
   }, [category]);
 
-  // console.log(userInfo, showImage);
-  // console.log('user: ', user);
-  console.log(commentInfo);
-
   const imagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imgFile = e.target.files && e.target.files[0];
     setUserInfo({
@@ -99,6 +96,7 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
     });
   };
 
+  // 유저가 새로 입력한 프사, 닉네임 서버로 보내서 서버에서 db정보 업데이트 한 후 응답으로 user 객체 보냄. 그걸로 user state 업데이트 해줘서 마이페이지 화면 및 헤더에 바로 반영하기 
   const handleSubmit = async () => {
     const formData = new FormData();
     if (userInfo.userImage) formData.append('userImage', userInfo.userImage);
@@ -134,12 +132,15 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
     dispatch(resetPage());
   };
 
+  const deleteAccount = () => {
+    setDeleteModal(true);
+  }
+
   return (
     <MyPageArea>
       <InfoArea>
         <ProfileUpdateCard>
           <UserImage category={showImage || user.userImage} onMouseEnter={() => setIsUserImageHover(true)} onMouseLeave={() => setIsUserImageHover(false)}>
-            {/* {isUserImageHover && <UserImageCover><CoverText>변경</CoverText></UserImageCover>} */}
             {isUserImageHover && 
               <UserImageCover>
                 <FileBox style={{flexDirection: "column", gap: ".5rem"}}>
@@ -154,7 +155,11 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
               <h3>닉네임</h3>
               <Input type="text" className="" color="white" width="100%" height="40px" name="nickname" value={userInfo.nickname} onChange={changeNickname} />
             </InputArea>
-            <UpdateButton onClick={handleSubmit}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>저장</span></UpdateButton>
+            <ButtonArea>
+              <UpdateButton onClick={handleSubmit}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>저장</span></UpdateButton>
+              <DeleteIdButton onClick={deleteAccount}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>회원 탈퇴</span></DeleteIdButton>
+              {deleteModal && <AlertModal mode="deleteAccountAlert" setAlertModal={setDeleteModal} />}
+            </ButtonArea>
           </InputAndButtonArea>
         </ProfileUpdateCard>
         <SlimDivider className="" width="80%" minWidth="700px" />
@@ -169,7 +174,6 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
           ))}
           {commentInfo.map(({ reviewId, text, createdAt }) => (
             <CommentCard onClick={() => moveToReviewDetail(reviewId)}>
-              {/* {(isLogin && user._id === userId) && <DeleteButton category={trash} onClick={deleteComment} />} */}
               <UserInfoArea>
                 <Profile className="" url={user.userImage} onClick={()=>{}} />
                 <UserName>{user.nickname}</UserName>

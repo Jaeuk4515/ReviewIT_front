@@ -7,9 +7,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
+import { useContext } from "react";
+import { authContext } from "../../../../App";
 
 interface AlertModalType {
-  mode: "createAlert" | "deleteAlert";
+  mode: "createAlert" | "deleteAlert" | "deleteAccountAlert";
   setAlertModal: React.Dispatch<React.SetStateAction<boolean>>;
   reviewId?: string | undefined;
 }
@@ -17,19 +19,46 @@ interface AlertModalType {
 export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModalType) {
   const navigate = useNavigate();
   const pageInfo = useSelector((state: RootState) => state.page);
+  const user = useSelector((state: RootState) => state.user);
+  const { isLogin, setIsLogin } = useContext(authContext)!;
 
   const handleDelete = async () => {
-    const response = await axios.delete(`http://localhost:3001/review/delete/${reviewId}`);
-    if (response.data.message === "success") {
-      navigate(`/posts?page=${pageInfo.page}&perPage=${pageInfo.perPage}`);
+    if (mode === "deleteAlert") {
+      const response = await axios.delete(`http://localhost:3001/review/delete/${reviewId}`);
+      if (response.data.message === "success") {
+        navigate(`/posts?category=none&page=${pageInfo.page}&perPage=${pageInfo.perPage}`);
+      };
     };
+    if (mode === "deleteAccountAlert") {
+      const response = await axios.delete(`http://localhost:3001/user/delete/${user._id}`, { withCredentials: true });
+      if (response.data.message === "success") {
+        setIsLogin(false);
+        navigate("/");
+      }
+    }
   };
+
+  const getModalText = () => {
+    let text = "";
+    switch (mode) {
+      case "createAlert":
+        text = "모든 정보를 입력해주세요!";
+        break;
+      case "deleteAlert":
+        text = "리뷰를 삭제하시겠습니까?";
+        break;
+      case "deleteAccountAlert":
+        text = "회원을 탈퇴하시겠습니까?";
+        break;
+    };
+    return text;
+  }
 
   return (
     <ModalBg>
       <ModalBox style={{width: "420px", height: "320px", gap: '2.5rem'}}>
         <Logo />
-        <ModalText><AlertIcon category={alert} />{mode === "createAlert" ? "모든 정보를 입력해주세요!" : "리뷰를 삭제하시겠습니까?"}</ModalText>
+        <ModalText><AlertIcon category={alert} />{getModalText()}</ModalText>
         {
           mode === "createAlert" ?
           <ModalButton style={{width: "70%"}} onClick={() => { setAlertModal(false) }}>확인</ModalButton> :

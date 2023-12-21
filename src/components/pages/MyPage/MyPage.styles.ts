@@ -82,6 +82,11 @@ const InputAndButtonArea = styled.div`
   margin-top: 20px;
 `
 
+const ButtonArea = styled.div`
+  display: flex;
+  gap: .6rem;
+`
+
 const UpdateButton = styled.div`
   display: flex;
   justify-content: center;
@@ -91,6 +96,11 @@ const UpdateButton = styled.div`
   height: 35px;
   width: 55px;
   cursor: pointer;
+`
+
+const DeleteIdButton = styled(UpdateButton)`
+  background-color: red;
+  width: 90px;
 `
 
 const SlimDivider = styled(Divider)`
@@ -121,4 +131,4 @@ const CommentCard = styled(CommentArea)`
   cursor: pointer;
 `
 
-export { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InitButton, InputAndButtonArea, UpdateButton, SlimDivider, UserReviewArea, ReviewOptionArea, CommentCard };
+export { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InitButton, InputAndButtonArea, ButtonArea, UpdateButton, DeleteIdButton, SlimDivider, UserReviewArea, ReviewOptionArea, CommentCard };
