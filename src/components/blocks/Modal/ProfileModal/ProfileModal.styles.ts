@@ -8,7 +8,7 @@ const Ballon = styled.div`
   top: 60px;
   right: -27px;
   background-color: #F6FBFF;
-  z-index: 10;
+  z-index: 1800;
   border-radius: 15px;
   box-shadow: 0 2px 4px 0 rgba(33, 37, 41, .24);
   border: 1px solid #E0E0E0;

@@ -65,7 +65,7 @@ const MiniModal = styled.div`
   box-shadow: 0 0 5px #C4C4C4;
   position: absolute;
   top: 35px; right: 28px;
-  z-index: 20;
+  z-index: 1800;
   gap: .4rem;
 `
 

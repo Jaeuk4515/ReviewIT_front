@@ -20,6 +20,7 @@ import red_heart from "../../../assets/icons/red_heart.svg";
 import { setLikey, setReviewInfo } from "../../../store/slices/reviewInfoSlice";
 import RequireLoginModal from "../../blocks/Modal/RequireLoginModal/RequireLoginModal";
 import user_default from "../../../assets/icons/user_default.svg";
+import { ModalBg } from "../../blocks/Modal/AuthModal/AuthModal.styles";
 
 export interface CommentInfo {
   commentId: string;
@@ -97,6 +98,7 @@ export default function ReviewDetail() {
 
   return (
     <ReviewDetailPage>
+      {isModal && <ModalBg style={{ background: "initial", backdropFilter: "initial", zIndex: "1500" }} onClick={() => { setIsModal(false) }} />}
       <UserInfoWrapper>
         <UserInfoArea style={{"marginLeft": "15px"}}>
           <Profile className="" url={reviewInfo.userImage} onClick={()=>{}} />

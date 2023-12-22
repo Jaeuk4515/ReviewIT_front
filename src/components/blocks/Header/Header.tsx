@@ -9,6 +9,7 @@ import { RootState } from "../../../store/RootState";
 import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
 import { setUser } from "../../../store/slices/userSlice";
 import { setModal } from "../../../store/slices/modalSlice";
+import { ModalBg } from "../Modal/AuthModal/AuthModal.styles";
 
 export default function Header() {
   const login = useSelector((state: RootState) => state.login);
@@ -45,6 +46,7 @@ export default function Header() {
 
   return (
     <HeaderWrapper>
+      {profileModal && <ModalBg style={{ background: "initial", backdropFilter: "initial", zIndex: "1500" }} onClick={() => { setProfileModal(!profileModal) }} />}
       <HeaderArea>
         <HeaderLogo onClick={moveToHome} />
         {
