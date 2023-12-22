@@ -3,11 +3,11 @@ import { Line } from "./Divider.styles"
 interface DividerType { 
   className: string;
   width: string;
-  minWidth?: string;
+  minwidth?: string;
 }
 
-export default function Divider({ className, width, minWidth }: DividerType) {
+export default function Divider({ className, width, minwidth }: DividerType) {
   return (
-    <Line className={className} width={width} minWidth={minWidth!} />
+    <Line className={className} width={width} minwidth={minwidth!} />
   )
 }

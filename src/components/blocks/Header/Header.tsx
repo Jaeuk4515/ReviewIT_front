@@ -10,7 +10,8 @@ import { resetCategory, setCategory } from "../../../store/slices/categorySlice"
 import { setUser } from "../../../store/slices/userSlice";
 import { setModal } from "../../../store/slices/modalSlice";
 
-export default function Header({ isLogin }: {isLogin: boolean}) {
+export default function Header() {
+  const login = useSelector((state: RootState) => state.login);
   const { modal } = useSelector((state: RootState) => state.modal);
   const user = useSelector((state: RootState) => state.user);
   const [ profileModal, setProfileModal ] = useState(false);
@@ -20,7 +21,7 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
   const reviewInfo = useSelector((state: RootState) => state.reviewInfo);
 
   useEffect(() => {
-    if (isLogin) {
+    if (login) {
       const getData = async () => {
         const { _id, nickname, email, userImage, likey } = await getUserInfo();
         dispatch(setUser({ _id, nickname, email, userImage, likey }));
@@ -28,7 +29,7 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
 
       getData();
     }
-  }, [isLogin, reviewInfo.likey]);
+  }, [login, reviewInfo.likey]);
 
   const moveToHome = () => {
     // 리뷰 페이지의 카테고리가 클릭된 상태에서 홈 화면 이동시 카테고리 state 초기화 -> 안하면 홈 화면의 카테고리 버튼이 활성화 되어있음 
@@ -47,7 +48,7 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
       <HeaderArea>
         <HeaderLogo onClick={moveToHome} />
         {
-          !isLogin ? 
+          !login ? 
           <ButtonArea>
             <HeaderButton buttontype="login" onClick={() => { dispatch(setModal("login")) }}>로그인</HeaderButton>
             <HeaderButton buttontype="signup" onClick={() => { dispatch(setModal("signup")) }}>회원가입</HeaderButton>

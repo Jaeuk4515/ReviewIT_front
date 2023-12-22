@@ -28,11 +28,10 @@ import arrow from "../../../assets/icons/bottom-arrow.svg";
 import TextArea from "../../atoms/TextArea/TextArea";
 import camera from "../../../assets/icons/camera.svg";
 import { PageDes, PageTitle } from "../Home/Home.styles";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import x_button from "../../../assets/icons/x-button.svg";
 import getUserInfo from "../../../services/getUserInfo";
-import { authContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import { Img } from "../../atoms/Category/Category.styles";
@@ -58,26 +57,29 @@ export default function ReviewCreate() {
   const [ option, setOption ] = useState(false);
   const content = useSelector((state: RootState) => state.content);
   const dispatch = useDispatch();
-  const { isLogin, setIsLogin } = useContext(authContext)!;
+  const login = useSelector((state: RootState) => state.login);
   const [ alertModal, setAlertModal ] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 로그인 중인데 리뷰 작성 페이지에서 브라우저를 새로고침 하면 isLogin이 false로 되서 튕김.. 왜이런지 모르겠다. 리렌더링 되도 그러네. 이 if문을 주석처리하면 안그럼 
-    // if (!isLogin) { 
-    //   alert("로그인이 필요한 서비스입니다.");
-    //   navigate("/");
-    // }
+    if (!login) {
+      navigate("/");
+    };
+  }, [login]);
+
+  useEffect(() => {
     const getData = async () => {
-      const userInfo = await getUserInfo();
-      console.log(userInfo);
-      dispatch(setUserId(userInfo._id));
+      if (login) {
+        const userInfo = await getUserInfo();
+        console.log(userInfo);
+        dispatch(setUserId(userInfo._id));
+      };
     };
 
     getData();
   }, []);
 
-  console.log("Review isLogin : ", isLogin);
+  console.log("Review isLogin : ", login);
   console.log(content);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

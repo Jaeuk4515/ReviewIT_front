@@ -50,9 +50,7 @@ const PageTitleText = styled.span`
   font-weight: bold;
 `
 
-const PageDes = styled(FooterText)`
-
-`
+const PageDes = styled(FooterText)``
 
 const MoreButton = styled.div`
   display: flex;
@@ -83,11 +81,6 @@ const PostArea = styled.div`
   position: relative;
 `
 
-// const Carousel = styled.div`
-//   overflow: hidden;
-//   width: 100%;
-// `
-
 const Carousel = styled.div`
   display: flex;
   align-items: center;
@@ -95,26 +88,15 @@ const Carousel = styled.div`
   width: 100%;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+
   &::-webkit-scrollbar {
     display: none;
   };
+
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
   };
 `
-
-// const ImgWrapper = styled.div<{ multi: number, leftOffSet: number }>`
-//   display: flex;
-//   width: ${props => props.multi * 100}%;
-//   position: relative;
-//   left: ${props => props.leftOffSet}px;
-//   transition: .35s;
-// `
-
-// const PostWrapper = styled.div`
-//   display: flex;
-//   width: 100%;
-// `
 
 const LeftShiftButton = styled(PrevButton)`
   top: 65px; left: -25px;

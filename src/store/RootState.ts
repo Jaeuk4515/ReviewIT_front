@@ -17,4 +17,5 @@ export interface RootState {
   reviewInfo: ReviewInfo;
   searchText: string;
   modal: ModalType;
+  login: boolean;
 }

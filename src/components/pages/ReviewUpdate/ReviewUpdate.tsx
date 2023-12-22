@@ -41,6 +41,7 @@ import { setNewContent, setReviewTitle, setCategory, setProductName, setProductL
 
 export default function ReviewUpdate() {
   const param = useParams();
+  const login = useSelector((state: RootState) => state.login);
   const newContent = useSelector((state: RootState) => state.newContent);
   const dispatch = useDispatch();
   const [ option, setOption ] = useState(false);
@@ -48,13 +49,25 @@ export default function ReviewUpdate() {
   const [ showImages, setShowImages ] = useState<string[]>([]);
   const navigate = useNavigate();
 
-  console.log(newContent);
+  useEffect(() => {
+    if (!login) {
+      navigate("/");
+    };
+  }, [login]);
 
   useEffect(() => {
     const getReviewInfo = async () => {
-      const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
-      dispatch(setNewContent(response.data));
-      setShowImages(response.data.productImages);
+      try {
+        const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
+        dispatch(setNewContent(response.data));
+        setShowImages(response.data.productImages);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.data.message === "internal error") {
+            navigate("/error/not_found");
+          };
+        };
+      };
     };
 
     getReviewInfo();

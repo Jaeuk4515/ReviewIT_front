@@ -32,7 +32,8 @@ interface UserInfo {
   nickname: string;
 }
 
-export default function MyPage({ isLogin }: {isLogin: boolean}) {
+export default function MyPage() {
+  const login = useSelector((state: RootState) => state.login);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const [ isUserImageHover, setIsUserImageHover ] = useState(false);
@@ -48,10 +49,9 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
   const [ showImage, setShowImage ] = useState("");
   const [ deleteModal, setDeleteModal ] = useState(false);
 
-  // 왜 로그인중인데도 새로고침하면 튕기냐 -> 리뷰 생성 페이지에서 로그인중인데 새로고침하면 튕기는거랑 똑같은듯. 새로고침하면 isLogin이 false로 되는거같은데.. ㅅㅂ 
   useEffect(() => {
-    if (!isLogin) navigate("/");
-  }, [isLogin]);
+    if (!login) navigate("/");
+  }, [login]);
 
   useEffect(() => {
     dispatch(setCategory("내가 쓴 리뷰"));
@@ -162,7 +162,7 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
             </ButtonArea>
           </InputAndButtonArea>
         </ProfileUpdateCard>
-        <SlimDivider className="" width="80%" minWidth="700px" />
+        <SlimDivider className="" width="80%" minwidth="700px" />
         <UserReviewArea>
           <ReviewOptionArea>
             <Category categoryName="내가 쓴 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 리뷰")) }} width="175px" />

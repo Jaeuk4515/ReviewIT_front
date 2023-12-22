@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Home from './components/pages/Home/Home';
 import { GlobalStyle, LayoutWrapper } from './App.styles';
 import Header from './components/blocks/Header/Header';
@@ -13,23 +13,22 @@ import Cookies from 'universal-cookie';
 import ReviewUpdate from './components/pages/ReviewUpdate/ReviewUpdate';
 import MyPage from './components/pages/MyPage/MyPage';
 import ErrorPage from './components/pages/404ErrorPage/404ErrorPage';
-
-interface AuthContextType {
-  isLogin: boolean;
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const authContext = createContext<AuthContextType | undefined>(undefined);
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './store/RootState';
+import { setLogin } from './store/slices/loginSlice';
 
 const cookies = new Cookies();
 
 function App() {
-  const [ isLogin, setIsLogin ] = useState(false);
+  const login = useSelector((state: RootState) => state.login);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const jwtToken = cookies.get('token');
-    if (jwtToken) setIsLogin(true);
-  }, [])
+    if (jwtToken) {
+      dispatch(setLogin(true));
+    };
+  }, []);
 
   const routePath = [
     {
@@ -54,7 +53,7 @@ function App() {
     },
     {
       path: "/posts/detail/:pId",
-      element: <ReviewDetail isLogin={isLogin} />
+      element: <ReviewDetail />
     },
     {
       path: "/create",
@@ -66,38 +65,35 @@ function App() {
     },
     {
       path: "/mypage/:userId",
-      element: <MyPage isLogin={isLogin} />
+      element: <MyPage />
     },
     {
       path: "/error/not_found",
       element: <ErrorPage />
     }
-  ]
+  ];
 
-  console.log("App isLogin : ", isLogin);
+  console.log("App isLogin : ", login);
   
   return (
     <>
       <GlobalStyle />
-      <authContext.Provider value={{ isLogin, setIsLogin }}>
-        <Routes>
-          {routePath.map(data => (
-            <Route 
-              key={data.path}
-              path={data.path} 
-              element={
-              <LayoutWrapper>
-                <Header isLogin={isLogin} />
-                {data.element}
-                <Footer />
-              </LayoutWrapper>
-            } />
-          ))}
-        </Routes>
-      </authContext.Provider>
+      <Routes>
+        {routePath.map(data => (
+          <Route 
+            key={data.path}
+            path={data.path} 
+            element={
+            <LayoutWrapper>
+              <Header />
+              {data.element}
+              <Footer />
+            </LayoutWrapper>
+          } />
+        ))}
+      </Routes>
     </>
   );
 }
 
 export default App;
-

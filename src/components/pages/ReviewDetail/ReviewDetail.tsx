@@ -28,8 +28,9 @@ export interface CommentInfo {
   createdAt: string;
 };
 
-export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
+export default function ReviewDetail() {
   const param = useParams();
+  const login = useSelector((state: RootState) => state.login);
   const pageInfo = useSelector((state: RootState) => state.page);
   const { category } = useSelector((state: RootState) => state.category);
   const reviewInfo = useSelector((state: RootState) => state.reviewInfo);
@@ -57,14 +58,10 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (error.response?.data.message === "internal error") {
-            // if (window.confirm("존재하지 않는 페이지입니다!")) {
-            //   window.close();
-            // }
             navigate("/error/not_found");
-          }
-        }
-        console.log(error);
-      }
+          };
+        };
+      };
     };
 
     const getCommentData = async () => {
@@ -78,17 +75,17 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
 
   useEffect(() => {
     const checkLogin = async () => {
-      if (!isLogin) setIsLike(false);
+      if (!login) setIsLike(false);
     };
 
     checkLogin();
-  }, [isLogin]);
+  }, [login]);
 
   const handleLikeButtonClick = async () => {
-    if (!isLogin) {
+    if (!login) {
       setLoginRequired(true);
       return;
-    }
+    };
     const response = await axios.post(`http://localhost:3001/review/likey/${param.pId}/${user._id}`);
     dispatch(setLikey(response.data));
   };
@@ -97,8 +94,6 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
     if (user.likey.includes(param.pId!)) setIsLike(true);
     else setIsLike(false);
   }, [user.likey]);
-
-  // console.log(reviewInfo, isLike);
 
   return (
     <ReviewDetailPage>
@@ -113,7 +108,7 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
       <PostContent>
         <ReviewHeader>
           <ReviewTitle>{reviewInfo.reviewTitle}</ReviewTitle>
-          { (isLogin && user._id === reviewInfo.userId) && <OptionIcon category={options} onClick={ () => { setIsModal(!isModal) } } /> }
+          {(login && user._id === reviewInfo.userId) && <OptionIcon category={options} onClick={ () => { setIsModal(!isModal) } } />}
           {
             isModal && 
             <>
@@ -136,10 +131,10 @@ export default function ReviewDetail({ isLogin }: {isLogin: boolean}) {
           </ExtraInfo>
         </ExtraInfoWrapper>
       </PostContent>
-      <CommentForm isLogin={isLogin} url={!isLogin ? user_default : user.userImage} uId={user._id} rId={param.pId!} commentInfo={commentInfo} setCommentInfo={setCommentInfo} />
+      <CommentForm url={!login ? user_default : user.userImage} uId={user._id} rId={param.pId!} commentInfo={commentInfo} setCommentInfo={setCommentInfo} />
       <CommentArea>
         {commentInfo.map(({ commentId, userId, text, createdAt }) => (
-          <CommentItem cId={commentId} userId={userId} text={text} createdAt={createdAt} commentInfo={commentInfo} setCommentInfo={setCommentInfo} isLogin={isLogin} />
+          <CommentItem cId={commentId} userId={userId} text={text} createdAt={createdAt} commentInfo={commentInfo} setCommentInfo={setCommentInfo} />
         ))}
       </CommentArea>
     </ReviewDetailPage>

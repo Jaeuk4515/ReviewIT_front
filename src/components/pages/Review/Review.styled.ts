@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { HomePage, PostArea } from "../Home/Home.styles";
+import { HomePage } from "../Home/Home.styles";
 import Post from "../../blocks/Post/Post";
-import { SubmitButton } from "../../blocks/CommentForm/CommentForm.styles";
 import { Img } from "../../atoms/Category/Category.styles";
 
 const ReviewPage = styled(HomePage)`
@@ -31,13 +30,6 @@ const PaginationArea = styled.div`
   margin-top: 30px;
   gap: .3rem;
 `
-
-// const ShiftButton = styled(SubmitButton)`
-//   background-color: #E8F2FF;
-//   color: #256FFF;
-//   width: 13%;
-//   height: 35px;
-// `
 
 const ShiftButton = styled.div`
   display: flex;

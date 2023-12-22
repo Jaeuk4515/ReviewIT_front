@@ -1,4 +1,4 @@
-import { useContext, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import { 
   ModalBg,
   Modal, 
@@ -17,10 +17,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SuccessModal from "../SuccessModal/SuccessModal";
-import { authContext } from "../../../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
 import { setModal } from "../../../../store/slices/modalSlice";
+import { setLogin } from "../../../../store/slices/loginSlice";
 
 type StateObj = {
   userInfo: {
@@ -75,7 +75,6 @@ export default function AuthModal() {
   const Dispatch = useDispatch();
   const [ inputInfo, dispatch ] = useReducer(reducer, initialState);
   const [ success, setSuccess ] = useState(false);
-  const { isLogin, setIsLogin } = useContext(authContext)!;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     dispatch({ type: "infoUpdate", payload: { name, value: e.target.value } });
@@ -181,7 +180,7 @@ export default function AuthModal() {
         return;
       };
       Dispatch(setModal(""));
-      setIsLogin(true);
+      Dispatch(setLogin(true));
     };
   };
 

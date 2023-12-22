@@ -5,10 +5,9 @@ import alert from "../../../../assets/icons/alert.svg";
 import { ButtonArea } from "../../Header/Header.styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
-import { useContext } from "react";
-import { authContext } from "../../../../App";
+import { setLogin } from "../../../../store/slices/loginSlice";
 
 interface AlertModalType {
   mode: "createAlert" | "deleteAlert" | "deleteAccountAlert";
@@ -20,7 +19,7 @@ export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModal
   const navigate = useNavigate();
   const pageInfo = useSelector((state: RootState) => state.page);
   const user = useSelector((state: RootState) => state.user);
-  const { isLogin, setIsLogin } = useContext(authContext)!;
+  const dispatch = useDispatch();
 
   const handleDelete = async () => {
     if (mode === "deleteAlert") {
@@ -32,10 +31,10 @@ export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModal
     if (mode === "deleteAccountAlert") {
       const response = await axios.delete(`http://localhost:3001/user/delete/${user._id}`, { withCredentials: true });
       if (response.data.message === "success") {
-        setIsLogin(false);
+        dispatch(setLogin(false));
         navigate("/");
-      }
-    }
+      };
+    };
   };
 
   const getModalText = () => {
@@ -52,7 +51,7 @@ export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModal
         break;
     };
     return text;
-  }
+  };
 
   return (
     <ModalBg>

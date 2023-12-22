@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { HomePage } from "../Home/Home.styles";
 import { Img } from "../../atoms/Category/Category.styles";
 import { SubmitButton } from "../../blocks/CommentForm/CommentForm.styles";
 
