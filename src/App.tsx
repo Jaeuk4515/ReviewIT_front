@@ -27,6 +27,8 @@ function App() {
     const jwtToken = cookies.get('token');
     if (jwtToken) {
       dispatch(setLogin(true));
+    } else {
+      dispatch(setLogin(false));
     };
   }, []);
 

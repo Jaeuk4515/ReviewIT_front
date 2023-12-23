@@ -21,10 +21,14 @@ export default function Header() {
   const dispatch = useDispatch();
   const reviewInfo = useSelector((state: RootState) => state.reviewInfo);
 
+  console.log(login, user);
+
   useEffect(() => {
     if (login) {
       const getData = async () => {
-        const { _id, nickname, email, userImage, likey } = await getUserInfo();
+        const response = await getUserInfo();
+        if (!response) return;
+        const { _id, nickname, email, userImage, likey } = response;
         dispatch(setUser({ _id, nickname, email, userImage, likey }));
       };
 
