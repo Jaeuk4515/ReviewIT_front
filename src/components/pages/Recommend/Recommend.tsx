@@ -13,11 +13,7 @@ import getPageArray from "../../../services/getPageArray";
 import PageControl from "../../../services/pageControl";
 import { setPageInfo } from "../../../store/slices/pageSlice";
 import { setPostInfo } from "../../../store/slices/postInfoSlice";
-import { PaginationArea, ShiftButton, ShiftIcon, NumberArea, NumberMark } from "../Review/Review.styled";
-import next from "../../../assets/icons/next.svg";
-import last from "../../../assets/icons/last.svg";
-import prev from "../../../assets/icons/prev.svg";
-import first from "../../../assets/icons/first.svg";
+import { PaginationArea, ShiftButton, FirstIcon, PrevIcon, NextIcon, LastIcon, NumberArea, NumberMark } from "../Review/Review.styled";
 
 export default function Recommend({ pageType }: {pageType: "good-product" | "bad-product"}) {
   const [ searchParams, setSearchParams ] = useSearchParams();
@@ -29,6 +25,7 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
   const pageController = new PageControl(page, pageInfo, searchParams, setSearchParams);
   const dispatch = useDispatch();
   const [ isSearching, setIsSearching ] = useState(false);
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     const getReviewInfo = async () => {
@@ -48,7 +45,7 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
           <PageTitleText style={{fontSize: "30px", height: "36px", lineHeight: "36px"}}>{pageType === "good-product" ? "강추" : "비추"}</PageTitleText>
         </PageTitle>
         <MoreButton>
-          <Link to="/posts?category=none&page=1&perPage=5&reset=yes"><MoreText>전체 리뷰</MoreText></Link>
+          <Link to={`/posts?category=none&page=1&perPage=${pageInfo.perPage}&reset=yes`}><MoreText>전체 리뷰</MoreText></Link>
           <MoreIcon />
         </MoreButton>
       </TitleArea>
@@ -59,12 +56,13 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
         })}
       </ReviewPostArea>
       <PaginationArea>
-        <ShiftButton onClick={pageController.moveToFirstPage}><ShiftIcon category={first} /></ShiftButton>
-        <ShiftButton onClick={pageController.moveToPrevPage}><ShiftIcon category={prev} /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToFirstPage}><FirstIcon /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToPrevPage}><PrevIcon /></ShiftButton>
         <NumberArea>
           {pageArray.map(pageNumber => (
             <NumberMark
               key={pageNumber}
+              theme={theme}
               focus={pageNumber === page ? "on" : "off"}
               onClick={() => pageController.handlePageChange(pageNumber)}
             >
@@ -72,8 +70,8 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
             </NumberMark>
           ))}
         </NumberArea>
-        <ShiftButton onClick={pageController.moveToNextPage}><ShiftIcon category={next} /></ShiftButton>
-        <ShiftButton onClick={pageController.moveToLastPage}><ShiftIcon category={last} /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToNextPage}><NextIcon /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToLastPage}><LastIcon /></ShiftButton>
       </PaginationArea>
     </RecommendPage>
   )

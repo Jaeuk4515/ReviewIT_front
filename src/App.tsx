@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import Home from './components/pages/Home/Home';
 import { GlobalStyle, LayoutWrapper } from './App.styles';
 import Header from './components/blocks/Header/Header';
@@ -16,12 +16,14 @@ import ErrorPage from './components/pages/404ErrorPage/404ErrorPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store/RootState';
 import { setLogin } from './store/slices/loginSlice';
+import { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme } from './theme/theme';
 
 const cookies = new Cookies();
 
 function App() {
-  const login = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch();
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     const jwtToken = cookies.get('token');
@@ -74,26 +76,26 @@ function App() {
       element: <ErrorPage />
     }
   ];
-
-  console.log("App isLogin : ", login);
   
   return (
     <>
-      <GlobalStyle />
-      <Routes>
-        {routePath.map(data => (
-          <Route 
-            key={data.path}
-            path={data.path} 
-            element={
-            <LayoutWrapper>
-              <Header />
-              {data.element}
-              <Footer />
-            </LayoutWrapper>
-          } />
-        ))}
-      </Routes>
+      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <GlobalStyle />
+        <Routes>
+          {routePath.map(data => (
+            <Route 
+              key={data.path}
+              path={data.path} 
+              element={
+              <LayoutWrapper>
+                <Header />
+                {data.element}
+                <Footer />
+              </LayoutWrapper>
+            } />
+          ))}
+        </Routes>
+      </ThemeProvider>
     </>
   );
 }

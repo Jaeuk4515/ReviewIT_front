@@ -9,6 +9,7 @@ const InputBox = styled.input<{color: string, width: string, height: string, onC
   padding: 0 15px;
   font-size: 17px;
   box-sizing: border-box;
+  color: ${({ theme }) => theme.textColor};
   
   &:focus {
     outline: none;

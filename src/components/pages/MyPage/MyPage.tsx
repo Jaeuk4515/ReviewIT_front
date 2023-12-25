@@ -48,6 +48,7 @@ export default function MyPage() {
   });
   const [ showImage, setShowImage ] = useState("");
   const [ deleteModal, setDeleteModal ] = useState(false);
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     if (!login) navigate("/");
@@ -140,7 +141,7 @@ export default function MyPage() {
     <MyPageArea>
       <InfoArea>
         <ProfileUpdateCard>
-          <UserImage category={showImage || user.userImage} onMouseEnter={() => setIsUserImageHover(true)} onMouseLeave={() => setIsUserImageHover(false)}>
+          <UserImage theme={theme} category={showImage || user.userImage} onMouseEnter={() => setIsUserImageHover(true)} onMouseLeave={() => setIsUserImageHover(false)}>
             {isUserImageHover && 
               <UserImageCover>
                 <FileBox style={{flexDirection: "column", gap: ".5rem"}}>
@@ -153,7 +154,7 @@ export default function MyPage() {
           <InputAndButtonArea>
             <InputArea style={{gap: ".7rem", width: "100%"}}>
               <h3>닉네임</h3>
-              <Input type="text" className="" color="white" width="100%" height="40px" name="nickname" value={userInfo.nickname} onChange={changeNickname} />
+              <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="nickname" value={userInfo.nickname} onChange={changeNickname} />
             </InputArea>
             <ButtonArea>
               <UpdateButton onClick={handleSubmit}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>저장</span></UpdateButton>

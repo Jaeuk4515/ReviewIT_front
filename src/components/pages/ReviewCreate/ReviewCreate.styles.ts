@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Img } from "../../atoms/Category/Category.styles";
 import { SubmitButton } from "../../blocks/CommentForm/CommentForm.styles";
+import { ReactComponent as ArrowIcon } from "../../../assets/icons/bottom-arrow.svg";
 
 const ReviewCreatePage = styled.form`
   display: flex;
@@ -42,24 +43,30 @@ const SelectBox = styled.div`
   display: flex;
   box-sizing: border-box;
   position: relative;
+  background-color: ${({ theme }) => theme.selectBoxColor};
 `
 
-const Seleted = styled.div`
+const Seleted = styled.div<{theme: "light" | "dark"}>`
   width: 90%;
   height: 100%;
-  border-right: 1.5px solid rgba(0, 0, 0, .1);
+  border-right: 1.5px solid ${props => props.theme === "light" ? "rgba(0, 0, 0, .1)" : "rgba(255, 255, 255, .3)"};
   display: flex;
   align-items: center;
 `
 
-const SelectedValue = styled.div`
+const SelectedValue = styled.div``
 
+const ArrowWrapper = styled.div`
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
-const Arrow = styled(Img)`
-  width: 15%;
-  height: 100%;
+const Arrow = styled(ArrowIcon)`
+  width: 22px;
   cursor: pointer;
+  fill: ${({ theme }) => theme.arrowColor};
 
   &:hover {
     opacity: .5;
@@ -78,7 +85,7 @@ const OptionBox = styled.div<{on: string}>`
   position: absolute;
   top: 40px; left: -1.5px;
   z-index: 10;
-  background-color: white;
+  background-color: ${({ theme }) => theme.optionBoxColor};
   overflow: auto;
 `
 
@@ -97,7 +104,7 @@ const Option = styled.div`
   box-sizing: border-box;
 
   &:hover {
-    background-color: #EAEAEA;
+    background-color: ${({ theme }) => theme.optionHoverColor};
   }
 `
 
@@ -175,10 +182,10 @@ const ButtonArea = styled(ReviewInfoArea)`
   margin-top: -50px;
 `
 
-const CompleteButton = styled(SubmitButton)<{buttontype: "cancel" | "write"}>`
+const CompleteButton = styled(SubmitButton)<{buttontype: "cancel" | "write"; themeProps?: "light" | "dark"}>`
   width: 65px;
   height: 35px;
-  background-color: ${props => props.buttontype === "cancel" ? "#EAEAEA" : ""};
+  background-color: ${props => props.buttontype === "cancel" ? "#EAEAEA" : props.themeProps === "dark" ? "#364F6B" : ""};
   color: ${props => props.buttontype === "cancel" ? "black" : ""};
   margin-left: 10px;
 `
@@ -191,6 +198,7 @@ export {
   SelectBox, 
   Seleted, 
   SelectedValue, 
+  ArrowWrapper,
   Arrow, 
   OptionBox, 
   OptionWrapper,

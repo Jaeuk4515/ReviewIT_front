@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { SearchArea, SearchBox, CancelButton, XIcon, IconArea } from "./Search.styles";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +23,7 @@ export default function Search({color, width, height, mode, isSearching, setIsSe
   const pageInfo = useSelector((state: RootState) => state.page);
   const { category } = useSelector((state: RootState) => state.category);
   const dispatch = useDispatch();
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     dispatch(resetSearchText());
@@ -46,7 +47,7 @@ export default function Search({color, width, height, mode, isSearching, setIsSe
       response = await axios.get(`http://localhost:3001/review/recommendation/${mode}?page=${1}&perPage=${pageInfo.perPage}`);
     }
     setIsSearching!(false);
-    dispatch(setPageInfo({ page: 1, perPage: 5, totalPage: response.data.totalPage }));
+    dispatch(setPageInfo({ page: 1, perPage: pageInfo.perPage, totalPage: response.data.totalPage }));
     dispatch(setPostInfo(response.data.thumbnailInfo));
     dispatch(resetSearchText());
   };
@@ -71,7 +72,7 @@ export default function Search({color, width, height, mode, isSearching, setIsSe
       response = await axios.get(`http://localhost:3001/review/search/${searchText}?category=${mode}&page=${1}&perPage=${pageInfo.perPage}`);
     };
     setIsSearching!(true);  // 검색 모드로 진입 
-    dispatch(setPageInfo({ page: 1, perPage: 5, totalPage: response.data.totalPage }));
+    dispatch(setPageInfo({ page: 1, perPage: pageInfo.perPage, totalPage: response.data.totalPage }));
     dispatch(setPostInfo(response.data.thumbnailInfo));
   };
 
@@ -82,7 +83,7 @@ export default function Search({color, width, height, mode, isSearching, setIsSe
 
   return (
     <SearchArea width={width} height={height} onSubmit={handleSubmit}>
-      <SearchBox color={color} width={width} height={height} placeholder="Search" value={searchText} onChange={handleChange} />
+      <SearchBox theme={theme} color={color} width={width} height={height} placeholder="Search" value={searchText} onChange={handleChange} />
       {searchText && <CancelButton onClick={cancelSearch}><XIcon /></CancelButton>}
       <IconArea />
     </SearchArea>

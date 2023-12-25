@@ -3,13 +3,17 @@ import facebook from "../../../assets/icons/facebook.svg";
 import instagram from "../../../assets/icons/instagram.svg";
 import youtube from "../../../assets/icons/youtube.svg";
 import mail from "../../../assets/icons/mail.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
 
 export default function Footer() {
+  const { theme } = useSelector((state: RootState) => state.theme);
+  
   return (
     <FooterWrapper>
       <FooterArea>
         <IconArea>
-          <FooterLogo />
+          <FooterLogo theme={theme} />
           <ContactIconArea>
             <ContactIcon icontype={facebook} />
             <ContactIcon icontype={instagram} />

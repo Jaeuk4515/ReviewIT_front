@@ -48,7 +48,7 @@ export default function CommentItem({ cId, userId, text, createdAt, commentInfo,
 
   return (
     <CommentArea>
-      {(login && user._id === userId) && <DeleteButton category={trash} onClick={deleteComment} />}
+      {(login && user._id === userId) && <DeleteButton onClick={deleteComment} />}
       <UserInfoArea>
         <Profile className="" url={userInfo.userImage} onClick={()=>{}} />
         <UserName>{userInfo.nickname}</UserName>

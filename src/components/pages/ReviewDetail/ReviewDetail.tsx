@@ -5,13 +5,10 @@ import CommentForm from "../../blocks/CommentForm/CommentForm";
 import CommentItem from "../../blocks/CommentItem/CommentItem";
 import { Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
 import ReviewCard from "../../blocks/ReviewCard/ReviewCard";
-import { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, ContentText, ExtraInfoWrapper, LikeyButton, LikeyIcon, ExtraInfo, CommentArea } from "./ReviewDetail.styles";
+import { ReviewDetailPage, UserInfoWrapper, ListButton, PostContent, ReviewHeader, ReviewTitle, OptionIcon, MiniModal, ButtonTitle, UpdateIcon, DeleteIcon, ContentText, ExtraInfoWrapper, LikeyButton, LikeyIcon, ExtraInfo, CommentArea } from "./ReviewDetail.styles";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import getUserInfoById from "../../../services/getUserInfoById";
-import options from "../../../assets/icons/options.svg";
-import update from "../../../assets/icons/update.svg";
-import trash from "../../../assets/icons/delete.svg";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
@@ -43,6 +40,7 @@ export default function ReviewDetail() {
   const [ loginRequired, setLoginRequired ] = useState(false);
   const [ commentInfo, setCommentInfo ] = useState<CommentInfo[]>([]);
   const navigate = useNavigate();
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     const getReviewInfo = async () => {
@@ -99,7 +97,7 @@ export default function ReviewDetail() {
   return (
     <ReviewDetailPage>
       {isModal && <ModalBg style={{ background: "initial", backdropFilter: "initial", zIndex: "1500" }} onClick={() => { setIsModal(false) }} />}
-      <UserInfoWrapper>
+      <UserInfoWrapper theme={theme}>
         <UserInfoArea style={{"marginLeft": "15px"}}>
           <Profile className="" url={reviewInfo.userImage} onClick={()=>{}} />
           <UserName>{reviewInfo.nickname}</UserName>
@@ -110,13 +108,13 @@ export default function ReviewDetail() {
       <PostContent>
         <ReviewHeader>
           <ReviewTitle>{reviewInfo.reviewTitle}</ReviewTitle>
-          {(login && user._id === reviewInfo.userId) && <OptionIcon category={options} onClick={ () => { setIsModal(!isModal) } } />}
+          {(login && user._id === reviewInfo.userId) && <OptionIcon onClick={ () => { setIsModal(!isModal) } } />}
           {
             isModal && 
             <>
               <MiniModal>
-                <Link to={`/posts/update/${param.pId}`}><ButtonTitle><UpdateIcon category={update} /><p style={{paddingTop: "3px"}}>수정</p></ButtonTitle></Link>
-                <ButtonTitle onClick={() => setAlertModal(true)}><UpdateIcon category={trash} /><p style={{paddingTop: "3px"}}>삭제</p></ButtonTitle>
+                <Link to={`/posts/update/${param.pId}`}><ButtonTitle><UpdateIcon /><p style={{paddingTop: "3px"}}>수정</p></ButtonTitle></Link>
+                <ButtonTitle onClick={() => setAlertModal(true)}><DeleteIcon /><p style={{paddingTop: "3px"}}>삭제</p></ButtonTitle>
               </MiniModal>
               { alertModal && <AlertModal mode="deleteAlert" setAlertModal={setAlertModal} reviewId={param.pId} /> }
             </>

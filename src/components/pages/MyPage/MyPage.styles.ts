@@ -19,7 +19,7 @@ const InfoArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #F8F8F8;
+  background-color: ${({ theme }) => theme.myPageBgColor};
   padding: 50px 30px;
   box-sizing: border-box;
   gap: 2rem;
@@ -35,14 +35,14 @@ const ProfileUpdateCard = styled.div`
   align-items: center;
   border: 1px solid rgba(0, 0, 0, .1);
   border-radius: 15px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor};
   gap: 6rem;
 `
 
-const UserImage = styled(Img)`
+const UserImage = styled(Img)<{theme: "light" | "dark"}>`
   width: 180px;
   height: 180px;
-  border: 1px solid rgba(0, 0, 0, .1);
+  border: 1px solid ${props => props.theme === "light" ? "rgba(0, 0, 0, .1)" : "rgba(255, 255, 255, .3)"};
   border-radius: 100px;
   position: relative;
 `
@@ -124,7 +124,7 @@ const ReviewOptionArea = styled.div`
 const CommentCard = styled(CommentArea)`
   width: 100%;
   min-width: 700px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor};
   border: 1px solid rgba(0, 0, 0, .1); 
   border-radius: 30px; 
   padding: 16px 30px;

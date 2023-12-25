@@ -14,7 +14,7 @@ const ModalBox = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor};
 `
 
 const SuccessMessage = styled(PageTitle)`

@@ -3,6 +3,9 @@ import { ErrorText, InputArea, InputBox, ModalTitle } from "../../blocks/Modal/A
 import { ChangePasswordPage, PasswordForm, ButtonArea, Btn } from "./ChangePassword.styles";
 import axios from "axios";
 import SuccessModal from "../../blocks/Modal/SuccessModal/SuccessModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
+import { useNavigate } from "react-router-dom";
 
 type StateObj = {
   userInfo: {
@@ -46,6 +49,8 @@ const initialState: StateObj = {
 export default function ChangePassword() {
   const [ inputInfo, dispatch ] = useReducer(reducer, initialState);
   const [ success, setSuccess ] = useState(false);
+  const { theme } = useSelector((state: RootState) => state.theme);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     dispatch({ type: "infoUpdate", payload: { name, value: e.target.value } });
@@ -90,13 +95,13 @@ export default function ChangePassword() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    if (!inputInfo.userInfo.email || !inputInfo.userInfo.newPassword || !inputInfo.userInfo.confirmPassword) return;
     const response = await axios.patch("http://localhost:3001/user/change-password", inputInfo.userInfo, {
       headers: {
         "Content-Type": "application/json"
       }
     });
-    console.log(response.data);
+
     if (response.data.message === "확인 비밀번호가 일치하지 않습니다.") {
       dispatch({ type: "errorUpdate", payload: { name: "confirmPasswordError", value: "확인 비밀번호가 일치하지 않습니다." } });
       return;
@@ -116,19 +121,19 @@ export default function ChangePassword() {
       <PasswordForm onSubmit={handleSubmit}>
         <ModalTitle>비밀번호 변경</ModalTitle>
         <InputArea>
-          <InputBox type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="이메일을 입력하세요" name="email" 
+          <InputBox theme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="이메일을 입력하세요" name="email" 
             value={inputInfo.userInfo.email} 
             onChange={(e)=>{ handleChange(e, "email") }} 
             onBlur={() => handleBlur("email")}
           />
           <ErrorText>{inputInfo.inputError.emailError}</ErrorText>
-          <InputBox type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호를 입력하세요" name="newPassword" 
+          <InputBox theme={theme} type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호를 입력하세요" name="newPassword" 
             value={inputInfo.userInfo.newPassword} 
             onChange={(e)=>{ handleChange(e, "newPassword") }}
             onBlur={() => handleBlur("newPassword")}
           />
           <ErrorText>{inputInfo.inputError.newPasswordError}</ErrorText>
-          <InputBox type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호 확인" name="confirmPassword" 
+          <InputBox theme={theme} type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호 확인" name="confirmPassword" 
             value={inputInfo.userInfo.confirmPassword} 
             onChange={(e)=>{ handleChange(e, "confirmPassword") }}
             onBlur={() => handleBlur("confirmPassword")}
@@ -136,7 +141,7 @@ export default function ChangePassword() {
           <ErrorText>{inputInfo.inputError.confirmPasswordError}</ErrorText>
         </InputArea>
         <ButtonArea>
-          <Btn buttontype="cancel" type="button">취소</Btn>
+          <Btn buttontype="cancel" type="button" onClick={() => navigate(-1)}>취소</Btn>
           <Btn buttontype="write" type="submit">확인</Btn>
         </ButtonArea>
       </PasswordForm>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import logo from "../../../../assets/icons/logo.svg";
+import logo_light from "../../../../assets/icons/logo_light.svg";
+import logo_dark from "../../../../assets/icons/logo_dark.svg";
 import Input from "../../../atoms/Input/Input";
 import { SubmitButton } from "../../CommentForm/CommentForm.styles";
 
@@ -18,18 +19,17 @@ const ModalBg = styled.div`
 const Modal = styled.form<{modaltype: "login" | "signup"}>`
   width: 420px;
   height: ${props => props.modaltype === "login" ? "550px" : "605px"};
-  border: 1px solid #C4C4C4;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor};
 `
 
-const Logo = styled.div`
-  background-image: url(${logo});
+const Logo = styled.div<{theme: "light" | "dark"}>`
+  background-image: url(${props => props.theme === "light" ? logo_light : logo_dark});
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -50,10 +50,12 @@ const InputArea = styled.div`
   gap: .4rem;
 `
 
-const InputBox = styled(Input)`
+const InputBox = styled(Input)<{theme: "light" | "dark"}>`
   box-sizing: border-box;
   padding: 0 20px;
   border: none;
+  background-color: ${props => props.theme === "light" ? "#F0F0F0" : "#626265"};
+  color: ${props => props.theme === "light" ? "black" : "white"};
   
   &::placeholder {
     color: #A8A8A8;
@@ -63,12 +65,13 @@ const InputBox = styled(Input)`
 const ErrorText = styled.span`
   height: 14px;
   width: 100%;
-  color: #ff1919;
+  color: ${({ theme }) => theme.errorTextColor};
   font-size: 10.5px;
   padding-left: 20px;
 `
 
 const ModalButton = styled(SubmitButton)`
+  background-color: ${({ theme }) => theme.modalButtonColor};
   width: 330px;
   height: 45px;
   border: none;
@@ -86,7 +89,7 @@ const TextArea = styled.div`
 `
 
 const FindPasswordText = styled.span`
-  color: #4375F5;
+  color: ${({ theme }) => theme.modalLinkText};
   cursor: pointer;
 `
 
@@ -100,7 +103,7 @@ const NormalText = styled.span`
 `
 
 const ToggleLink = styled.span`
-  color: #4375F5;
+  color: ${({ theme }) => theme.modalLinkText};
   cursor: pointer;
 `
 

@@ -10,6 +10,7 @@ const TextBox = styled.textarea<{color: string, width: string, height: string, f
   padding: 15px;
   box-sizing: border-box;
   font-size: ${props => props.fontSize};
+  color: ${({ theme }) => theme.textColor};
   
   &:focus {
     outline: none;

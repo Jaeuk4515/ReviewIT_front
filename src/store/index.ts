@@ -11,6 +11,7 @@ import modalSlice from "./slices/modalSlice";
 import loginSlice from "./slices/loginSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import themeSlice from "./slices/themeSlice";
 
 const reducers = combineReducers({
   postInfo: postInfoSlice,
@@ -22,13 +23,14 @@ const reducers = combineReducers({
   reviewInfo: reviewInfoSlice,
   searchText: searchTextSlice,
   modal: modalSlice,
-  login: loginSlice
+  login: loginSlice,
+  theme: themeSlice
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['login', 'user']
+  whitelist: ['login', 'user', 'theme']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

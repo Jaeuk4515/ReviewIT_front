@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Logo } from "../../blocks/Modal/AuthModal/AuthModal.styles";
 import { FooterText } from "../../blocks/Footer/Footer.styles";
-import right from "../../../assets/icons/right.svg";
+import { ReactComponent as Right } from "../../../assets/icons/right.svg";
 import { NextButton, PrevButton } from "../../blocks/ReviewCard/ReviewCard.styles";
 
 const HomePage = styled.div`
@@ -61,16 +61,16 @@ const MoreButton = styled.div`
 `
 
 const MoreText = styled(FooterText)`
-  color: black;
+  color: ${({ theme }) => theme.textColor};
   font-size: 18px;
   height: 25px;
   line-height: 25px;
 `
 
-const MoreIcon = styled(Logo)`
-  background-image: url(${right});
+const MoreIcon = styled(Right)`
   width: 20px;
-  height: 20px;
+  height: 15px;
+  fill: ${({ theme }) => theme.rightIconColor};
 `
 
 const PostArea = styled.div`

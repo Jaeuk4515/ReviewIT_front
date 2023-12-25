@@ -3,7 +3,7 @@ import Search from "../../atoms/Search/Search";
 import CategoryNav from "../../blocks/CategoryNav/CategoryNav";
 import RecommendCard from "../../blocks/RecommendCard/RecommendCard";
 import { ContentArea } from "../Home/Home.styles";
-import { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, ShiftIcon, NumberArea, NumberMark } from "./Review.styled";
+import { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, FirstIcon, PrevIcon, NextIcon, LastIcon, NumberArea, NumberMark } from "./Review.styled";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import getPageArray from "../../../services/getPageArray";
@@ -12,10 +12,6 @@ import { RootState } from "../../../store/RootState";
 import { setPostInfo } from "../../../store/slices/postInfoSlice";
 import { setPageInfo } from "../../../store/slices/pageSlice";
 import PageControl from "../../../services/pageControl";
-import next from "../../../assets/icons/next.svg";
-import last from "../../../assets/icons/last.svg";
-import prev from "../../../assets/icons/prev.svg";
-import first from "../../../assets/icons/first.svg";
 import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
 
 export type category = "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "none"
@@ -34,10 +30,11 @@ export default function Review() {
   const pageController = new PageControl(page, pageInfo, searchParams, setSearchParams);
   const [ isSearching, setIsSearching ] = useState(false);
   const searchText = useSelector((state: RootState) => state.searchText);
+  const { theme } = useSelector((state: RootState) => state.theme);
   
   const goToReviews = (status: "good" | "bad") => () => {
-    if (status === "good") navigate("/posts/recommendation/good-product?page=1&perPage=5");
-    if (status === "bad") navigate("/posts/recommendation/bad-product?page=1&perPage=5");
+    if (status === "good") navigate(`/posts/recommendation/good-product?page=1&perPage=${pageInfo.perPage}`);
+    if (status === "bad") navigate(`/posts/recommendation/bad-product?page=1&perPage=${pageInfo.perPage}`);
   };
 
   const setCategoryQuery = (newCategory: category) => {
@@ -100,7 +97,7 @@ export default function Review() {
           };
           dispatch(setCategory(category as category));
         };
-        dispatch(setPageInfo({ page: 1, perPage: 5, totalPage: response.data.totalPage }));
+        dispatch(setPageInfo({ page: 1, perPage: pageInfo.perPage, totalPage: response.data.totalPage }));
         dispatch(setPostInfo(response.data.thumbnailInfo));
         pageController.handlePageChange(1);
       };
@@ -123,12 +120,13 @@ export default function Review() {
         })}
       </ReviewPostArea>
       <PaginationArea>
-        <ShiftButton onClick={pageController.moveToFirstPage}><ShiftIcon category={first} /></ShiftButton>
-        <ShiftButton onClick={pageController.moveToPrevPage}><ShiftIcon category={prev} /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToFirstPage}><FirstIcon /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToPrevPage}><PrevIcon /></ShiftButton>
         <NumberArea>
           {pageArray.map(pageNumber => (
             <NumberMark
               key={pageNumber}
+              theme={theme}
               focus={pageNumber === page ? "on" : "off"}
               onClick={() => pageController.handlePageChange(pageNumber)}
             >
@@ -136,8 +134,8 @@ export default function Review() {
             </NumberMark>
           ))}
         </NumberArea>
-        <ShiftButton onClick={pageController.moveToNextPage}><ShiftIcon category={next} /></ShiftButton>
-        <ShiftButton onClick={pageController.moveToLastPage}><ShiftIcon category={last} /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToNextPage}><NextIcon /></ShiftButton>
+        <ShiftButton onClick={pageController.moveToLastPage}><LastIcon /></ShiftButton>
       </PaginationArea>
     </ReviewPage>
   )

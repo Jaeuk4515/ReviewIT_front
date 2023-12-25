@@ -17,6 +17,7 @@ interface CommentFormType {
 export default function CommentForm({ url, uId, rId, commentInfo, setCommentInfo }: CommentFormType) {
   const login = useSelector((state: RootState) => state.login);
   const [ commentText, setCommentText ] = useState("");
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentText(e.target.value);
@@ -44,7 +45,7 @@ export default function CommentForm({ url, uId, rId, commentInfo, setCommentInfo
 
   return (
     <Form onSubmit={handleSubmit}>
-      {!login && <NoAuthCover><NoAuthText>댓글을 작성하려면 로그인을 해주세요!</NoAuthText></NoAuthCover>}
+      {!login && <NoAuthCover theme={theme}><NoAuthText>댓글을 작성하려면 로그인을 해주세요!</NoAuthText></NoAuthCover>}
       <FormArea>
         <InputWrapper>
           <UserProfile className="" url={url} onClick={()=>{}} />

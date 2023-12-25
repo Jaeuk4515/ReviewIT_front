@@ -1,4 +1,4 @@
-import { DateInfo, InfoCard, ProductImage, ReviewInfo, TextInfo } from "./UserReviewInfo.styles";
+import { InfoCard, ProductImage, ReviewInfo, TextInfo, TitleSpan, NameSpan, DateInfo } from "./UserReviewInfo.styles";
 import monitor from "../../../assets/icons/monitor.svg";
 import Stars from "../Stars/Stars";
 import { ProductImg } from "../Post/Post.styles";
@@ -18,8 +18,8 @@ export default function UserReviewInfo({ productImage, reviewTitle, productName,
       <ProductImage className="" url={productImage} />
       <ReviewInfo>
         <TextInfo>
-          <span style={{fontSize: "20px", fontWeight: "bold"}}>{reviewTitle}</span>
-          <span style={{fontSize: "18px"}}>{productName}</span>
+          <TitleSpan>{reviewTitle}</TitleSpan>
+          <NameSpan>{productName}</NameSpan>
         </TextInfo>
         <Stars mode="view" grade={grade} />
       </ReviewInfo>

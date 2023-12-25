@@ -1,4 +1,4 @@
-import { HeaderWrapper, HeaderArea, HeaderLogo, ButtonArea, HeaderButton, WriteReviewButton, WriteIcon, Profile } from "./Header.styles";
+import { HeaderWrapper, HeaderArea, HeaderLogo, ButtonArea, ThemeButton, ThemeIcon, LoginButton, RegisterButton, WriteReviewButton, WriteIcon, Profile } from "./Header.styles";
 import { useEffect, useState } from "react";
 import AuthModal from "../Modal/AuthModal/AuthModal";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import { resetCategory, setCategory } from "../../../store/slices/categorySlice"
 import { setUser } from "../../../store/slices/userSlice";
 import { setModal } from "../../../store/slices/modalSlice";
 import { ModalBg } from "../Modal/AuthModal/AuthModal.styles";
+import { setTheme } from "../../../store/slices/themeSlice";
 
 export default function Header() {
   const login = useSelector((state: RootState) => state.login);
@@ -20,8 +21,7 @@ export default function Header() {
   const { category } = useSelector((state: RootState) => state.category);
   const dispatch = useDispatch();
   const reviewInfo = useSelector((state: RootState) => state.reviewInfo);
-
-  console.log(login, user);
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     if (login) {
@@ -52,15 +52,17 @@ export default function Header() {
     <HeaderWrapper>
       {profileModal && <ModalBg style={{ background: "initial", backdropFilter: "initial", zIndex: "1500" }} onClick={() => { setProfileModal(!profileModal) }} />}
       <HeaderArea>
-        <HeaderLogo onClick={moveToHome} />
+        <HeaderLogo theme={theme} onClick={moveToHome} />
         {
           !login ? 
           <ButtonArea>
-            <HeaderButton buttontype="login" onClick={() => { dispatch(setModal("login")) }}>로그인</HeaderButton>
-            <HeaderButton buttontype="signup" onClick={() => { dispatch(setModal("signup")) }}>회원가입</HeaderButton>
+            <ThemeButton theme={theme} onClick={() => dispatch(setTheme(theme === "light" ? "dark" : "light"))}><ThemeIcon theme={theme} /></ThemeButton>
+            <LoginButton colorTheme={theme} onClick={() => { dispatch(setModal("login")) }}>로그인</LoginButton>
+            <RegisterButton onClick={() => { dispatch(setModal("signup")) }}>회원가입</RegisterButton>
             {modal && <AuthModal />}
           </ButtonArea> : 
           <ButtonArea>
+            <ThemeButton theme={theme} onClick={() => dispatch(setTheme(theme === "light" ? "dark" : "light"))}><ThemeIcon theme={theme} /></ThemeButton>
             <WriteReviewButton onClick={moveToCreate}>
               <WriteIcon />
               리뷰작성

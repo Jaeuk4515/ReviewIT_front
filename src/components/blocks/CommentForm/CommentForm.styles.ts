@@ -8,7 +8,7 @@ const Form = styled.form`
   height: 120px;
   border: 1.5px solid rgba(182, 182, 182, .1);
   border-radius: 15px;
-  background-color: #F2F8FF;
+  background-color: ${({ theme }) => theme.commentFormColor};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,7 +16,7 @@ const Form = styled.form`
   position: relative;
 `
 
-const NoAuthCover = styled.div`
+const NoAuthCover = styled.div<{theme: "light" | "dark"}>`
   position: absolute;
   top: 0; bottom: 0;
   left: 0; right: 0;
@@ -24,11 +24,11 @@ const NoAuthCover = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(54, 79, 107, .1);
+  background-color: ${props => props.theme === "light" ? "rgb(54, 79, 107, .15)" : "rgba(0, 0, 0, .4)"};
 `
 
 const NoAuthText = styled.h2`
-  color: #8D98A4;
+  color: ${({ theme }) => theme.noAuthTextColor};
 `
 
 const FormArea = styled.div`
@@ -47,7 +47,7 @@ const CommentInput = styled(TextArea)`
 `
 
 const SubmitButton = styled(Button)`
-  background-color: #256FFF;
+  background-color: ${({ theme }) => theme.writeButtonColor};
   color: #FFF;
   width: 70px;
   height: 30px;

@@ -5,6 +5,7 @@ import { newContentState } from './slices/newContentSlice';
 import { PageObject } from './slices/pageSlice';
 import { PostObject } from './slices/postInfoSlice';
 import { ReviewInfo } from './slices/reviewInfoSlice';
+import { ThemeType } from './slices/themeSlice';
 import { User } from './slices/userSlice';
 
 export interface RootState {
@@ -18,4 +19,5 @@ export interface RootState {
   searchText: string;
   modal: ModalType;
   login: boolean;
+  theme: ThemeType;
 }

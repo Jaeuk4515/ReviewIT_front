@@ -7,7 +7,8 @@ import {
   InputArea, 
   SelectBox, 
   Seleted, 
-  SelectedValue, 
+  SelectedValue,
+  ArrowWrapper,
   Arrow, 
   OptionBox, 
   OptionWrapper,
@@ -24,9 +25,9 @@ import {
   ButtonArea,
   CompleteButton
 } from "./ReviewCreate.styles";
-import arrow from "../../../assets/icons/bottom-arrow.svg";
 import TextArea from "../../atoms/TextArea/TextArea";
-import camera from "../../../assets/icons/camera.svg";
+import camera_light from "../../../assets/icons/camera_light.svg";
+import camera_dark from "../../../assets/icons/camera_dark.svg";
 import { PageDes, PageTitle } from "../Home/Home.styles";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -60,6 +61,7 @@ export default function ReviewCreate() {
   const login = useSelector((state: RootState) => state.login);
   const [ alertModal, setAlertModal ] = useState(false);
   const navigate = useNavigate();
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     if (!login) {
@@ -78,9 +80,6 @@ export default function ReviewCreate() {
 
     getData();
   }, []);
-
-  console.log("Review isLogin : ", login);
-  console.log(content);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,8 +102,8 @@ export default function ReviewCreate() {
     if (content.productImages) {
       for (let i = 0; i < content.productImages.length; i++) {
         formData.append("productImages", content.productImages[i]);
-      }
-    }
+      };
+    };
     // 서버로 전송
     const response = await axios.post("http://localhost:3001/review/create", formData, {
       headers: {
@@ -115,17 +114,17 @@ export default function ReviewCreate() {
     if (response.data.message === 'success') {
       navigate(`/posts/detail/${response.data.reviewId}`);
       dispatch(resetContent());
-    }
-  }
+    };
+  };
 
   const handleOption = () => {
     setOption(!option);
-  }
+  };
 
   const changeCategory = (name: categoryType) => {
     dispatch(setCategory(name));
     setOption(!option);
-  }
+  };
 
   const [ showImages, setShowImages ] = useState<string[]>([]);
 
@@ -152,13 +151,13 @@ export default function ReviewCreate() {
 
     const newImgFiles = dataTransfer.files;
     dispatch(setProductImages(newImgFiles));
-  }
+  };
 
   const handleDeleteImage = (idx: number) => {
     setShowImages(showImages.filter((_, index) => index !== idx));
     const updatedImages = content.productImages ? Array.from(content.productImages).filter((_, index) => index !== idx) : null;
     dispatch(setProductImages(updatedImages as FileList | null));
-  }
+  };
 
   return (
     <ReviewCreatePage onSubmit={handleSubmit}>
@@ -166,13 +165,13 @@ export default function ReviewCreate() {
         <TextInfoArea>
           <InputArea>
             <h3>제목</h3>
-            <Input type="text" className="" color="white" width="100%" height="40px" name="reviewTitle" value={content.reviewTitle} onChange={(e) => { dispatch(setReviewTitle(e.target.value)) }} />
+            <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="reviewTitle" value={content.reviewTitle} onChange={(e) => { dispatch(setReviewTitle(e.target.value)) }} />
           </InputArea>
           <InputArea>
             <h3>카테고리</h3>
             <SelectBox>
-              <Seleted><SelectedValue>{content.category}</SelectedValue></Seleted>
-              <Arrow category={arrow} onClick={handleOption} />
+              <Seleted theme={theme}><SelectedValue>{content.category}</SelectedValue></Seleted>
+              <ArrowWrapper><Arrow onClick={handleOption} /></ArrowWrapper>
               <OptionBox on={option.toString()}>
                 <OptionWrapper>
                   {categoryList.map((name, idx) => (
@@ -184,11 +183,11 @@ export default function ReviewCreate() {
           </InputArea>
           <InputArea>
             <h3>제품명</h3>
-            <Input type="text" className="" color="white" width="100%" height="40px" name="productName" value={content.productName} onChange={(e) => { dispatch(setProductName(e.target.value)) }} />
+            <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productName" value={content.productName} onChange={(e) => { dispatch(setProductName(e.target.value)) }} />
           </InputArea>
           <InputArea>
             <h3>제품 링크</h3>
-            <Input type="text" className="" color="white" width="100%" height="40px" name="productLink" value={content.productLink} onChange={(e) => { dispatch(setProductLink(e.target.value)) }} />
+            <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productLink" value={content.productLink} onChange={(e) => { dispatch(setProductLink(e.target.value)) }} />
           </InputArea>
           <InputArea><h3>별점</h3><Stars mode="edit" /></InputArea>
         </TextInfoArea>
@@ -209,7 +208,7 @@ export default function ReviewCreate() {
                 ))
                 : 
                 <IconWrapper>
-                  <PictureIcon category={camera} />
+                  <PictureIcon category={theme === "light" ? camera_light : camera_dark} />
                   <PageDes>제품 사진을 등록해보세요</PageDes>
                 </IconWrapper>
               }
@@ -223,11 +222,11 @@ export default function ReviewCreate() {
       </ReviewInfoArea>
       <InputArea style={{"width": "50%", "minWidth": "800px"}}>
         <h3>리뷰</h3>
-        <TextArea color="white" width="100%" height="400px" fontSize="18px" name="reviewContent" value={content.reviewContent} onChange={(e) => { dispatch(setReviewContent(e.target.value)) }} />
+        <TextArea color={theme === "light" ? "white" : "#626265"} width="100%" height="400px" fontSize="18px" name="reviewContent" value={content.reviewContent} onChange={(e) => { dispatch(setReviewContent(e.target.value)) }} />
       </InputArea>
       <ButtonArea>
         <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>
-        <CompleteButton buttontype="write" type="submit">등록</CompleteButton>
+        <CompleteButton themeProps={theme} buttontype="write" type="submit">등록</CompleteButton>
       </ButtonArea>
       { alertModal && <AlertModal mode="createAlert" setAlertModal={setAlertModal} /> }
     </ReviewCreatePage>

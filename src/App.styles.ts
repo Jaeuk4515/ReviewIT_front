@@ -23,6 +23,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: Arial, sans-serif;
     height: 100vh;
     min-height: 100vh;
+    background-color: ${({ theme }) => theme.backgroundColor};
+    color: ${({ theme }) => theme.textColor};
   }
 `
 
