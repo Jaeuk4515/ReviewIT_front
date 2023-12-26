@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Home from './components/pages/Home/Home';
 import { GlobalStyle, LayoutWrapper } from './App.styles';
 import Header from './components/blocks/Header/Header';

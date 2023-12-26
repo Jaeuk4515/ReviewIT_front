@@ -1,10 +1,19 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { Logo } from "../Modal/AuthModal/AuthModal.styles";
 import { SubmitButton } from "../CommentForm/CommentForm.styles";
 import { ReactComponent as Write } from "../../../assets/icons/write.svg";
 import UserProfile from "../../atoms/UserProfile/UserProfile";
 import light_mode from "../../../assets/icons/light_mode.svg";
 import dark_mode from "../../../assets/icons/dark_mode.svg";
+
+const themeTrans = keyframes`
+  0%{
+    transform: scale(0.6) rotate(180deg);
+  }
+  100%{
+    transform: scale(1) rotate(360deg);
+  }
+`
 
 const HeaderWrapper = styled.div`
   width: 100%;
@@ -41,7 +50,7 @@ const ButtonArea = styled.div`
   gap: .6rem;
 `
 
-const ThemeButton = styled.div<{theme: "light" | "dark"}>`
+const ThemeButton = styled.div<{theme: "light" | "dark", animate: "on" | "off"}>`
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -49,9 +58,16 @@ const ThemeButton = styled.div<{theme: "light" | "dark"}>`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
 
   &:hover {
     background-color: ${props => props.theme === "light" ? "#f0f0f0" : "#4a4a4a"};
+  }
+
+  ${props => props.animate === "on" &&
+    css`
+      animation: ${themeTrans} .2s linear;
+    `
   }
 `
 

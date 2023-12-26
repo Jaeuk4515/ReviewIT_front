@@ -113,7 +113,7 @@ export default function ChangePassword() {
     if (response.data.message === "success") {
       setSuccess(true);
       return;
-    }
+    };
   };
 
   return (
