@@ -1,8 +1,11 @@
 import styled from "styled-components";
-import { HomePage, PostArea } from "../Home/Home.styles";
+import { HomePage } from "../Home/Home.styles";
 import Post from "../../blocks/Post/Post";
-import { SubmitButton } from "../../blocks/CommentForm/CommentForm.styles";
 import { Img } from "../../atoms/Category/Category.styles";
+import { ReactComponent as First } from "../../../assets/icons/first.svg";
+import { ReactComponent as Prev } from "../../../assets/icons/prev.svg";
+import { ReactComponent as Next } from "../../../assets/icons/next.svg";
+import { ReactComponent as Last } from "../../../assets/icons/last.svg";
 
 const ReviewPage = styled(HomePage)`
   margin-top: 15px;
@@ -32,18 +35,11 @@ const PaginationArea = styled.div`
   gap: .3rem;
 `
 
-// const ShiftButton = styled(SubmitButton)`
-//   background-color: #E8F2FF;
-//   color: #256FFF;
-//   width: 13%;
-//   height: 35px;
-// `
-
 const ShiftButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #E8F2FF;
+  background-color: ${({ theme }) => theme.pageButtonColor};
   border-radius: 10px;
   height: 30px;
   cursor: pointer;
@@ -53,6 +49,29 @@ const ShiftButton = styled.div`
 const ShiftIcon = styled(Img)`
   width: 14px;
   height: 14px;
+`
+
+const FirstIcon = styled(First)`
+  width: 14px;
+  height: 14px;
+  fill: ${({ theme }) => theme.pageButtonIconColor};
+  stroke: ${({ theme }) => theme.pageButtonIconColor};
+`
+const PrevIcon = styled(Prev)`
+  width: 14px;
+  height: 14px;
+  fill: ${({ theme }) => theme.pageButtonIconColor};
+`
+const NextIcon = styled(Next)`
+  width: 14px;
+  height: 14px;
+  fill: ${({ theme }) => theme.pageButtonIconColor};
+`
+const LastIcon = styled(Last)`
+  width: 14px;
+  height: 14px;
+  fill: ${({ theme }) => theme.pageButtonIconColor};
+  stroke: ${({ theme }) => theme.pageButtonIconColor};
 `
 
 const NumberArea = styled.div`
@@ -65,16 +84,16 @@ const NumberArea = styled.div`
   margin: 0 10px;
 `
 
-const NumberMark = styled.div<{focus: "on" | "off"}>`
+const NumberMark = styled.div<{focus: "on" | "off"; theme: "light" | "dark"}>`
   border-radius: 30px;
   width: 30px;
   height: 30px;
-  background-color: ${props => props.focus === "on" ? "#256FFF" : ""};
-  color: ${props => props.focus === "on" ? "white" : ""};
+  background-color: ${props => props.focus === "on" ? props.theme === "light" ? "#256FFF" : "#fff" : ""};
+  color: ${props => props.focus === "on" ? props.theme === "light" ? "white" : "black" : ""};
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 `
 
-export { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, ShiftIcon, NumberArea, NumberMark }
+export { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, ShiftIcon, FirstIcon, PrevIcon, NextIcon, LastIcon, NumberArea, NumberMark }

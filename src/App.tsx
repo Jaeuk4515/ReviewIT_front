@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Home from './components/pages/Home/Home';
 import { GlobalStyle, LayoutWrapper } from './App.styles';
 import Header from './components/blocks/Header/Header';
@@ -13,23 +13,26 @@ import Cookies from 'universal-cookie';
 import ReviewUpdate from './components/pages/ReviewUpdate/ReviewUpdate';
 import MyPage from './components/pages/MyPage/MyPage';
 import ErrorPage from './components/pages/404ErrorPage/404ErrorPage';
-
-interface AuthContextType {
-  isLogin: boolean;
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const authContext = createContext<AuthContextType | undefined>(undefined);
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './store/RootState';
+import { setLogin } from './store/slices/loginSlice';
+import { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme } from './theme/theme';
 
 const cookies = new Cookies();
 
 function App() {
-  const [ isLogin, setIsLogin ] = useState(false);
+  const dispatch = useDispatch();
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   useEffect(() => {
     const jwtToken = cookies.get('token');
-    if (jwtToken) setIsLogin(true);
-  }, [])
+    if (jwtToken) {
+      dispatch(setLogin(true));
+    } else {
+      dispatch(setLogin(false));
+    };
+  }, []);
 
   const routePath = [
     {
@@ -54,7 +57,7 @@ function App() {
     },
     {
       path: "/posts/detail/:pId",
-      element: <ReviewDetail isLogin={isLogin} />
+      element: <ReviewDetail />
     },
     {
       path: "/create",
@@ -66,20 +69,18 @@ function App() {
     },
     {
       path: "/mypage/:userId",
-      element: <MyPage isLogin={isLogin} />
+      element: <MyPage />
     },
     {
       path: "/error/not_found",
       element: <ErrorPage />
     }
-  ]
-
-  console.log("App isLogin : ", isLogin);
+  ];
   
   return (
     <>
-      <GlobalStyle />
-      <authContext.Provider value={{ isLogin, setIsLogin }}>
+      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <GlobalStyle />
         <Routes>
           {routePath.map(data => (
             <Route 
@@ -87,17 +88,16 @@ function App() {
               path={data.path} 
               element={
               <LayoutWrapper>
-                <Header isLogin={isLogin} />
+                <Header />
                 {data.element}
                 <Footer />
               </LayoutWrapper>
             } />
           ))}
         </Routes>
-      </authContext.Provider>
+      </ThemeProvider>
     </>
   );
 }
 
 export default App;
-

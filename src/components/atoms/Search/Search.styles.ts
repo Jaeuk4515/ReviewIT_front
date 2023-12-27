@@ -10,7 +10,7 @@ const SearchArea = styled.form<{width: string, height: string}>`
   border-radius: 30px;
 `
 
-const SearchBox = styled(InputBox)`
+const SearchBox = styled(InputBox)<{theme: "light" | "dark"}>`
   border: 1px solid rgba(0, 0, 0, .15);
   border-radius: 30px;
   position: absolute;
@@ -19,6 +19,8 @@ const SearchBox = styled(InputBox)`
   caret-color: #89CFF3;
   font-size: 20px;
   position: relative;
+  background-color: ${props => props.theme === "light" ? "white" : "#626265"};
+  color: ${props => props.theme === "light" ? "black" : "white"};
 
   &:focus {
     outline: none;
@@ -48,16 +50,16 @@ const XIcon = styled(X)`
 `
 
 const IconArea = styled.button`
-  width: 14%;
+  width: 12.5%;
   height: 100%;
   border-radius: 0 30px 30px 0;
   border: none;
   position: absolute;
   right: 0;
-  background-color: #89CFF3;
+  background-color: ${({ theme }) => theme.searchIconBoxColor};
   background-image: url(${search});
   background-repeat: no-repeat;
-  background-size: 20px 20px;
+  background-size: 24px 24px;
   background-position: center;
   cursor: pointer;
 `

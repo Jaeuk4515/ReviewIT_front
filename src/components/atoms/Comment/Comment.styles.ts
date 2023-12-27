@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import comment from "../../../assets/icons/comment.svg"
+import { ReactComponent as Comment } from "../../../assets/icons/comment.svg";
 
 const CommentArea = styled.div`
   display: flex;
@@ -7,13 +7,10 @@ const CommentArea = styled.div`
   align-items: center;
 `
 
-const CommentIcon = styled.div`
-  background-image: url(${comment});
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  width: 22px;
-  height: 22px;
+const CommentIcon = styled(Comment)`
+  width: 24px;
+  height: 24px;
+  fill: ${({ theme }) => theme.commentIconColor};
 `
 
 const CommentNum = styled.span`

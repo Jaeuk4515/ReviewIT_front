@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import UserProfile from "../../atoms/UserProfile/UserProfile";
-import { OptionIcon } from "../../pages/ReviewDetail/ReviewDetail.styles";
+import { DeleteIcon } from "../../pages/ReviewDetail/ReviewDetail.styles";
 
 const CommentArea = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ const CommentArea = styled.div`
   height: auto;
   padding: 16px 20px;
   box-sizing: border-box;
-  background-color: #F8F8F8;
+  background-color: ${({ theme }) => theme.commentColor};
   border-radius: 15px;
   position: relative;
 `
@@ -53,7 +53,7 @@ const CommentText = styled.p`
   line-height: 23px;
 `
 
-const DeleteButton = styled(OptionIcon)`
+const DeleteButton = styled(DeleteIcon)`
   position: absolute;
   width: 20px;
   height: 20px;

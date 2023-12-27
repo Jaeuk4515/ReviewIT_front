@@ -20,6 +20,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    resetUser: (state) => {
+      return initialState;
+    },
     setNickname: (state, action: PayloadAction<string>) => {
       state.nickname = action.payload;
     },
@@ -32,5 +35,5 @@ const userSlice = createSlice({
   }
 });
 
-export const { setNickname, setUserImage, setUser } = userSlice.actions;
+export const { resetUser, setNickname, setUserImage, setUser } = userSlice.actions;
 export default userSlice.reducer;

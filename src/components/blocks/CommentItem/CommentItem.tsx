@@ -13,7 +13,6 @@ export interface CommentItemType {
   createdAt: string;
   commentInfo: CommentInfo[];
   setCommentInfo: React.Dispatch<React.SetStateAction<CommentInfo[]>>;
-  isLogin: boolean;
 }
 
 interface UserInfo {
@@ -21,7 +20,8 @@ interface UserInfo {
   nickname: string;
 }
 
-export default function CommentItem({ cId, userId, text, createdAt, commentInfo, setCommentInfo, isLogin }: CommentItemType) {
+export default function CommentItem({ cId, userId, text, createdAt, commentInfo, setCommentInfo }: CommentItemType) {
+  const login = useSelector((state: RootState) => state.login);
   const user = useSelector((state: RootState) => state.user);
   const [ userInfo, setUserInfo ] = useState<UserInfo>({
     userImage: "",
@@ -48,7 +48,7 @@ export default function CommentItem({ cId, userId, text, createdAt, commentInfo,
 
   return (
     <CommentArea>
-      {(isLogin && user._id === userId) && <DeleteButton category={trash} onClick={deleteComment} />}
+      {(login && user._id === userId) && <DeleteButton onClick={deleteComment} />}
       <UserInfoArea>
         <Profile className="" url={userInfo.userImage} onClick={()=>{}} />
         <UserName>{userInfo.nickname}</UserName>

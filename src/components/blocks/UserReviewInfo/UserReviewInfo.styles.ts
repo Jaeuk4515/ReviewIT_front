@@ -6,7 +6,7 @@ const InfoCard = styled(InputAndButtonArea)`
   width: 100%;
   min-width: 700px;
   height: 140px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor};
   border: 1px solid rgba(0, 0, 0, .1);
   border-radius: 30px;
   display: flex;
@@ -40,6 +40,19 @@ const TextInfo = styled.div`
   gap: .5rem;
 `
 
+const TitleSpan = styled.span`
+  font-size: 20px;
+  font-weight: bold;
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
+const NameSpan = styled(TitleSpan)`
+  font-size: 18px;
+`
+
 const DateInfo = styled.div`
   width: 13%;
   height: 100px;
@@ -48,4 +61,4 @@ const DateInfo = styled.div`
   margin-right: 45px;
 `
 
-export { InfoCard, ProductImage, ReviewInfo, TextInfo, DateInfo };
+export { InfoCard, ProductImage, ReviewInfo, TextInfo, TitleSpan, NameSpan, DateInfo };

@@ -13,9 +13,7 @@ import {
   MoreText, 
   MoreIcon, 
   PostArea, 
-  Carousel, 
-  // ImgWrapper, 
-  // PostWrapper, 
+  Carousel,
   LeftShiftButton, 
   RightShiftButton 
 } from "./Home.styles";
@@ -34,6 +32,7 @@ import Banner from "../../blocks/Banner/Banner";
 
 export default function Home() {
   const postInfo = useSelector((state: RootState) => state.postInfo);
+  const pageInfo = useSelector((state: RootState) => state.page);
   const dispatch = useDispatch();
   const [ currentImageIndex, setCurrentImageIndex ] = useState(1);
   const [ scrollPosition, setScrollPosition ] = useState(0);
@@ -41,11 +40,9 @@ export default function Home() {
   const navigate = useNavigate();
   
   const goToReviews = (status: "good" | "bad") => () => {
-    if (status === "good") navigate("/posts/recommendation/good-product?page=1&perPage=5");
-    if (status === "bad") navigate("/posts/recommendation/bad-product?page=1&perPage=5");
-  }
-
-  // console.log(scrollPosition, carouselRef.current ? carouselRef.current.scrollWidth : 0);
+    if (status === "good") navigate(`/posts/recommendation/good-product?page=1&perPage=${pageInfo.perPage}`);
+    if (status === "bad") navigate(`/posts/recommendation/bad-product?page=1&perPage=${pageInfo.perPage}`);
+  };
 
   useEffect(() => {
     const getReviewsInfo = async () => {
@@ -102,7 +99,7 @@ export default function Home() {
             <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
           </PageText>
           <MoreButton>
-            <Link to="/posts?category=none&page=1&perPage=5&reset=yes"><MoreText>전체 리뷰</MoreText></Link>
+            <Link to={`/posts?category=none&page=1&perPage=${pageInfo.perPage}&reset=yes`}><MoreText>전체 리뷰</MoreText></Link>
             <MoreIcon />
           </MoreButton>
         </ContentArea>

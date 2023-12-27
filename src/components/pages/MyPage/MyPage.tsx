@@ -32,7 +32,8 @@ interface UserInfo {
   nickname: string;
 }
 
-export default function MyPage({ isLogin }: {isLogin: boolean}) {
+export default function MyPage() {
+  const login = useSelector((state: RootState) => state.login);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const [ isUserImageHover, setIsUserImageHover ] = useState(false);
@@ -47,11 +48,11 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
   });
   const [ showImage, setShowImage ] = useState("");
   const [ deleteModal, setDeleteModal ] = useState(false);
+  const { theme } = useSelector((state: RootState) => state.theme);
 
-  // 왜 로그인중인데도 새로고침하면 튕기냐 -> 리뷰 생성 페이지에서 로그인중인데 새로고침하면 튕기는거랑 똑같은듯. 새로고침하면 isLogin이 false로 되는거같은데.. ㅅㅂ 
   useEffect(() => {
-    if (!isLogin) navigate("/");
-  }, [isLogin]);
+    if (!login) navigate("/");
+  }, [login]);
 
   useEffect(() => {
     dispatch(setCategory("내가 쓴 리뷰"));
@@ -140,7 +141,7 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
     <MyPageArea>
       <InfoArea>
         <ProfileUpdateCard>
-          <UserImage category={showImage || user.userImage} onMouseEnter={() => setIsUserImageHover(true)} onMouseLeave={() => setIsUserImageHover(false)}>
+          <UserImage theme={theme} category={showImage || user.userImage} onMouseEnter={() => setIsUserImageHover(true)} onMouseLeave={() => setIsUserImageHover(false)}>
             {isUserImageHover && 
               <UserImageCover>
                 <FileBox style={{flexDirection: "column", gap: ".5rem"}}>
@@ -153,7 +154,7 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
           <InputAndButtonArea>
             <InputArea style={{gap: ".7rem", width: "100%"}}>
               <h3>닉네임</h3>
-              <Input type="text" className="" color="white" width="100%" height="40px" name="nickname" value={userInfo.nickname} onChange={changeNickname} />
+              <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="nickname" value={userInfo.nickname} onChange={changeNickname} />
             </InputArea>
             <ButtonArea>
               <UpdateButton onClick={handleSubmit}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>저장</span></UpdateButton>
@@ -162,7 +163,7 @@ export default function MyPage({ isLogin }: {isLogin: boolean}) {
             </ButtonArea>
           </InputAndButtonArea>
         </ProfileUpdateCard>
-        <SlimDivider className="" width="80%" minWidth="700px" />
+        <SlimDivider className="" width="80%" minwidth="700px" />
         <UserReviewArea>
           <ReviewOptionArea>
             <Category categoryName="내가 쓴 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 리뷰")) }} width="175px" />

@@ -7,7 +7,8 @@ import {
   InputArea, 
   SelectBox, 
   Seleted, 
-  SelectedValue, 
+  SelectedValue,
+  ArrowWrapper,
   Arrow, 
   OptionBox, 
   OptionWrapper,
@@ -21,18 +22,18 @@ import {
   FileBox,
   ImageUploadButton,
   ImageInput,
+  TextLimit,
   ButtonArea,
   CompleteButton
 } from "./ReviewCreate.styles";
-import arrow from "../../../assets/icons/bottom-arrow.svg";
 import TextArea from "../../atoms/TextArea/TextArea";
-import camera from "../../../assets/icons/camera.svg";
+import camera_light from "../../../assets/icons/camera_light.svg";
+import camera_dark from "../../../assets/icons/camera_dark.svg";
 import { PageDes, PageTitle } from "../Home/Home.styles";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import x_button from "../../../assets/icons/x-button.svg";
 import getUserInfo from "../../../services/getUserInfo";
-import { authContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import { Img } from "../../atoms/Category/Category.styles";
@@ -58,35 +59,44 @@ export default function ReviewCreate() {
   const [ option, setOption ] = useState(false);
   const content = useSelector((state: RootState) => state.content);
   const dispatch = useDispatch();
-  const { isLogin, setIsLogin } = useContext(authContext)!;
+  const login = useSelector((state: RootState) => state.login);
   const [ alertModal, setAlertModal ] = useState(false);
   const navigate = useNavigate();
+  const { theme } = useSelector((state: RootState) => state.theme);
+  const [ textCount, setTextCount ] = useState(0);
 
   useEffect(() => {
-    // 로그인 중인데 리뷰 작성 페이지에서 브라우저를 새로고침 하면 isLogin이 false로 되서 튕김.. 왜이런지 모르겠다. 리렌더링 되도 그러네. 이 if문을 주석처리하면 안그럼 
-    // if (!isLogin) { 
-    //   alert("로그인이 필요한 서비스입니다.");
-    //   navigate("/");
-    // }
+    if (!login) {
+      navigate("/");
+    };
+  }, [login]);
+
+  useEffect(() => {
     const getData = async () => {
-      const userInfo = await getUserInfo();
-      console.log(userInfo);
-      dispatch(setUserId(userInfo._id));
+      if (login) {
+        const userInfo = await getUserInfo();
+        dispatch(setUserId(userInfo._id));
+      };
     };
 
     getData();
   }, []);
 
-  console.log("Review isLogin : ", isLogin);
-  console.log(content);
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    if (inputValue.length <= 1000) {
+      dispatch(setReviewContent(inputValue));
+      setTextCount(inputValue.length);
+    };
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
-    // if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
-    //   setAlertModal(true);
-    //   return;
-    // };
+    const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
+    if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
+      setAlertModal(true);
+      return;
+    };
     
     // 함수로 빼기
     const formData = new FormData();
@@ -101,8 +111,8 @@ export default function ReviewCreate() {
     if (content.productImages) {
       for (let i = 0; i < content.productImages.length; i++) {
         formData.append("productImages", content.productImages[i]);
-      }
-    }
+      };
+    };
     // 서버로 전송
     const response = await axios.post("http://localhost:3001/review/create", formData, {
       headers: {
@@ -113,17 +123,17 @@ export default function ReviewCreate() {
     if (response.data.message === 'success') {
       navigate(`/posts/detail/${response.data.reviewId}`);
       dispatch(resetContent());
-    }
-  }
+    };
+  };
 
   const handleOption = () => {
     setOption(!option);
-  }
+  };
 
   const changeCategory = (name: categoryType) => {
     dispatch(setCategory(name));
     setOption(!option);
-  }
+  };
 
   const [ showImages, setShowImages ] = useState<string[]>([]);
 
@@ -150,13 +160,13 @@ export default function ReviewCreate() {
 
     const newImgFiles = dataTransfer.files;
     dispatch(setProductImages(newImgFiles));
-  }
+  };
 
   const handleDeleteImage = (idx: number) => {
     setShowImages(showImages.filter((_, index) => index !== idx));
     const updatedImages = content.productImages ? Array.from(content.productImages).filter((_, index) => index !== idx) : null;
     dispatch(setProductImages(updatedImages as FileList | null));
-  }
+  };
 
   return (
     <ReviewCreatePage onSubmit={handleSubmit}>
@@ -164,13 +174,13 @@ export default function ReviewCreate() {
         <TextInfoArea>
           <InputArea>
             <h3>제목</h3>
-            <Input type="text" className="" color="white" width="100%" height="40px" name="reviewTitle" value={content.reviewTitle} onChange={(e) => { dispatch(setReviewTitle(e.target.value)) }} />
+            <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="reviewTitle" value={content.reviewTitle} onChange={(e) => { dispatch(setReviewTitle(e.target.value)) }} />
           </InputArea>
           <InputArea>
             <h3>카테고리</h3>
             <SelectBox>
-              <Seleted><SelectedValue>{content.category}</SelectedValue></Seleted>
-              <Arrow category={arrow} onClick={handleOption} />
+              <Seleted theme={theme}><SelectedValue>{content.category}</SelectedValue></Seleted>
+              <ArrowWrapper><Arrow onClick={handleOption} /></ArrowWrapper>
               <OptionBox on={option.toString()}>
                 <OptionWrapper>
                   {categoryList.map((name, idx) => (
@@ -182,11 +192,11 @@ export default function ReviewCreate() {
           </InputArea>
           <InputArea>
             <h3>제품명</h3>
-            <Input type="text" className="" color="white" width="100%" height="40px" name="productName" value={content.productName} onChange={(e) => { dispatch(setProductName(e.target.value)) }} />
+            <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productName" value={content.productName} onChange={(e) => { dispatch(setProductName(e.target.value)) }} />
           </InputArea>
           <InputArea>
             <h3>제품 링크</h3>
-            <Input type="text" className="" color="white" width="100%" height="40px" name="productLink" value={content.productLink} onChange={(e) => { dispatch(setProductLink(e.target.value)) }} />
+            <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productLink" value={content.productLink} onChange={(e) => { dispatch(setProductLink(e.target.value)) }} />
           </InputArea>
           <InputArea><h3>별점</h3><Stars mode="edit" /></InputArea>
         </TextInfoArea>
@@ -207,7 +217,7 @@ export default function ReviewCreate() {
                 ))
                 : 
                 <IconWrapper>
-                  <PictureIcon category={camera} />
+                  <PictureIcon category={theme === "light" ? camera_light : camera_dark} />
                   <PageDes>제품 사진을 등록해보세요</PageDes>
                 </IconWrapper>
               }
@@ -221,11 +231,12 @@ export default function ReviewCreate() {
       </ReviewInfoArea>
       <InputArea style={{"width": "50%", "minWidth": "800px"}}>
         <h3>리뷰</h3>
-        <TextArea color="white" width="100%" height="400px" fontSize="18px" name="reviewContent" value={content.reviewContent} onChange={(e) => { dispatch(setReviewContent(e.target.value)) }} />
+        <TextArea color={theme === "light" ? "white" : "#626265"} width="100%" height="400px" fontSize="18px" name="reviewContent" value={content.reviewContent} onChange={handleTextAreaChange} />
+        <TextLimit>{`( ${textCount} / 1000 )`}</TextLimit>
       </InputArea>
       <ButtonArea>
         <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>
-        <CompleteButton buttontype="write" type="submit">등록</CompleteButton>
+        <CompleteButton themeProps={theme} buttontype="write" type="submit">등록</CompleteButton>
       </ButtonArea>
       { alertModal && <AlertModal mode="createAlert" setAlertModal={setAlertModal} /> }
     </ReviewCreatePage>

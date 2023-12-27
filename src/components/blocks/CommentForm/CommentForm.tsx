@@ -3,9 +3,10 @@ import UserProfile from "../../atoms/UserProfile/UserProfile";
 import { Form, NoAuthCover, NoAuthText, InputWrapper, CommentInput, SubmitButton, FormArea } from "./CommentForm.styles";
 import { useState } from "react";
 import { CommentInfo } from "../../pages/ReviewDetail/ReviewDetail";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/RootState";
 
 interface CommentFormType {
-  isLogin: boolean;
   url: string;
   uId: string;
   rId: string;
@@ -13,8 +14,10 @@ interface CommentFormType {
   setCommentInfo: React.Dispatch<React.SetStateAction<CommentInfo[]>>;
 };
 
-export default function CommentForm({ isLogin, url, uId, rId, commentInfo, setCommentInfo }: CommentFormType) {
+export default function CommentForm({ url, uId, rId, commentInfo, setCommentInfo }: CommentFormType) {
+  const login = useSelector((state: RootState) => state.login);
   const [ commentText, setCommentText ] = useState("");
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentText(e.target.value);
@@ -42,11 +45,11 @@ export default function CommentForm({ isLogin, url, uId, rId, commentInfo, setCo
 
   return (
     <Form onSubmit={handleSubmit}>
-      {!isLogin && <NoAuthCover><NoAuthText>댓글을 작성하려면 로그인을 해주세요!</NoAuthText></NoAuthCover>}
+      {!login && <NoAuthCover theme={theme}><NoAuthText>댓글을 작성하려면 로그인을 해주세요!</NoAuthText></NoAuthCover>}
       <FormArea>
         <InputWrapper>
           <UserProfile className="" url={url} onClick={()=>{}} />
-          <CommentInput color="#FFF" width="700px" height="60px" fontSize="15px" name="" value={commentText} onChange={handleChange} />
+          <CommentInput color="#FFF" width="700px" height="60px" fontSize="15px" name="" value={commentText} onChange={handleChange} commentForm="yes" />
         </InputWrapper>
         <SubmitButton>댓글 쓰기</SubmitButton>
       </FormArea>

@@ -1,10 +1,9 @@
-import { useContext, useEffect } from "react";
 import { Ballon, ButtonArea, MyPageButton, LogoutButton, InfoArea } from "./ProfileModal.styles";
 import axios from "axios";
-import { authContext } from "../../../../App";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
+import { setLogin } from "../../../../store/slices/loginSlice";
 
 type UserData = {
   nickname: string;
@@ -18,14 +17,14 @@ interface ProfileModalType {
 }
 
 export default function ProfileModal({ userData, setProfileModal }: ProfileModalType) {
-  const { isLogin, setIsLogin } = useContext(authContext)!;
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
 
   const logout = async () => {
     const response = await axios.get("http://localhost:3001/user/logout", { withCredentials: true });
     if (response.data.message === "success") {
-      setIsLogin(false);
+      dispatch(setLogin(false));
       setProfileModal(false);
     };
   };

@@ -21,7 +21,7 @@ const ErrorImage = styled.img`
 `
 
 const ErrorText = styled.span`
-  color: #4370FF;
+  color: ${({ theme }) => theme.errorPageTextColor};
   font-size: 30px;
   margin-bottom: 25px;
 `

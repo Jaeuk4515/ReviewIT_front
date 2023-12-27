@@ -1,4 +1,4 @@
-import { HeaderWrapper, HeaderArea, HeaderLogo, ButtonArea, HeaderButton, WriteReviewButton, WriteIcon, Profile } from "./Header.styles";
+import { HeaderWrapper, HeaderArea, HeaderLogo, ButtonArea, ThemeButton, ThemeIcon, LoginButton, RegisterButton, WriteReviewButton, WriteIcon, Profile } from "./Header.styles";
 import { useEffect, useState } from "react";
 import AuthModal from "../Modal/AuthModal/AuthModal";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,11 @@ import { RootState } from "../../../store/RootState";
 import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
 import { setUser } from "../../../store/slices/userSlice";
 import { setModal } from "../../../store/slices/modalSlice";
+import { ModalBg } from "../Modal/AuthModal/AuthModal.styles";
+import { setTheme } from "../../../store/slices/themeSlice";
 
-export default function Header({ isLogin }: {isLogin: boolean}) {
+export default function Header() {
+  const login = useSelector((state: RootState) => state.login);
   const { modal } = useSelector((state: RootState) => state.modal);
   const user = useSelector((state: RootState) => state.user);
   const [ profileModal, setProfileModal ] = useState(false);
@@ -18,17 +21,21 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
   const { category } = useSelector((state: RootState) => state.category);
   const dispatch = useDispatch();
   const reviewInfo = useSelector((state: RootState) => state.reviewInfo);
+  const { theme } = useSelector((state: RootState) => state.theme);
+  const [ isAnimating, setIsAnimating ] = useState(false);
 
   useEffect(() => {
-    if (isLogin) {
+    if (login) {
       const getData = async () => {
-        const { _id, nickname, email, userImage, likey } = await getUserInfo();
+        const response = await getUserInfo();
+        if (!response) return;
+        const { _id, nickname, email, userImage, likey } = response;
         dispatch(setUser({ _id, nickname, email, userImage, likey }));
       };
 
       getData();
     }
-  }, [isLogin, reviewInfo.likey]);
+  }, [login, reviewInfo.likey]);
 
   const moveToHome = () => {
     // 리뷰 페이지의 카테고리가 클릭된 상태에서 홈 화면 이동시 카테고리 state 초기화 -> 안하면 홈 화면의 카테고리 버튼이 활성화 되어있음 
@@ -42,18 +49,30 @@ export default function Header({ isLogin }: {isLogin: boolean}) {
     navigate("/create");
   };
 
+  const handleClick = () => {
+    dispatch(setTheme(theme === "light" ? "dark" : "light"));
+    setIsAnimating(true);
+
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 200);
+  };
+
   return (
     <HeaderWrapper>
+      {profileModal && <ModalBg style={{ background: "initial", backdropFilter: "initial", zIndex: "1500" }} onClick={() => { setProfileModal(!profileModal) }} />}
       <HeaderArea>
-        <HeaderLogo onClick={moveToHome} />
+        <HeaderLogo theme={theme} onClick={moveToHome} />
         {
-          !isLogin ? 
+          !login ? 
           <ButtonArea>
-            <HeaderButton buttontype="login" onClick={() => { dispatch(setModal("login")) }}>로그인</HeaderButton>
-            <HeaderButton buttontype="signup" onClick={() => { dispatch(setModal("signup")) }}>회원가입</HeaderButton>
+            <ThemeButton theme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
+            <LoginButton colorTheme={theme} onClick={() => { dispatch(setModal("login")) }}>로그인</LoginButton>
+            <RegisterButton onClick={() => { dispatch(setModal("signup")) }}>회원가입</RegisterButton>
             {modal && <AuthModal />}
           </ButtonArea> : 
           <ButtonArea>
+            <ThemeButton theme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
             <WriteReviewButton onClick={moveToCreate}>
               <WriteIcon />
               리뷰작성

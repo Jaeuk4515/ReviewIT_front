@@ -11,7 +11,7 @@ const Card = styled.div`
   height: 350px;
   border: 1px solid #C4C4C4;
   border-radius: 20px;
-  background-color: #F5F5F5;
+  background-color: ${({ theme }) => theme.reviewCardColor};
 `
 
 const ReviewImg = styled(ImageCard)`
@@ -66,7 +66,7 @@ const LinkArea = styled.a`
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor};
   box-sizing: border-box;
   text-decoration: none;
 `

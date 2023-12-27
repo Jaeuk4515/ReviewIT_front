@@ -4,6 +4,8 @@ import Cookies from 'universal-cookie';
 export default async function getUserInfo() {
   const cookies = new Cookies();
   const jwtToken = cookies.get('token');
+  
+  if (!jwtToken) return;
 
   const response = await axios.get('http://localhost:3001/user/my', {
     headers: {

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import heart from "../../../assets/icons/heart.svg"
+import { ReactComponent as Heart } from "../../../assets/icons/heart.svg";
 
 const LikeyArea = styled.div`
   display: flex;
@@ -7,13 +7,10 @@ const LikeyArea = styled.div`
   align-items: center;
 `
 
-const LikeyIcon = styled.div`
-  background-image: url(${heart});
-  bakcground-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  width: 15px;
-  height: 15px;
+const LikeyIcon = styled(Heart)`
+  width: 18px;
+  height: 16px;
+  fill: ${({ theme }) => theme.commentIconColor};
 `
 
 const LikeyNum = styled.span`

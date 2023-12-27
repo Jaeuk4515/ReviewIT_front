@@ -2,18 +2,21 @@ import styled from "styled-components";
 import { SubmitButton } from "../../blocks/CommentForm/CommentForm.styles";
 import { HomePage, PageTitle } from "../Home/Home.styles";
 import { Img } from "../../atoms/Category/Category.styles";
+import { ReactComponent as Options } from "../../../assets/icons/options.svg";
+import { ReactComponent as Update } from "../../../assets/icons/update.svg";
+import { ReactComponent as Delete } from "../../../assets/icons/delete.svg";
 
 const ReviewDetailPage = styled(HomePage)`
   gap: 2rem;
 `
 
-const UserInfoWrapper = styled.div`
+const UserInfoWrapper = styled.div<{theme: "light" | "dark"}>`
   display: flex;
   justify-content: space-between;
   width: 48%;
   min-width: 825px;
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  border-bottom: 1px solid ${props => props.theme === "light" ? "rgba(0, 0, 0, .1)" : "rgba(255, 255, 255, .5)"};
 `
 
 const ListButton = styled(SubmitButton)`
@@ -47,16 +50,17 @@ const ReviewHeader = styled.div`
 const ReviewTitle = styled.h2`
 `
 
-const OptionIcon = styled(Img)`
+const OptionIcon = styled(Options)`
   width: 25px;
   height: 25px;
   cursor: pointer;
+  fill: ${({ theme }) => theme.optionIconColor};
 `
 
 const MiniModal = styled.div`
   width: 100px;
   height: 70px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor};
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -65,7 +69,7 @@ const MiniModal = styled.div`
   box-shadow: 0 0 5px #C4C4C4;
   position: absolute;
   top: 35px; right: 28px;
-  z-index: 20;
+  z-index: 1800;
   gap: .4rem;
 `
 
@@ -78,12 +82,17 @@ const ButtonTitle = styled(PageTitle)`
   }
 `
 
-const UpdateIcon = styled(OptionIcon)`
-  width: 16px;
-  height: 18px;
+const UpdateIcon = styled(Update)`
+  width: 15px;
+  height: 17px;
+  fill: ${({ theme }) => theme.textColor};
 `
 
-const DeleteIcon = styled(UpdateIcon)`
+const DeleteIcon = styled(Delete)`
+  width: 16px;
+  height: 17px;
+  fill: ${({ theme }) => theme.backgroundColor};
+  stroke: ${({ theme }) => theme.textColor};
 `
 
 const ContentText = styled.p`
@@ -109,6 +118,7 @@ const LikeyButton = styled.div`
   align-items: center;
   margin-left: 20px;
   cursor: pointer;
+  background-color: white;
 
   &:active {
     transform: scale(1.08);

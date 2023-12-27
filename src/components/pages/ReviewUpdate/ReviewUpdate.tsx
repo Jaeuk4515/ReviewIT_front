@@ -24,16 +24,18 @@ import {
   ImageInput,
   ButtonArea,
   CompleteButton,
-  OptionWrapper
+  OptionWrapper,
+  ArrowWrapper,
+  TextLimit
 } from "../ReviewCreate/ReviewCreate.styles";
 import Input from "../../atoms/Input/Input";
 import Stars from "../../blocks/Stars/Stars";
 import { PageDes, PageTitle } from "../Home/Home.styles";
 import TextArea from "../../atoms/TextArea/TextArea";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
-import arrow from "../../../assets/icons/bottom-arrow.svg";
 import x_button from "../../../assets/icons/x-button.svg";
-import camera from "../../../assets/icons/camera.svg";
+import camera_light from "../../../assets/icons/camera_light.svg";
+import camera_dark from "../../../assets/icons/camera_dark.svg";
 import { Img } from "../../atoms/Category/Category.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
@@ -41,20 +43,36 @@ import { setNewContent, setReviewTitle, setCategory, setProductName, setProductL
 
 export default function ReviewUpdate() {
   const param = useParams();
+  const login = useSelector((state: RootState) => state.login);
   const newContent = useSelector((state: RootState) => state.newContent);
   const dispatch = useDispatch();
   const [ option, setOption ] = useState(false);
   const [ alertModal, setAlertModal ] = useState(false);
   const [ showImages, setShowImages ] = useState<string[]>([]);
   const navigate = useNavigate();
+  const { theme } = useSelector((state: RootState) => state.theme);
+  const [ textCount, setTextCount ] = useState(0);
 
-  console.log(newContent);
+  useEffect(() => {
+    if (!login) {
+      navigate("/");
+    };
+  }, [login]);
 
   useEffect(() => {
     const getReviewInfo = async () => {
-      const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
-      dispatch(setNewContent(response.data));
-      setShowImages(response.data.productImages);
+      try {
+        const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
+        dispatch(setNewContent(response.data));
+        setTextCount(response.data.reviewContent.length);
+        setShowImages(response.data.productImages);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.data.message === "internal error") {
+            navigate("/error/not_found");
+          };
+        };
+      };
     };
 
     getReviewInfo();
@@ -128,6 +146,13 @@ export default function ReviewUpdate() {
     setShowImages(showImages.filter((_, index) => index !== idx));
   };
 
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    if (inputValue.length <= 1000) {
+      dispatch(setReviewContent(inputValue));
+      setTextCount(inputValue.length);
+    };
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -192,13 +217,13 @@ export default function ReviewUpdate() {
           <TextInfoArea>
             <InputArea>
               <h3>제목</h3>
-              <Input type="text" className="" color="white" width="100%" height="40px" name="reviewTitle" value={newContent.reviewTitle} onChange={(e) => { dispatch(setReviewTitle(e.target.value)) }} />
+              <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="reviewTitle" value={newContent.reviewTitle} onChange={(e) => { dispatch(setReviewTitle(e.target.value)) }} />
             </InputArea>
             <InputArea>
               <h3>카테고리</h3>
               <SelectBox>
                 <Seleted><SelectedValue>{newContent.category}</SelectedValue></Seleted>
-                <Arrow category={arrow} onClick={handleOption} />
+                <ArrowWrapper><Arrow onClick={handleOption} /></ArrowWrapper>
                 <OptionBox on={option.toString()}>
                   <OptionWrapper>
                     {categoryList.map((name, idx) => (
@@ -210,11 +235,11 @@ export default function ReviewUpdate() {
             </InputArea>
             <InputArea>
               <h3>제품명</h3>
-              <Input type="text" className="" color="white" width="100%" height="40px" name="productName" value={newContent.productName} onChange={(e) => { dispatch(setProductName(e.target.value)) }} />
+              <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productName" value={newContent.productName} onChange={(e) => { dispatch(setProductName(e.target.value)) }} />
             </InputArea>
             <InputArea>
               <h3>제품 링크</h3>
-              <Input type="text" className="" color="white" width="100%" height="40px" name="productLink" value={newContent.productLink} onChange={(e) => { dispatch(setProductLink(e.target.value)) }} />
+              <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productLink" value={newContent.productLink} onChange={(e) => { dispatch(setProductLink(e.target.value)) }} />
             </InputArea>
             <InputArea><h3>별점</h3><Stars mode="edit" grade={newContent.grade} /></InputArea>
           </TextInfoArea>
@@ -235,7 +260,7 @@ export default function ReviewUpdate() {
                   ))
                   : 
                   <IconWrapper>
-                    <PictureIcon category={camera} />
+                    <PictureIcon category={theme === "light" ? camera_light : camera_dark} />
                     <PageDes>제품 사진을 등록해보세요</PageDes>
                   </IconWrapper>
                 }
@@ -249,7 +274,8 @@ export default function ReviewUpdate() {
         </ReviewInfoArea>
         <InputArea style={{"width": "50%", "minWidth": "800px"}}>
           <h3>리뷰</h3>
-          <TextArea color="white" width="100%" height="400px" fontSize="18px" name="reviewContent" value={newContent.reviewContent} onChange={(e) => { dispatch(setReviewContent(e.target.value)) }} />
+          <TextArea color={theme === "light" ? "white" : "#626265"} width="100%" height="400px" fontSize="18px" name="reviewContent" value={newContent.reviewContent} onChange={handleTextAreaChange} />
+          <TextLimit>{`( ${textCount} / 1000 )`}</TextLimit>
         </InputArea>
         <ButtonArea>
           <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>

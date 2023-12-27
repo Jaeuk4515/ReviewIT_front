@@ -7,8 +7,9 @@ const Ballon = styled.div`
   position: absolute;
   top: 60px;
   right: -27px;
-  background-color: #F6FBFF;
-  z-index: 10;
+  // background-color: #F6FBFF;
+  background-color: ${({ theme }) => theme.backgroundColor};
+  z-index: 1800;
   border-radius: 15px;
   box-shadow: 0 2px 4px 0 rgba(33, 37, 41, .24);
   border: 1px solid #E0E0E0;
@@ -22,7 +23,7 @@ const Ballon = styled.div`
     content: "";
     width: 17px;
     height: 17px;
-    background-color: #F6FBFF;
+    background-color: ${({ theme }) => theme.backgroundColor};
     transform: rotate(34.5deg) skew(0, 20deg);
     position: absolute;
     top: -9.5px; right: 36px;

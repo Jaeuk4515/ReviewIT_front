@@ -14,7 +14,7 @@ const ModalBox = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.backgroundColor};
 `
 
 const SuccessMessage = styled(PageTitle)`
@@ -32,15 +32,22 @@ const ButtonWrapper = styled(ButtonArea)`
   flex-direction: column;
 `
 
-const LoginButton = styled.div`
+const LoginButton = styled.div<{theme: "light" | "dark"}>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, .1);
+  border: 1px solid ${props => props.theme === "light" ? "rgba(0, 0, 0, .2)" : "rgba(255, 255, 255, .4)"};
   border-radius: 10px;
   width: 328px;
   height: 45px;
   cursor: pointer;
+  background-color: white;
 `
 
-export { ModalBox, SuccessMessage, SuccessMark, ButtonWrapper, LoginButton }
+const LoginText = styled.span`
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+`
+
+export { ModalBox, SuccessMessage, SuccessMark, ButtonWrapper, LoginButton, LoginText }

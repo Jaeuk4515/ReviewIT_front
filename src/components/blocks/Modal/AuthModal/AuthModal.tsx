@@ -1,4 +1,4 @@
-import { useContext, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import { 
   ModalBg,
   Modal, 
@@ -17,10 +17,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SuccessModal from "../SuccessModal/SuccessModal";
-import { authContext } from "../../../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
 import { setModal } from "../../../../store/slices/modalSlice";
+import { setLogin } from "../../../../store/slices/loginSlice";
 
 type StateObj = {
   userInfo: {
@@ -75,7 +75,7 @@ export default function AuthModal() {
   const Dispatch = useDispatch();
   const [ inputInfo, dispatch ] = useReducer(reducer, initialState);
   const [ success, setSuccess ] = useState(false);
-  const { isLogin, setIsLogin } = useContext(authContext)!;
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     dispatch({ type: "infoUpdate", payload: { name, value: e.target.value } });
@@ -181,7 +181,7 @@ export default function AuthModal() {
         return;
       };
       Dispatch(setModal(""));
-      setIsLogin(true);
+      Dispatch(setLogin(true));
     };
   };
 
@@ -190,15 +190,15 @@ export default function AuthModal() {
     {!success ? 
       <ModalBg onClick={() => { Dispatch(setModal("")) }}>
         <Modal modaltype={modal as "login" | "signup"} onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit} >
-          <Logo />
+          <Logo theme={theme} />
           <ModalTitle>{modal === "login" ? "로그인" : "회원가입"}</ModalTitle>
           <InputArea>
-            {modal === "signup" && <InputBox type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="닉네임" name="nickname" value={inputInfo.userInfo.nickname} onChange={(e) => handleChange(e, "nickname")} />}
+            {modal === "signup" && <InputBox theme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="닉네임" name="nickname" value={inputInfo.userInfo.nickname} onChange={(e) => handleChange(e, "nickname")} />}
             {modal === "signup" && <ErrorText>{inputInfo.inputError.nicknameError}</ErrorText>}
-            <InputBox type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="이메일" name="email" value={inputInfo.userInfo.email} onChange={(e)=>handleChange(e, "email")} />
+            <InputBox theme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="이메일" name="email" value={inputInfo.userInfo.email} onChange={(e)=>handleChange(e, "email")} />
             {modal === "signup" && <ErrorText>{inputInfo.inputError.emailError}</ErrorText>}
             {modal === "login" && <ErrorText>{inputInfo.inputError.emailError}</ErrorText>}
-            <InputBox type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="비밀번호" name="password" value={inputInfo.userInfo.password} onChange={(e)=>handleChange(e, "password")} />
+            <InputBox theme={theme} type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="비밀번호" name="password" value={inputInfo.userInfo.password} onChange={(e)=>handleChange(e, "password")} />
             {modal === "signup" && <ErrorText>{inputInfo.inputError.passwordError}</ErrorText>}
             {modal === "login" && <ErrorText>{inputInfo.inputError.passwordError}</ErrorText>}
             <ModalButton>{modal === "login" ? "로그인" : "회원가입"}</ModalButton>

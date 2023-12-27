@@ -7,7 +7,7 @@ const FooterWrapper = styled(HeaderWrapper)`
   height: 200px;
   border-bottom: 0;
   border-top: 1px solid rgba(0, 0, 0, .05);
-  background-color: #f3f7ff;
+  background-color: ${({ theme }) => theme.footerColor};
   z-index: 10;
 `
 
@@ -24,7 +24,7 @@ const IconArea = styled.div`
   align-items: center;
 `
 
-const FooterLogo = styled(HeaderLogo)`
+const FooterLogo = styled(HeaderLogo)<{theme: "login" | "dark"}>`
 
 `
 
@@ -50,7 +50,7 @@ const FooterTextArea = styled.div`
 `
 
 const FooterText = styled.span`
-  color: #9A9A9A;
+  color: ${({ theme }) => theme.footerText};
   font-size: 13px;
 `
 

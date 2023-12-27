@@ -12,12 +12,13 @@ interface CategoryType {
 
 export default function Category({ categoryName, nameLeftPadding, onClick, width }: CategoryType) {
   const { category } = useSelector((state: RootState) => state.category);
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   return (
     <CategoryArea onClick={onClick}>
-      <CategoryButton active={category === categoryName ? "on" : "off"} width={width}>
+      <CategoryButton active={category === categoryName ? "on" : "off"} theme={theme} width={width}>
         <Img category={getCategory(categoryName)} />
-        <Name padding={nameLeftPadding} active={category === categoryName ? "on" : "off"}>{categoryName}</Name>
+        <Name padding={nameLeftPadding} active={category === categoryName ? "on" : "off"} theme={theme}>{categoryName}</Name>
       </CategoryButton>
     </CategoryArea>
   )
