@@ -13,8 +13,7 @@ const ReviewDetailPage = styled(HomePage)`
 const UserInfoWrapper = styled.div<{theme: "light" | "dark"}>`
   display: flex;
   justify-content: space-between;
-  width: 48%;
-  min-width: 825px;
+  width: 825px;
   padding-bottom: 15px;
   border-bottom: 1px solid ${props => props.theme === "light" ? "rgba(0, 0, 0, .1)" : "rgba(255, 255, 255, .5)"};
 `
@@ -31,8 +30,7 @@ const PostContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  min-width: 855px;
+  width: 855px;
   gap: 2.5rem;
 `
 

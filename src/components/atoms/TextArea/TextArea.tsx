@@ -8,11 +8,11 @@ interface TextAreaType {
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  commentForm?: string;
+  commentform?: string;
 }
 
-export default function TextArea({ color, width, height, fontSize, name, value, onChange, commentForm }: TextAreaType) {
+export default function TextArea({ color, width, height, fontSize, name, value, onChange, commentform }: TextAreaType) {
   return (
-    <TextBox color={color} width={width} height={height} fontSize={fontSize} name={name} value={value} onChange={onChange} commentForm={commentForm} />
+    <TextBox color={color} width={width} height={height} fontSize={fontSize} name={name} value={value} onChange={onChange} commentform={commentform} />
   )
 }
