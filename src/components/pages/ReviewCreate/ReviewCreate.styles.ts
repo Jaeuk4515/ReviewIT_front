@@ -177,6 +177,11 @@ const ImageInput = styled.input<{onChange: (e: React.ChangeEvent<HTMLInputElemen
   border: 0;
 `
 
+const TextLimit = styled.span`
+  font-size: 15px;
+  margin-left: auto;
+`
+
 const ButtonArea = styled(ReviewInfoArea)`
   justify-content: flex-end;
   margin-top: -50px;
@@ -212,6 +217,7 @@ export {
   FileBox,
   ImageUploadButton,
   ImageInput,
+  TextLimit,
   ButtonArea, 
   CompleteButton 
 }

@@ -25,7 +25,8 @@ import {
   ButtonArea,
   CompleteButton,
   OptionWrapper,
-  ArrowWrapper
+  ArrowWrapper,
+  TextLimit
 } from "../ReviewCreate/ReviewCreate.styles";
 import Input from "../../atoms/Input/Input";
 import Stars from "../../blocks/Stars/Stars";
@@ -50,6 +51,7 @@ export default function ReviewUpdate() {
   const [ showImages, setShowImages ] = useState<string[]>([]);
   const navigate = useNavigate();
   const { theme } = useSelector((state: RootState) => state.theme);
+  const [ textCount, setTextCount ] = useState(0);
 
   useEffect(() => {
     if (!login) {
@@ -62,6 +64,7 @@ export default function ReviewUpdate() {
       try {
         const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
         dispatch(setNewContent(response.data));
+        setTextCount(response.data.reviewContent.length);
         setShowImages(response.data.productImages);
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -143,6 +146,13 @@ export default function ReviewUpdate() {
     setShowImages(showImages.filter((_, index) => index !== idx));
   };
 
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    if (inputValue.length <= 1000) {
+      dispatch(setReviewContent(inputValue));
+      setTextCount(inputValue.length);
+    };
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -264,7 +274,8 @@ export default function ReviewUpdate() {
         </ReviewInfoArea>
         <InputArea style={{"width": "50%", "minWidth": "800px"}}>
           <h3>리뷰</h3>
-          <TextArea color={theme === "light" ? "white" : "#626265"} width="100%" height="400px" fontSize="18px" name="reviewContent" value={newContent.reviewContent} onChange={(e) => { dispatch(setReviewContent(e.target.value)) }} />
+          <TextArea color={theme === "light" ? "white" : "#626265"} width="100%" height="400px" fontSize="18px" name="reviewContent" value={newContent.reviewContent} onChange={handleTextAreaChange} />
+          <TextLimit>{`( ${textCount} / 1000 )`}</TextLimit>
         </InputArea>
         <ButtonArea>
           <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>

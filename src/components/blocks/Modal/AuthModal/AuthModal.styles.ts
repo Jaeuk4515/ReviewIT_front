@@ -25,7 +25,7 @@ const Modal = styled.form<{modaltype: "login" | "signup"}>`
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  background-color: ${({ theme }) => theme.backgroundColor};
+  background-color: ${({ theme }) => theme.headerColor};
 `
 
 const Logo = styled.div<{theme: "light" | "dark"}>`

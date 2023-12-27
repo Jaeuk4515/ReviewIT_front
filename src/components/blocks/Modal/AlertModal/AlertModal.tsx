@@ -20,6 +20,7 @@ export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModal
   const pageInfo = useSelector((state: RootState) => state.page);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   const handleDelete = async () => {
     if (mode === "deleteAlert") {
@@ -56,7 +57,7 @@ export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModal
   return (
     <ModalBg>
       <ModalBox style={{width: "420px", height: "320px", gap: '2.5rem'}}>
-        <Logo />
+        <Logo theme={theme} />
         <ModalText><AlertIcon category={alert} />{getModalText()}</ModalText>
         {
           mode === "createAlert" ?

@@ -40,8 +40,8 @@ export default function Home() {
   const navigate = useNavigate();
   
   const goToReviews = (status: "good" | "bad") => () => {
-    if (status === "good") navigate("/posts/recommendation/good-product?page=1&perPage=5");
-    if (status === "bad") navigate("/posts/recommendation/bad-product?page=1&perPage=5");
+    if (status === "good") navigate(`/posts/recommendation/good-product?page=1&perPage=${pageInfo.perPage}`);
+    if (status === "bad") navigate(`/posts/recommendation/bad-product?page=1&perPage=${pageInfo.perPage}`);
   };
 
   useEffect(() => {

@@ -22,6 +22,7 @@ import {
   FileBox,
   ImageUploadButton,
   ImageInput,
+  TextLimit,
   ButtonArea,
   CompleteButton
 } from "./ReviewCreate.styles";
@@ -62,6 +63,7 @@ export default function ReviewCreate() {
   const [ alertModal, setAlertModal ] = useState(false);
   const navigate = useNavigate();
   const { theme } = useSelector((state: RootState) => state.theme);
+  const [ textCount, setTextCount ] = useState(0);
 
   useEffect(() => {
     if (!login) {
@@ -73,7 +75,6 @@ export default function ReviewCreate() {
     const getData = async () => {
       if (login) {
         const userInfo = await getUserInfo();
-        console.log(userInfo);
         dispatch(setUserId(userInfo._id));
       };
     };
@@ -81,13 +82,21 @@ export default function ReviewCreate() {
     getData();
   }, []);
 
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    if (inputValue.length <= 1000) {
+      dispatch(setReviewContent(inputValue));
+      setTextCount(inputValue.length);
+    };
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
-    // if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
-    //   setAlertModal(true);
-    //   return;
-    // };
+    const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
+    if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
+      setAlertModal(true);
+      return;
+    };
     
     // 함수로 빼기
     const formData = new FormData();
@@ -222,7 +231,15 @@ export default function ReviewCreate() {
       </ReviewInfoArea>
       <InputArea style={{"width": "50%", "minWidth": "800px"}}>
         <h3>리뷰</h3>
-        <TextArea color={theme === "light" ? "white" : "#626265"} width="100%" height="400px" fontSize="18px" name="reviewContent" value={content.reviewContent} onChange={(e) => { dispatch(setReviewContent(e.target.value)) }} />
+        <TextArea 
+          color={theme === "light" ? "white" : "#626265"} 
+          width="100%" height="400px" 
+          fontSize="18px" 
+          name="reviewContent" 
+          value={content.reviewContent} 
+          onChange={handleTextAreaChange} 
+        />
+        <TextLimit>{`( ${textCount} / 1000 )`}</TextLimit>
       </InputArea>
       <ButtonArea>
         <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>
