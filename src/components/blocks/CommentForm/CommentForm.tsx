@@ -49,7 +49,7 @@ export default function CommentForm({ url, uId, rId, commentInfo, setCommentInfo
       <FormArea>
         <InputWrapper>
           <UserProfile className="" url={url} onClick={()=>{}} />
-          <CommentInput color="#FFF" width="700px" height="60px" fontSize="15px" name="" value={commentText} onChange={handleChange} commentForm="yes" />
+          <CommentInput color="#FFF" width="700px" height="60px" fontSize="15px" name="" value={commentText} onChange={handleChange} commentform="yes" />
         </InputWrapper>
         <SubmitButton>댓글 쓰기</SubmitButton>
       </FormArea>

@@ -136,7 +136,7 @@ export default function ReviewDetail() {
         </ReviewHeader>
         <ReviewCard urls={reviewInfo.productImages} name={reviewInfo.productName} grade={reviewInfo.grade} link={reviewInfo.productLink} />
         <ContentText>{reviewInfo.reviewContent}</ContentText>
-        <ExtraInfoWrapper>
+        <ExtraInfoWrapper theme={theme}>
           <LikeyButton onClick={handleLikeButtonClick}><LikeyIcon category={isLike ? red_heart : gray_heart} /></LikeyButton>
           {loginRequired && <RequireLoginModal setLoginRequired={setLoginRequired} />}
           <ExtraInfo>

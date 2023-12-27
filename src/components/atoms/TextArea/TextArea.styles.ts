@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-const TextBox = styled.textarea<{color: string, width: string, height: string, fontSize: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, commentForm: string | undefined}>`
+const TextBox = styled.textarea<{color: string, width: string, height: string, fontSize: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, commentform: string | undefined}>`
   width: ${props => props.width};
   height: ${props => props.height};
   background-color: ${props => props.color};
@@ -12,7 +12,7 @@ const TextBox = styled.textarea<{color: string, width: string, height: string, f
   font-size: ${props => props.fontSize};
   color: ${({ theme }) => theme.textColor};
 
-  ${props => props.commentForm === "yes" &&
+  ${props => props.commentform === "yes" &&
     css`
       color: black;
     ` }

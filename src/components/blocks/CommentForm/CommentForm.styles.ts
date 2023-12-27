@@ -3,8 +3,7 @@ import Button from "../../atoms/Button/Button";
 import TextArea from "../../atoms/TextArea/TextArea";
 
 const Form = styled.form`
-  width: 46%;
-  min-width: 787px;
+  width: 800px;
   height: 120px;
   border: 1.5px solid rgba(182, 182, 182, .1);
   border-radius: 15px;
@@ -14,6 +13,7 @@ const Form = styled.form`
   justify-content: center;
   align-items: center;
   position: relative;
+  padding-top: 5px;
 `
 
 const NoAuthCover = styled.div<{theme: "light" | "dark"}>`
