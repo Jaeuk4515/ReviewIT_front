@@ -231,14 +231,7 @@ export default function ReviewCreate() {
       </ReviewInfoArea>
       <InputArea style={{"width": "50%", "minWidth": "800px"}}>
         <h3>리뷰</h3>
-        <TextArea 
-          color={theme === "light" ? "white" : "#626265"} 
-          width="100%" height="400px" 
-          fontSize="18px" 
-          name="reviewContent" 
-          value={content.reviewContent} 
-          onChange={handleTextAreaChange} 
-        />
+        <TextArea color={theme === "light" ? "white" : "#626265"} width="100%" height="400px" fontSize="18px" name="reviewContent" value={content.reviewContent} onChange={handleTextAreaChange} />
         <TextLimit>{`( ${textCount} / 1000 )`}</TextLimit>
       </InputArea>
       <ButtonArea>

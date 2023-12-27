@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Comment from "../../atoms/Comment/Comment";
 import Likey from "../../atoms/Likey/Likey";
 import CommentForm from "../../blocks/CommentForm/CommentForm";
@@ -41,6 +41,7 @@ export default function ReviewDetail() {
   const [ commentInfo, setCommentInfo ] = useState<CommentInfo[]>([]);
   const navigate = useNavigate();
   const { theme } = useSelector((state: RootState) => state.theme);
+  const location = useLocation();
 
   useEffect(() => {
     const getReviewInfo = async () => {
@@ -111,7 +112,12 @@ export default function ReviewDetail() {
           <UserName>{reviewInfo.nickname}</UserName>
           <WritedTime>{reviewInfo.createdAt}</WritedTime>
         </UserInfoArea>
-        <Link to={`/posts?category=${checkCategory() ? "none" : category}&page=${pageInfo.page}&perPage=${pageInfo.perPage}&reset=no`}><ListButton>목록</ListButton></Link>
+        <Link to={
+          // 목록 버튼 클릭 시, 전체 리뷰 페이지에서 들어온 경우는 전체 리뷰 페이지로 보내고 강추/비추 페이지에서 들어온 경우는 강추/비추 페이지로 보냄
+          !location.state?.recommend 
+            ? `/posts?category=${checkCategory() ? "none" : category}&page=${pageInfo.page}&perPage=${pageInfo.perPage}&reset=no`
+            : `/posts/recommendation/${location.state.recommend}?page=${pageInfo.page}&perPage=${pageInfo.perPage}`
+          }><ListButton>목록</ListButton></Link>
       </UserInfoWrapper>
       <PostContent>
         <ReviewHeader>

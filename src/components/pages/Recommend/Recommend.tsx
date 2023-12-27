@@ -5,7 +5,7 @@ import bad from "../../../assets/icons/bad.svg";
 import Search from "../../atoms/Search/Search";
 import { GridPost, ReviewPostArea } from "../Review/Review.styled";
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
@@ -26,6 +26,7 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
   const dispatch = useDispatch();
   const [ isSearching, setIsSearching ] = useState(false);
   const { theme } = useSelector((state: RootState) => state.theme);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getReviewInfo = async () => {
@@ -36,6 +37,14 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
 
     getReviewInfo();
   }, [page, perPage]);
+
+  const moveToReviewDetial = (reviewId: string) => {
+    navigate(`/posts/detail/${reviewId}`, {
+      state: {
+        recommend: pageType
+      }
+    });
+  };
 
   return (
     <RecommendPage>
@@ -52,7 +61,8 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
       <Search color="white" width="500px" height="50px" mode={pageType} isSearching={isSearching} setIsSearching={setIsSearching} pageController={pageController} />
       <ReviewPostArea>
         {postInfo.map(({ reviewId, productImage, productName, grade }) => {
-          return <Link to={`/posts/detail/${reviewId}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>
+          // return <Link to={`/posts/detail/${reviewId}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>
+          return <div key={reviewId} onClick={() => moveToReviewDetial(reviewId)} style={{cursor: "pointer"}}><GridPost className="" url={productImage} name={productName} grade={grade} /></div>
         })}
       </ReviewPostArea>
       <PaginationArea>
