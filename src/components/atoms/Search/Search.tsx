@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { SearchArea, SearchBox, CancelButton, XIcon, IconArea } from "./Search.styles";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { resetSearchText, setSearchText } from "../../../store/slices/searchText
 import { setPageInfo } from "../../../store/slices/pageSlice";
 import { setPostInfo } from "../../../store/slices/postInfoSlice";
 import PageControl from "../../../services/pageControl";
+import { origin_URL } from "../../../App";
 
 interface SearchType {
   color: string;
@@ -39,12 +40,12 @@ export default function Search({color, width, height, mode, isSearching, setIsSe
     let response;
     if (mode === "whole") {
       if (category === "none") {
-        response = await axios.get(`http://localhost:3001/review?page=${1}&perPage=${pageInfo.perPage}`);
+        response = await axios.get(`${origin_URL}/review?page=${1}&perPage=${pageInfo.perPage}`);
       } else {
-        response = await axios.get(`http://localhost:3001/review/category/${category}?page=${1}&perPage=${pageInfo.perPage}`);
+        response = await axios.get(`${origin_URL}/review/category/${category}?page=${1}&perPage=${pageInfo.perPage}`);
       };
     } else {
-      response = await axios.get(`http://localhost:3001/review/recommendation/${mode}?page=${1}&perPage=${pageInfo.perPage}`);
+      response = await axios.get(`${origin_URL}/review/recommendation/${mode}?page=${1}&perPage=${pageInfo.perPage}`);
     }
     setIsSearching!(false);
     dispatch(setPageInfo({ page: 1, perPage: pageInfo.perPage, totalPage: response.data.totalPage }));
@@ -64,12 +65,12 @@ export default function Search({color, width, height, mode, isSearching, setIsSe
     // 검색어가 있는 경우
     if (mode === "whole") {  // 전체 리뷰 페이지에서의 검색인 경우
       if (category === "none") {
-        response = await axios.get(`http://localhost:3001/review/search/${searchText}?page=${1}&perPage=${pageInfo.perPage}`);
+        response = await axios.get(`${origin_URL}/review/search/${searchText}?page=${1}&perPage=${pageInfo.perPage}`);
       } else {
-        response = await axios.get(`http://localhost:3001/review/search/${searchText}?category=${category}&page=${1}&perPage=${pageInfo.perPage}`);
+        response = await axios.get(`${origin_URL}/review/search/${searchText}?category=${category}&page=${1}&perPage=${pageInfo.perPage}`);
       };
     } else {  // 강추 or 비추 페이지에서의 검색인 경우 
-      response = await axios.get(`http://localhost:3001/review/search/${searchText}?category=${mode}&page=${1}&perPage=${pageInfo.perPage}`);
+      response = await axios.get(`${origin_URL}/review/search/${searchText}?category=${mode}&page=${1}&perPage=${pageInfo.perPage}`);
     };
     setIsSearching!(true);  // 검색 모드로 진입 
     dispatch(setPageInfo({ page: 1, perPage: pageInfo.perPage, totalPage: response.data.totalPage }));

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
 import { setLogin } from "../../../../store/slices/loginSlice";
+import { origin_URL } from "../../../../App";
 
 type UserData = {
   nickname: string;
@@ -22,7 +23,7 @@ export default function ProfileModal({ userData, setProfileModal }: ProfileModal
   const dispatch = useDispatch();
 
   const logout = async () => {
-    const response = await axios.get("http://localhost:3001/user/logout", { withCredentials: true });
+    const response = await axios.get(`${origin_URL}/user/logout`, { withCredentials: true });
     if (response.data.message === "success") {
       dispatch(setLogin(false));
       setProfileModal(false);

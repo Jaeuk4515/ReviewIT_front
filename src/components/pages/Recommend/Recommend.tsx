@@ -14,6 +14,7 @@ import PageControl from "../../../services/pageControl";
 import { setPageInfo } from "../../../store/slices/pageSlice";
 import { setPostInfo } from "../../../store/slices/postInfoSlice";
 import { PaginationArea, ShiftButton, FirstIcon, PrevIcon, NextIcon, LastIcon, NumberArea, NumberMark } from "../Review/Review.styled";
+import { origin_URL } from "../../../App";
 
 export default function Recommend({ pageType }: {pageType: "good-product" | "bad-product"}) {
   const [ searchParams, setSearchParams ] = useSearchParams();
@@ -30,7 +31,7 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
 
   useEffect(() => {
     const getReviewInfo = async () => {
-      const response = await axios.get(`http://localhost:3001/review/recommendation/${pageType}?page=${page}&perPage=${perPage}`);
+      const response = await axios.get(`${origin_URL}/review/recommendation/${pageType}?page=${page}&perPage=${perPage}`);
       dispatch(setPageInfo({ page: page, perPage: perPage, totalPage: response.data.totalPage }));
       dispatch(setPostInfo(response.data.thumbnailInfo));
     };
@@ -61,7 +62,6 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
       <Search color="white" width="500px" height="50px" mode={pageType} isSearching={isSearching} setIsSearching={setIsSearching} pageController={pageController} />
       <ReviewPostArea>
         {postInfo.map(({ reviewId, productImage, productName, grade }) => {
-          // return <Link to={`/posts/detail/${reviewId}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>
           return <div key={reviewId} onClick={() => moveToReviewDetial(reviewId)} style={{cursor: "pointer"}}><GridPost className="" url={productImage} name={productName} grade={grade} /></div>
         })}
       </ReviewPostArea>

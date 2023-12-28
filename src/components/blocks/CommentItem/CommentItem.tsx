@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { CommentArea, UserInfoArea, Profile, UserName, WritedTime, CommentText, DeleteButton } from "./CommentItem.styles";
 import axios from "axios";
-import trash from "../../../assets/icons/delete.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
 import { CommentInfo } from "../../pages/ReviewDetail/ReviewDetail";
+import { origin_URL } from "../../../App";
 
 export interface CommentItemType {
   cId: string;
@@ -30,7 +30,7 @@ export default function CommentItem({ cId, userId, text, createdAt, commentInfo,
   
   useEffect(() => {
     const getUserInfo = async () => {
-      const response = await axios.post("http://localhost:3001/user/getUserInfo", { _id: userId });
+      const response = await axios.post(`${origin_URL}/user/getUserInfo`, { _id: userId });
       const { userImage, nickname } = response.data;
       setUserInfo({ userImage, nickname });
     };
@@ -39,7 +39,7 @@ export default function CommentItem({ cId, userId, text, createdAt, commentInfo,
   }, []);
 
   const deleteComment = async () => {
-    const response = await axios.delete(`http://localhost:3001/comment/delete/${cId}`);
+    const response = await axios.delete(`${origin_URL}/comment/delete/${cId}`);
     if (response.data.message === "success") {
       let newCommentInfo = commentInfo.filter(comment => comment.commentId !== cId);
       setCommentInfo(newCommentInfo);

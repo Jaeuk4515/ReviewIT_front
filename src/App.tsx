@@ -19,6 +19,8 @@ import { setLogin } from './store/slices/loginSlice';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './theme/theme';
 
+export const origin_URL = "http://localhost:3001";
+
 const cookies = new Cookies();
 
 function App() {

@@ -13,7 +13,7 @@ const Form = styled.form`
   justify-content: center;
   align-items: center;
   position: relative;
-  padding-top: 5px;
+  padding-top: 3px;
 `
 
 const NoAuthCover = styled.div<{theme: "light" | "dark"}>`

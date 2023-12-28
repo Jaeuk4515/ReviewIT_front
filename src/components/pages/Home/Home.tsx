@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
 import { setPostInfo } from "../../../store/slices/postInfoSlice";
 import Banner from "../../blocks/Banner/Banner";
+import { origin_URL } from "../../../App";
 
 export default function Home() {
   const postInfo = useSelector((state: RootState) => state.postInfo);
@@ -46,7 +47,7 @@ export default function Home() {
 
   useEffect(() => {
     const getReviewsInfo = async () => {
-      const response = await axios.get("http://localhost:3001/review/topReviews");
+      const response = await axios.get(`${origin_URL}/review/topReviews`);
       dispatch(setPostInfo(response.data));
     };
 

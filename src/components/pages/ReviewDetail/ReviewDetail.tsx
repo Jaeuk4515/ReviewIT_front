@@ -18,6 +18,7 @@ import { setLikey, setReviewInfo } from "../../../store/slices/reviewInfoSlice";
 import RequireLoginModal from "../../blocks/Modal/RequireLoginModal/RequireLoginModal";
 import user_default from "../../../assets/icons/user_default.svg";
 import { ModalBg } from "../../blocks/Modal/AuthModal/AuthModal.styles";
+import { origin_URL } from "../../../App";
 
 export interface CommentInfo {
   commentId: string;
@@ -46,7 +47,7 @@ export default function ReviewDetail() {
   useEffect(() => {
     const getReviewInfo = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
+        const response = await axios.get(`${origin_URL}/review/${param.pId}`);
         const { nickname, userImage } = await getUserInfoById(response.data.userId);
         const date = new Date(response.data.createdAt);
         dispatch(setReviewInfo({
@@ -65,7 +66,7 @@ export default function ReviewDetail() {
     };
 
     const getCommentData = async () => {
-      const response = await axios.get(`http://localhost:3001/comment/${param.pId}`);
+      const response = await axios.get(`${origin_URL}/comment/${param.pId}`);
       setCommentInfo(response.data);
     };
 
@@ -86,7 +87,7 @@ export default function ReviewDetail() {
       setLoginRequired(true);
       return;
     };
-    const response = await axios.post(`http://localhost:3001/review/likey/${param.pId}/${user._id}`);
+    const response = await axios.post(`${origin_URL}/review/likey/${param.pId}/${user._id}`);
     dispatch(setLikey(response.data));
   };
 

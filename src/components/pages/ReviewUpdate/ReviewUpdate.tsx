@@ -40,6 +40,7 @@ import { Img } from "../../atoms/Category/Category.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
 import { setNewContent, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setNewProductImages, setDeletedProductImages, setReviewContent } from "../../../store/slices/newContentSlice";
+import { origin_URL } from "../../../App";
 
 export default function ReviewUpdate() {
   const param = useParams();
@@ -62,7 +63,7 @@ export default function ReviewUpdate() {
   useEffect(() => {
     const getReviewInfo = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/review/${param.pId}`);
+        const response = await axios.get(`${origin_URL}/review/${param.pId}`);
         dispatch(setNewContent(response.data));
         setTextCount(response.data.reviewContent.length);
         setShowImages(response.data.productImages);
@@ -100,7 +101,6 @@ export default function ReviewUpdate() {
       }
       imgUrls.push(URL.createObjectURL(imgFiles[i]));
     };
-    console.log('미리보기 이미지 : ', imgUrls);
     setShowImages(imgUrls);
 
     // 이전에 새로 추가한 이미지를 유지한채 또다시 새로 추가한 이미지가 있으면 추가
@@ -114,8 +114,6 @@ export default function ReviewUpdate() {
     });
 
     const newImgFiles = dataTransfer.files;
-
-    console.log('실제로 새로 추가된 이미지 : ', filesArray);
 
     dispatch(setNewProductImages(newImgFiles));
   };
@@ -200,7 +198,7 @@ export default function ReviewUpdate() {
     console.log(formData);
 
     // 서버로 전송
-    const response = await axios.patch(`http://localhost:3001/review/update/${param.pId}`, formData, {
+    const response = await axios.patch(`${origin_URL}/review/update/${param.pId}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

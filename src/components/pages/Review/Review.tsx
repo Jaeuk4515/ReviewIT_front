@@ -13,6 +13,7 @@ import { setPostInfo } from "../../../store/slices/postInfoSlice";
 import { setPageInfo } from "../../../store/slices/pageSlice";
 import PageControl from "../../../services/pageControl";
 import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
+import { origin_URL } from "../../../App";
 
 export type category = "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "none"
 
@@ -52,15 +53,15 @@ export default function Review() {
       let response;
       if (category === "none") {
         if (isSearching) {  // 검색인 경우 (카테고리 선택 X)
-          response = await axios.get(`http://localhost:3001/review/search/${searchText}?page=${page}&perPage=${perPage}`);
+          response = await axios.get(`${origin_URL}/review/search/${searchText}?page=${page}&perPage=${perPage}`);
         } else {  // 전체 조회 (검색 X)
-          response = await axios.get(`http://localhost:3001/review?page=${page}&perPage=${perPage}`);
+          response = await axios.get(`${origin_URL}/review?page=${page}&perPage=${perPage}`);
         };
       } else {
         if (isSearching) {  // 검색인 경우 (카테고리 선택 O)
-          response = await axios.get(`http://localhost:3001/review/search/${searchText}?category=${category}&page=${page}&perPage=${perPage}`);
+          response = await axios.get(`${origin_URL}/review/search/${searchText}?category=${category}&page=${page}&perPage=${perPage}`);
         } else {  // 전체 조회 (검색 X)
-          response = await axios.get(`http://localhost:3001/review/category/${category}?page=${page}&perPage=${perPage}`);
+          response = await axios.get(`${origin_URL}/review/category/${category}?page=${page}&perPage=${perPage}`);
         };
       };
       dispatch(setPageInfo({ page: page, perPage: perPage, totalPage: response.data.totalPage }));
@@ -77,23 +78,23 @@ export default function Review() {
         if (category === "none") {
           if (isSearching) {  // 검색인 경우 (카테고리 선택 X)
             if (!searchText) {  // 검색어를 지우기만하고 카테고리 변경 시 (카테고리 선택 X)
-              response = await axios.get(`http://localhost:3001/review?page=${1}&perPage=${pageInfo.perPage}`);
+              response = await axios.get(`${origin_URL}/review?page=${1}&perPage=${pageInfo.perPage}`);
             } else {
-              response = await axios.get(`http://localhost:3001/review/search/${searchText}?page=${1}&perPage=${pageInfo.perPage}`);
+              response = await axios.get(`${origin_URL}/review/search/${searchText}?page=${1}&perPage=${pageInfo.perPage}`);
             };
           } else {  // 전체 조회 (검색 X)
-            response = await axios.get(`http://localhost:3001/review?page=${1}&perPage=${pageInfo.perPage}`);
+            response = await axios.get(`${origin_URL}/review?page=${1}&perPage=${pageInfo.perPage}`);
           };
           dispatch(resetCategory());
         } else {
           if (isSearching) {  // 검색인 경우 (카테고리 선택 O)
             if (!searchText) {  // 검색어를 지우기만하고 카테고리 변경 시 (카테고리 선택 O)
-              response = await axios.get(`http://localhost:3001/review/category/${category}?page=${1}&perPage=${pageInfo.perPage}`);
+              response = await axios.get(`${origin_URL}/review/category/${category}?page=${1}&perPage=${pageInfo.perPage}`);
             } else {
-              response = await axios.get(`http://localhost:3001/review/search/${searchText}?category=${category}&page=${1}&perPage=${pageInfo.perPage}`);
+              response = await axios.get(`${origin_URL}/review/search/${searchText}?category=${category}&page=${1}&perPage=${pageInfo.perPage}`);
             };
           } else {  // 전체 조회 (검색 X)
-            response = await axios.get(`http://localhost:3001/review/category/${category}?page=${1}&perPage=${pageInfo.perPage}`);
+            response = await axios.get(`${origin_URL}/review/category/${category}?page=${1}&perPage=${pageInfo.perPage}`);
           };
           dispatch(setCategory(category as category));
         };
