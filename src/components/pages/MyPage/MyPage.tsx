@@ -15,6 +15,7 @@ import { setNickname, setUserImage } from "../../../store/slices/userSlice";
 import user_default from "../../../assets/icons/user_default.svg";
 import { CommentText, Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
+import { origin_URL } from "../../../App";
 
 interface ReviewInfo extends PostObject {
   reviewTitle: string;
@@ -62,17 +63,17 @@ export default function MyPage() {
     // userId가 현재 user의 id인 리뷰들 가져오는 api 호출 
     const getMyReviews = async () => {
       if (category.category === "내가 쓴 리뷰") {
-        const response = await axios.get(`http://localhost:3001/review/myReviews/${param.userId}?category=write_review`);
+        const response = await axios.get(`${origin_URL}/review/myReviews/${param.userId}?category=write_review`);
         setReviewInfo(response.data);
         setCommentInfo([]);
       };
       if (category.category === "좋아요 한 리뷰") {
-        const response = await axios.get(`http://localhost:3001/review/myReviews/${param.userId}?category=like_review`);
+        const response = await axios.get(`${origin_URL}/review/myReviews/${param.userId}?category=like_review`);
         setReviewInfo(response.data);
         setCommentInfo([]);
       };
       if (category.category === "내가 쓴 댓글") {
-        const response = await axios.get(`http://localhost:3001/review/myReviews/${param.userId}?category=write_comment`);
+        const response = await axios.get(`${origin_URL}/review/myReviews/${param.userId}?category=write_comment`);
         setReviewInfo([]);
         setCommentInfo(response.data);
       };
@@ -103,7 +104,7 @@ export default function MyPage() {
     if (userInfo.userImage) formData.append('userImage', userInfo.userImage);
     formData.append('nickname', userInfo.nickname);
     const isDefault = showImage === user_default;  // 유저 이미지를 기본 이미지로 바꿨을 경우 
-    const response = await axios.patch(`http://localhost:3001/user/update/${param.userId}?default=${isDefault ? "yes" : "no"}`, formData, {
+    const response = await axios.patch(`${origin_URL}/user/update/${param.userId}?default=${isDefault ? "yes" : "no"}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

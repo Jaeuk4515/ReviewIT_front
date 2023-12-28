@@ -40,6 +40,7 @@ import { Img } from "../../atoms/Category/Category.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
 import { setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setReviewContent, resetContent } from "../../../store/slices/contentSlice";
+import { origin_URL } from "../../../App";
 
 export interface content {
   userId: string;
@@ -114,7 +115,7 @@ export default function ReviewCreate() {
       };
     };
     // 서버로 전송
-    const response = await axios.post("http://localhost:3001/review/create", formData, {
+    const response = await axios.post(`${origin_URL}/review/create`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

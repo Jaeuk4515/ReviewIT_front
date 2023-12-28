@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CommentInfo } from "../../pages/ReviewDetail/ReviewDetail";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
+import { origin_URL } from "../../../App";
 
 interface CommentFormType {
   url: string;
@@ -25,7 +26,7 @@ export default function CommentForm({ url, uId, rId, commentInfo, setCommentInfo
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await axios.post('http://localhost:3001/comment/create', { 
+    const response = await axios.post(`${origin_URL}/comment/create`, { 
       userId: uId,
       reviewId: rId,
       text: commentText

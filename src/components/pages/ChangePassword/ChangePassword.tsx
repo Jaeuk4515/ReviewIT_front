@@ -6,6 +6,7 @@ import SuccessModal from "../../blocks/Modal/SuccessModal/SuccessModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
 import { useNavigate } from "react-router-dom";
+import { origin_URL } from "../../../App";
 
 type StateObj = {
   userInfo: {
@@ -96,7 +97,7 @@ export default function ChangePassword() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!inputInfo.userInfo.email || !inputInfo.userInfo.newPassword || !inputInfo.userInfo.confirmPassword) return;
-    const response = await axios.patch("http://localhost:3001/user/change-password", inputInfo.userInfo, {
+    const response = await axios.patch(`${origin_URL}/user/change-password`, inputInfo.userInfo, {
       headers: {
         "Content-Type": "application/json"
       }

@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
 import { setModal } from "../../../../store/slices/modalSlice";
 import { setLogin } from "../../../../store/slices/loginSlice";
+import { origin_URL } from "../../../../App";
 
 type StateObj = {
   userInfo: {
@@ -134,13 +135,11 @@ export default function AuthModal() {
         return;
       };
 
-      const response = await axios.post("http://localhost:3001/user/register", inputInfo.userInfo, {
+      const response = await axios.post(`${origin_URL}/user/register`, inputInfo.userInfo, {
         headers: {
           "Content-Type": "application/json"
         }
       });
-
-      console.log(response.data);
 
       if (response.data.message === '사용중인 이메일입니다.') {
         dispatch({ type: 'errorUpdate', payload: { name: "emailError", value: response.data.message } });
@@ -164,7 +163,7 @@ export default function AuthModal() {
       const loginInfo = { email: inputInfo.userInfo.email, password: inputInfo.userInfo.password };
       dispatch({ type: "errorInit", payload: initialState.inputError });
       if (!loginInfo.email || !loginInfo.password) return;
-      const response = await axios.post("http://localhost:3001/user/login", loginInfo, {
+      const response = await axios.post(`${origin_URL}/user/login`, loginInfo, {
         headers: {
           "Content-Type": "application/json"
         },
