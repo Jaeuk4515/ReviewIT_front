@@ -28,6 +28,7 @@ export default function Header() {
     if (login) {
       const getData = async () => {
         const response = await getUserInfo();
+        console.log(response);
         if (!response) return;
         const { _id, nickname, email, userImage, likey } = response;
         dispatch(setUser({ _id, nickname, email, userImage, likey }));
