@@ -5,6 +5,7 @@ import { origin_URL } from '../App';
 export default async function getUserInfo() {
   const cookies = new Cookies();
   const jwtToken = cookies.get('token');
+  console.log(jwtToken);
   
   if (!jwtToken) return;
 
