@@ -11,8 +11,7 @@ import { setUser } from "../../../store/slices/userSlice";
 import { setModal } from "../../../store/slices/modalSlice";
 import { ModalBg } from "../Modal/AuthModal/AuthModal.styles";
 import { setTheme } from "../../../store/slices/themeSlice";
-// import Cookies from 'universal-cookie';
-import { Cookies } from 'react-cookie';
+import Cookies from 'universal-cookie';
 
 export default function Header() {
   const login = useSelector((state: RootState) => state.login);
@@ -29,8 +28,7 @@ export default function Header() {
   useEffect(() => {
     if (login) {
       const getData = async () => {
-        // const cookies = new Cookies(null, { path: '/', domain: 'robotic-heaven-409619.du.r.appspot.com' });
-        const cookies = new Cookies();
+        const cookies = new Cookies(null, { path: '/', domain: 'robotic-heaven-409619.du.r.appspot.com' });
         const jwtToken = cookies.get('token');
         console.log('Token before getUserInfo:', jwtToken)
         const response = await getUserInfo();
