@@ -28,7 +28,7 @@ export default function Header() {
   useEffect(() => {
     if (login) {
       const getData = async () => {
-        const cookies = new Cookies(null, { path: '/', secure: true, sameSite: 'none' });
+        const cookies = new Cookies(null, { path: '/', domain: 'https://robotic-heaven-409619.du.r.appspot.com' });
         const jwtToken = cookies.get('token');
         console.log('Token before getUserInfo:', jwtToken)
         const response = await getUserInfo();
