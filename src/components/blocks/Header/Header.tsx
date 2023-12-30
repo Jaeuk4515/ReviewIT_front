@@ -28,7 +28,7 @@ export default function Header() {
   useEffect(() => {
     if (login) {
       const getData = async () => {
-        const cookies = new Cookies();
+        const cookies = new Cookies(null, { path: '/' });
         const jwtToken = cookies.get('token');
         console.log('Token before getUserInfo:', jwtToken)
         const response = await getUserInfo();

@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 import { origin_URL } from '../App';
 
 export default async function getUserInfo() {
-  const cookies = new Cookies();
+  const cookies = new Cookies(null, { path: '/' });
   const jwtToken = cookies.get('token');
   console.log(jwtToken);
   

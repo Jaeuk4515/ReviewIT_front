@@ -39,7 +39,7 @@ const Img = styled.div<{category: string}>`
 `
 
 const Name = styled.span<{padding: string, active: "on" | "off", theme: "light" | "dark"}>`
-  font-size: 20px;
+  font-size: 19px;
   height: 25px;
   line-height: 25px;
   padding-left: ${props => props.padding};
