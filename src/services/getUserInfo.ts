@@ -1,11 +1,8 @@
 import axios from 'axios';
-import Cookies from 'universal-cookie';
-import { origin_URL } from '../App';
+import { cookies, origin_URL } from '../App';
 
 export default async function getUserInfo() {
-  const cookies = new Cookies(null, { path: '/', domain: 'https://review-it-tawny.vercel.app' });
   const jwtToken = cookies.get('token');
-  console.log(jwtToken);
   
   if (!jwtToken) return;
 

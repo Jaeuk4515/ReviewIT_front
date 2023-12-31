@@ -11,7 +11,6 @@ import { setUser } from "../../../store/slices/userSlice";
 import { setModal } from "../../../store/slices/modalSlice";
 import { ModalBg } from "../Modal/AuthModal/AuthModal.styles";
 import { setTheme } from "../../../store/slices/themeSlice";
-import Cookies from 'universal-cookie';
 
 export default function Header() {
   const login = useSelector((state: RootState) => state.login);
@@ -28,11 +27,7 @@ export default function Header() {
   useEffect(() => {
     if (login) {
       const getData = async () => {
-        const cookies = new Cookies(null, { path: '/', domain: 'https://review-it-tawny.vercel.app' });
-        const jwtToken = cookies.get('token');
-        console.log('Token before getUserInfo:', jwtToken)
         const response = await getUserInfo();
-        console.log(response);
         if (!response) return;
         const { _id, nickname, email, userImage, likey } = response;
         dispatch(setUser({ _id, nickname, email, userImage, likey }));

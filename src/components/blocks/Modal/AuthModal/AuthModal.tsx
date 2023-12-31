@@ -21,8 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
 import { setModal } from "../../../../store/slices/modalSlice";
 import { setLogin } from "../../../../store/slices/loginSlice";
-import { origin_URL } from "../../../../App";
-import Cookies from 'universal-cookie';
+import { cookies, origin_URL } from "../../../../App";
 
 type StateObj = {
   userInfo: {
@@ -169,7 +168,6 @@ export default function AuthModal() {
           "Content-Type": "application/json"
         }
       });
-      console.log(response.data);
       if (response.data.message === "가입되지 않은 회원입니다.") {
         dispatch({ type: "errorUpdate", payload: { name: "emailError", value: response.data.message } });
         return;
@@ -179,7 +177,6 @@ export default function AuthModal() {
         dispatch({ type: "errorUpdate", payload: { name: "passwordError", value: response.data.message } });
         return;
       };
-      const cookies = new Cookies();
       cookies.set('token', response.data.value, { path: '/' });
       Dispatch(setModal(""));
       Dispatch(setLogin(true));
