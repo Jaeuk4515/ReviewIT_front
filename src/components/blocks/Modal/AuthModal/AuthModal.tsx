@@ -22,6 +22,7 @@ import { RootState } from "../../../../store/RootState";
 import { setModal } from "../../../../store/slices/modalSlice";
 import { setLogin } from "../../../../store/slices/loginSlice";
 import { origin_URL } from "../../../../App";
+import Cookies from 'universal-cookie';
 
 type StateObj = {
   userInfo: {
@@ -166,10 +167,9 @@ export default function AuthModal() {
       const response = await axios.post(`${origin_URL}/user/login`, loginInfo, {
         headers: {
           "Content-Type": "application/json"
-        },
-        withCredentials: true
+        }
       });
-      console.log(response);
+      console.log(response.data);
       if (response.data.message === "가입되지 않은 회원입니다.") {
         dispatch({ type: "errorUpdate", payload: { name: "emailError", value: response.data.message } });
         return;
@@ -179,6 +179,8 @@ export default function AuthModal() {
         dispatch({ type: "errorUpdate", payload: { name: "passwordError", value: response.data.message } });
         return;
       };
+      const cookies = new Cookies();
+      cookies.set('token', response.data.value, { path: '/' });
       Dispatch(setModal(""));
       Dispatch(setLogin(true));
     };
