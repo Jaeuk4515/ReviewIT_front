@@ -16,6 +16,7 @@ import user_default from "../../../assets/icons/user_default.svg";
 import { CommentText, Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import { origin_URL } from "../../../App";
+import SuccessModal from "../../blocks/Modal/SuccessModal/SuccessModal";
 
 interface ReviewInfo extends PostObject {
   reviewTitle: string;
@@ -50,6 +51,7 @@ export default function MyPage() {
   const [ showImage, setShowImage ] = useState("");
   const [ deleteModal, setDeleteModal ] = useState(false);
   const { theme } = useSelector((state: RootState) => state.theme);
+  const [ success, setSuccess ] = useState(false);
 
   useEffect(() => {
     if (!login) navigate("/");
@@ -117,6 +119,7 @@ export default function MyPage() {
       nickname: nickname
     });
     setShowImage("");
+    setSuccess(true);
   };
 
   const changeDefaultImage = () => {
@@ -159,6 +162,7 @@ export default function MyPage() {
             </InputArea>
             <ButtonArea>
               <UpdateButton onClick={handleSubmit}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>저장</span></UpdateButton>
+              {success && <SuccessModal mode="changeuserinfo" setsuccess={setSuccess} />}
               <DeleteIdButton onClick={deleteAccount}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>회원 탈퇴</span></DeleteIdButton>
               {deleteModal && <AlertModal mode="deleteAccountAlert" setAlertModal={setDeleteModal} />}
             </ButtonArea>
