@@ -50,7 +50,7 @@ export default function SuccessModal({ mode, setsuccess }: SuccessModalType) {
 
   return (
     <ModalBg>
-      <ModalBox style={{height: "320px", gap: "1rem"}}>
+      <ModalBox style={mode === "changeuserinfo" ? {height: "320px", gap: "1rem"} : {}}>
         <Logo theme={theme} />
         <SuccessMessage>
           <SuccessMark />
