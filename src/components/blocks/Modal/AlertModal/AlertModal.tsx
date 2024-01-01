@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
 import { setLogin } from "../../../../store/slices/loginSlice";
-import { origin_URL } from "../../../../App";
+import { cookies, origin_URL } from "../../../../App";
+import { resetUser } from "../../../../store/slices/userSlice";
 
 interface AlertModalType {
   mode: "createAlert" | "deleteAlert" | "deleteAccountAlert";
@@ -33,6 +34,8 @@ export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModal
     if (mode === "deleteAccountAlert") {
       const response = await axios.delete(`${origin_URL}/user/delete/${user._id}`, { withCredentials: true });
       if (response.data.message === "success") {
+        cookies.remove('token', { path: '/' });
+        dispatch(resetUser());
         dispatch(setLogin(false));
         navigate("/");
       };

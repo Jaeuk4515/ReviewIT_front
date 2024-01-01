@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
 import { setLogin } from "../../../../store/slices/loginSlice";
 import { cookies } from "../../../../App";
+import { resetUser } from "../../../../store/slices/userSlice";
 
 type UserData = {
   nickname: string;
@@ -23,6 +24,7 @@ export default function ProfileModal({ userData, setProfileModal }: ProfileModal
 
   const logout = async () => {
     cookies.remove('token', { path: '/' });
+    dispatch(resetUser());
     dispatch(setLogin(false));
     setProfileModal(false);
   };
