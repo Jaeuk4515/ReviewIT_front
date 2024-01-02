@@ -5,6 +5,7 @@ const UserImg = styled(Img)`
   width: 35px;
   height: 35px;
   border-radius: 20px;
+  background-size: cover;
 `
 
 export { UserImg }

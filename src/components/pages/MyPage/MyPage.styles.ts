@@ -45,6 +45,7 @@ const UserImage = styled(Img)<{theme: "light" | "dark"}>`
   border: 1px solid ${props => props.theme === "light" ? "rgba(0, 0, 0, .1)" : "rgba(255, 255, 255, .3)"};
   border-radius: 100px;
   position: relative;
+  background-size: cover;
 `
 
 const UserImageCover = styled.div`
