@@ -171,9 +171,9 @@ export default function MyPage() {
         <SlimDivider className="" width="80%" minwidth="700px" />
         <UserReviewArea>
           <ReviewOptionArea>
-            <Category categoryName="내가 쓴 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 리뷰")) }} width="175px" />
-            <Category categoryName="좋아요 한 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("좋아요 한 리뷰")) }} width="195px" />
-            <Category categoryName="내가 쓴 댓글" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 댓글")) }} width="175px" />
+            <Category categoryName="내가 쓴 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 리뷰")) }} width="178px" />
+            <Category categoryName="좋아요 한 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("좋아요 한 리뷰")) }} width="198px" />
+            <Category categoryName="내가 쓴 댓글" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 댓글")) }} width="178px" />
           </ReviewOptionArea>
           {reviewInfo.map(({ reviewId, productImage, reviewTitle, productName, grade, createdAt }) => (
             <UserReviewInfo key={reviewId} productImage={productImage} reviewTitle={reviewTitle} productName={productName} grade={grade} createdAt={createdAt} onClick={() => moveToReviewDetail(reviewId)} />
