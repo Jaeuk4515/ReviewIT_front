@@ -16,7 +16,7 @@ const CategoryArea = styled.div`
 
 const CategoryButton = styled.div<{active: "on" | "off", theme: "light" | "dark", width: string | undefined}>`
   height: 45px;
-  width: ${props => props.width ? props.width : "130px"};
+  width: ${props => props.width ? props.width : "132px"};
   display: flex;
   justify-content: center;
   align-items: center;
