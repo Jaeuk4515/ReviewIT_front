@@ -3,17 +3,28 @@ import facebook from "../../../assets/icons/facebook.svg";
 import instagram from "../../../assets/icons/instagram.svg";
 import youtube from "../../../assets/icons/youtube.svg";
 import mail from "../../../assets/icons/mail.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/RootState";
+import { useNavigate } from "react-router-dom";
+import { resetCategory } from "../../../store/slices/categorySlice";
 
 export default function Footer() {
   const { theme } = useSelector((state: RootState) => state.theme);
+  const { category } = useSelector((state: RootState) => state.category);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const moveToHome = () => {
+    // 리뷰 페이지의 카테고리가 클릭된 상태에서 홈 화면 이동시 카테고리 state 초기화 -> 안하면 홈 화면의 카테고리 버튼이 활성화 되어있음 
+    if (category !== "none") dispatch(resetCategory());
+    navigate("/");
+  };
   
   return (
     <FooterWrapper>
       <FooterArea>
         <IconArea>
-          <FooterLogo theme={theme} />
+          <FooterLogo theme={theme} onClick={moveToHome} />
           <ContactIconArea>
             <ContactIcon icontype={facebook} />
             <ContactIcon icontype={instagram} />
