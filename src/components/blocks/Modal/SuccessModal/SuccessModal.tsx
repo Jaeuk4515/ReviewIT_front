@@ -51,9 +51,9 @@ export default function SuccessModal({ mode, setsuccess }: SuccessModalType) {
   return (
     <ModalBg>
       <ModalBox style={mode === "changeuserinfo" ? {height: "320px", gap: "1rem"} : {}}>
-        <Logo theme={theme} />
+        <Logo logotheme={theme} />
         <SuccessMessage>
-          <SuccessMark />
+          <SuccessMark logotheme={theme} />
           <ModalTitle>{getModalText()}</ModalTitle>
         </SuccessMessage>
         <ButtonWrapper>

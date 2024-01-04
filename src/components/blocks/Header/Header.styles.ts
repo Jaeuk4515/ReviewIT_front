@@ -35,12 +35,21 @@ const HeaderArea = styled.div`
   align-items: center;
   width: 80%;
   height: 100%;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 90%;
+  };
 `
 
-const HeaderLogo = styled(Logo)<{theme: "light" | "dark"}>`
+const HeaderLogo = styled(Logo)<{logotheme: "light" | "dark"}>`
   width: 160px;
   height: 35px;
   cursor: pointer;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 120px;
+    min-width: 120px;
+  };
 `
 
 const ButtonArea = styled.div`
@@ -48,9 +57,13 @@ const ButtonArea = styled.div`
   justify-content: center;
   align-items: center;
   gap: .6rem;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    gap: .2rem;
+  }
 `
 
-const ThemeButton = styled.div<{theme: "light" | "dark", animate: "on" | "off"}>`
+const ThemeButton = styled.div<{buttonTheme: "light" | "dark", animate: "on" | "off"}>`
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -61,7 +74,7 @@ const ThemeButton = styled.div<{theme: "light" | "dark", animate: "on" | "off"}>
   margin-right: 10px;
 
   &:hover {
-    background-color: ${props => props.theme === "light" ? "#f0f0f0" : "#4a4a4a"};
+    background-color: ${props => props.buttonTheme === "light" ? "#f0f0f0" : "#4a4a4a"};
   }
 
   ${props => props.animate === "on" &&
@@ -69,6 +82,10 @@ const ThemeButton = styled.div<{theme: "light" | "dark", animate: "on" | "off"}>
       animation: ${themeTrans} .2s linear;
     `
   }
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    margin-right: 0px;
+  };
 `
 
 const ThemeIcon = styled.div<{theme: "light" | "dark"}>`
@@ -87,6 +104,11 @@ const LoginButton = styled(SubmitButton)<{colorTheme: "light" | "dark"}>`
   height: 35px;
   width: 80px;
   font-size: 15px;
+  
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 45px;
+    font-size: 12px;
+  };
 `
 
 const RegisterButton = styled(SubmitButton)`
@@ -95,6 +117,11 @@ const RegisterButton = styled(SubmitButton)`
   height: 35px;
   width: 80px;
   font-size: 15px;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 55px;
+    font-size: 12px;
+  };
 `
 
 const WriteReviewButton = styled(SubmitButton)`
@@ -108,6 +135,11 @@ const WriteReviewButton = styled(SubmitButton)`
   height: 35px;
   font-size: 15px;
   margin-right: 10px;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 80px;
+    font-size: 12.5px;
+  };
 `
 
 const WriteIcon = styled(Write)`
@@ -115,6 +147,11 @@ const WriteIcon = styled(Write)`
   height: 15px;
   margin-right: 2px;
   fill: white;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 12px;
+    height: 12px;
+  };
 `
 
 const Profile = styled(UserProfile)`

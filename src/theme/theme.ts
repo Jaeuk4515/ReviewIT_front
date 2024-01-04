@@ -1,3 +1,9 @@
+const sizes = {
+  small: "600px",
+  medium: "1024px",
+  large: "1025px"
+};
+
 export const lightTheme = {
   backgroundColor: "#fff",
   textColor: "black",
@@ -29,6 +35,11 @@ export const lightTheme = {
   noAuthTextColor: "#8D98A4",
   errorTextColor: "#ff1919",
   errorPageTextColor: "#4370FF",
+  mediaQuery: {
+    small: `screen and (max-width: ${sizes.small})`,
+    medium: `screen and (max-width: ${sizes.medium})`,
+    large: `screen and (min-width: ${sizes.large})`
+  }
 };
 
 export const darkTheme = {
@@ -62,6 +73,11 @@ export const darkTheme = {
   noAuthTextColor: "#fff",
   errorTextColor: "#ff5e5e",
   errorPageTextColor: "#fff",
+  mediaQuery: {
+    small: `screen and (max-width: ${sizes.small})`,
+    medium: `screen and (max-width: ${sizes.medium})`,
+    large: `screen and (min-width: ${sizes.large})`
+  }
 };
 
 export const theme = {

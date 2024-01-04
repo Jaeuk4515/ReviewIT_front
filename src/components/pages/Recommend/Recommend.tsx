@@ -51,7 +51,7 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
     <RecommendPage>
       <TitleArea>
         <PageTitle style={{alignItems: "center", gap: "1rem"}}>
-          <PageIcon url={pageType === "good-product" ? good : bad} style={{width: "36px", height: "36px"}} />
+          <PageIcon logotheme={theme} url={pageType === "good-product" ? good : bad} style={{width: "36px", height: "36px"}} />
           <PageTitleText style={{fontSize: "30px", height: "36px", lineHeight: "36px"}}>{pageType === "good-product" ? "강추" : "비추"}</PageTitleText>
         </PageTitle>
         <MoreButton>

@@ -24,7 +24,7 @@ export default function Footer() {
     <FooterWrapper>
       <FooterArea>
         <IconArea>
-          <FooterLogo theme={theme} onClick={moveToHome} />
+          <FooterLogo logotheme={theme} onClick={moveToHome} />
           <ContactIconArea>
             <ContactIcon icontype={facebook} />
             <ContactIcon icontype={instagram} />

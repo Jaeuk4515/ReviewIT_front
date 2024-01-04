@@ -188,7 +188,7 @@ export default function AuthModal() {
     {!success ? 
       <ModalBg onClick={() => { Dispatch(setModal("")) }}>
         <Modal modaltype={modal as "login" | "signup"} onClick={(e) => e.stopPropagation()} onSubmit={handleSubmit} >
-          <Logo theme={theme} />
+          <Logo logotheme={theme} />
           <ModalTitle>{modal === "login" ? "로그인" : "회원가입"}</ModalTitle>
           <InputArea>
             {modal === "signup" && <InputBox theme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="닉네임" name="nickname" value={inputInfo.userInfo.nickname} onChange={(e) => handleChange(e, "nickname")} />}

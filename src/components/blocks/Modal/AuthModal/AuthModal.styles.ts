@@ -28,8 +28,8 @@ const Modal = styled.form<{modaltype: "login" | "signup"}>`
   background-color: ${({ theme }) => theme.headerColor};
 `
 
-const Logo = styled.div<{theme: "light" | "dark"}>`
-  background-image: url(${props => props.theme === "light" ? logo_light : logo_dark});
+const Logo = styled.div<{logotheme: "light" | "dark"}>`
+  background-image: url(${props => props.logotheme === "light" ? logo_light : logo_dark});
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

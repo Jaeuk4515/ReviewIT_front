@@ -39,6 +39,7 @@ export default function Home() {
   const [ scrollPosition, setScrollPosition ] = useState(0);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
+  const { theme } = useSelector((state: RootState) => state.theme);
   
   const goToReviews = (status: "good" | "bad") => () => {
     if (status === "good") navigate(`/posts/recommendation/good-product?page=1&perPage=${pageInfo.perPage}`);
@@ -95,7 +96,7 @@ export default function Home() {
           <PageText>
             <PageTitle>
               <PageTitleText>리뷰</PageTitleText>
-              <PageIcon url={review} />
+              <PageIcon logotheme={theme} url={review} />
             </PageTitle>
             <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
           </PageText>
@@ -111,7 +112,7 @@ export default function Home() {
           <PageText>
             <PageTitle>
               <PageTitleText>베스트 리뷰</PageTitleText>
-              <PageIcon url={hot} />
+              <PageIcon logotheme={theme} url={hot} />
             </PageTitle>
             <PageDes>많은 사람들에게 도움이 된 인기 리뷰들이에요</PageDes>
           </PageText>
@@ -137,9 +138,9 @@ export default function Home() {
         <PageText>
           <PageTitle>
             <PageTitleText>추천</PageTitleText>
-            <PageIcon url={thumbs_up} />
+            <PageIcon logotheme={theme} url={thumbs_up} />
             <PageTitleText style={{"marginLeft": "7px"}}>비추천</PageTitleText>
-            <PageIcon url={thumbs_down} />
+            <PageIcon logotheme={theme} url={thumbs_down} />
           </PageTitle>
           <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
         </PageText>

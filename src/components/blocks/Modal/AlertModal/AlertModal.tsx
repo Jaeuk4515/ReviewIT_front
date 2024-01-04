@@ -61,7 +61,7 @@ export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModal
   return (
     <ModalBg>
       <ModalBox style={{width: "420px", height: "320px", gap: '2.5rem'}}>
-        <Logo theme={theme} />
+        <Logo logotheme={theme} />
         <ModalText><AlertIcon category={alert} />{getModalText()}</ModalText>
         {
           mode === "createAlert" ?

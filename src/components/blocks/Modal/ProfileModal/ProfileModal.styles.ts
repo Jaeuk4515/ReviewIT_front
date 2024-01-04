@@ -7,7 +7,6 @@ const Ballon = styled.div`
   position: absolute;
   top: 60px;
   right: -27px;
-  // background-color: #F6FBFF;
   background-color: ${({ theme }) => theme.backgroundColor};
   z-index: 1800;
   border-radius: 15px;
@@ -31,7 +30,17 @@ const Ballon = styled.div`
     border: 1px solid #E0E0E0;
     border-right: none;
     border-bottom: none;
-  }
+
+    @media ${({ theme }) => theme.mediaQuery.small} {
+      right: 25px;
+    }
+  };
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 200px;
+    height: 145px;
+    right: -16px;
+  };
 `
 
 const InfoArea = styled.div`
@@ -55,6 +64,11 @@ const MyPageButton = styled(Button)`
   font-size: 17px;
   font-weight: bold;
   border: none;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 80px;
+    font-size: 14px;
+  };
 `
 
 const LogoutButton = styled(MyPageButton)`

@@ -62,17 +62,17 @@ export default function Header() {
     <HeaderWrapper>
       {profileModal && <ModalBg style={{ background: "initial", backdropFilter: "initial", zIndex: "1500" }} onClick={() => { setProfileModal(!profileModal) }} />}
       <HeaderArea>
-        <HeaderLogo theme={theme} onClick={moveToHome} />
+        <HeaderLogo logotheme={theme} onClick={moveToHome} />
         {
           !login ? 
           <ButtonArea>
-            <ThemeButton theme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
+            <ThemeButton buttonTheme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
             <LoginButton colorTheme={theme} onClick={() => { dispatch(setModal("login")) }}>로그인</LoginButton>
             <RegisterButton onClick={() => { dispatch(setModal("signup")) }}>회원가입</RegisterButton>
             {modal && <AuthModal />}
           </ButtonArea> : 
           <ButtonArea>
-            <ThemeButton theme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
+            <ThemeButton buttonTheme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
             <WriteReviewButton onClick={moveToCreate}>
               <WriteIcon />
               리뷰작성
