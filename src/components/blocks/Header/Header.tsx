@@ -66,13 +66,13 @@ export default function Header() {
         {
           !login ? 
           <ButtonArea>
-            <ThemeButton buttonTheme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
-            <LoginButton colorTheme={theme} onClick={() => { dispatch(setModal("login")) }}>로그인</LoginButton>
+            <ThemeButton buttontheme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
+            <LoginButton colortheme={theme} onClick={() => { dispatch(setModal("login")) }}>로그인</LoginButton>
             <RegisterButton onClick={() => { dispatch(setModal("signup")) }}>회원가입</RegisterButton>
             {modal && <AuthModal />}
           </ButtonArea> : 
           <ButtonArea>
-            <ThemeButton buttonTheme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
+            <ThemeButton buttontheme={theme} animate={isAnimating ? "on" : "off"} onClick={handleClick}><ThemeIcon theme={theme} /></ThemeButton>
             <WriteReviewButton onClick={moveToCreate}>
               <WriteIcon />
               리뷰작성

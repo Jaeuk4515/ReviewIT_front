@@ -53,8 +53,8 @@ export interface content {
   grade: 0 | 1 | 2 | 3 | 4 | 5;
 };
 
-export const categoryList = [ "컴퓨터", "노트북", "핸드폰", "모니터", "키보드", "마우스", "태블릿" ];
-export type categoryType = "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿";
+export const categoryList = [ "컴퓨터", "노트북", "핸드폰", "모니터", "키보드", "마우스", "태블릿", "스마트워치", "스피커" ];
+export type categoryType = "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "스마트워치" | "스피커";
 
 export default function ReviewCreate() {
   const [ option, setOption ] = useState(false);
@@ -181,7 +181,7 @@ export default function ReviewCreate() {
             <h3>카테고리</h3>
             <SelectBox>
               <Seleted theme={theme}><SelectedValue>{content.category}</SelectedValue></Seleted>
-              <ArrowWrapper><Arrow onClick={handleOption} /></ArrowWrapper>
+              <ArrowWrapper onClick={handleOption}><Arrow /></ArrowWrapper>
               <OptionBox on={option.toString()}>
                 <OptionWrapper>
                   {categoryList.map((name, idx) => (

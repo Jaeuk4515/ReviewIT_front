@@ -8,6 +8,8 @@ import tablet from "../assets/icons/tablet.svg";
 import review_write from "../assets/icons/review_write.svg";
 import review_likey from "../assets/icons/review_likey.svg";
 import comment_icon from "../assets/icons/chat.svg";
+import smart_watch from "../assets/icons/smart-watch.svg";
+import speaker from "../assets/icons/speaker.svg";
 
 export default function getCategory(categoryName: string) {
   let svg = "";
@@ -42,6 +44,12 @@ export default function getCategory(categoryName: string) {
       break;
     case "내가 쓴 댓글":
       svg = comment_icon;
+      break;
+    case "스마트워치":
+      svg = smart_watch;
+      break;
+    case "스피커":
+      svg = speaker;
       break;
   };
 

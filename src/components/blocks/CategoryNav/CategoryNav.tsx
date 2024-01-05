@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 import Category from "../../atoms/Category/Category";
-import { CategoryNavBar, NavBar } from "./CategoryNav.styles";
+import { CategoryNavBar, NavBar, LeftShiftButton, RightShiftButton } from "./CategoryNav.styles";
 import { RootState } from "../../../store/RootState";
 import { useNavigate } from "react-router-dom";
 import { category } from "../../pages/Review/Review";
+import { useEffect, useRef, useState } from "react";
 
 interface CategoryNavType {
   from?: string;
@@ -15,6 +16,9 @@ export default function CategoryNav({ from, setCategoryQuery, setResetQuery }: C
   const categoryObj = useSelector((state: RootState) => state.category);
   const pageInfo = useSelector((state: RootState) => state.page);
   const navigate = useNavigate();
+  const [ scrollPosition, setScrollPosition ] = useState(0);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const [ maxScrollLeft, setMaxScrollLeft ] = useState(0);  // 스크롤 가능한 최대 너비를 가져와서 설정
 
   const categroyChange = async (categoryName: category) => {
     if (from === "home") {
@@ -25,9 +29,31 @@ export default function CategoryNav({ from, setCategoryQuery, setResetQuery }: C
     setResetQuery!("yes");
   };
 
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth"
+      });
+    };
+  }, [scrollPosition]);
+
+  useEffect(() => {
+    if (carouselRef.current) setMaxScrollLeft(carouselRef.current.scrollWidth - carouselRef.current.clientWidth);
+  }, [window.innerWidth]);
+
+  const handlePrevClick = () => {
+    if (carouselRef.current) setScrollPosition(0);
+  };
+
+  const handleNextClick = () => {
+    if (carouselRef.current) setScrollPosition(maxScrollLeft);
+  };
+
   return (
     <CategoryNavBar>
-      <NavBar>
+      <LeftShiftButton className="" direction="left" state={scrollPosition > 0 ? "enable" : "disable"} onClick={handlePrevClick} />
+      <NavBar ref={carouselRef}>
         <Category categoryName="컴퓨터" nameLeftPadding="0px" onClick={() => categroyChange("컴퓨터")} />
         <Category categoryName="노트북" nameLeftPadding="2px" onClick={() => categroyChange("노트북")} />
         <Category categoryName="핸드폰" nameLeftPadding="0px" onClick={() => categroyChange("핸드폰")} />
@@ -35,51 +61,10 @@ export default function CategoryNav({ from, setCategoryQuery, setResetQuery }: C
         <Category categoryName="키보드" nameLeftPadding="2px" onClick={() => categroyChange("키보드")} />
         <Category categoryName="마우스" nameLeftPadding="1px" onClick={() => categroyChange("마우스")} />
         <Category categoryName="태블릿" nameLeftPadding="2px" onClick={() => categroyChange("태블릿")} />
+        <Category categoryName="스마트워치" nameLeftPadding="2px" onClick={() => categroyChange("스마트워치")} width="162px" />
+        <Category categoryName="스피커" nameLeftPadding="2px" onClick={() => categroyChange("스피커")} />
       </NavBar>
+      <RightShiftButton className="" direction="right" state={scrollPosition < maxScrollLeft ? "enable" : "disable"} onClick={handleNextClick} />
     </CategoryNavBar>
   )
 }
-
-// import { useDispatch, useSelector } from "react-redux";
-// import Category from "../../atoms/Category/Category";
-// import { CategoryNavBar, NavBar } from "./CategoryNav.styles";
-// import { RootState } from "../../../store/RootState";
-// import axios from "axios";
-// import { setPageInfo } from "../../../store/slices/pageSlice";
-// import { setPostInfo } from "../../../store/slices/postInfoSlice";
-// import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
-// import { useNavigate } from "react-router-dom";
-
-// interface CategoryNavType {
-//   from?: string;
-// }
-
-// export default function CategoryNav({ from }: CategoryNavType) {
-//   const postInfo = useSelector((state: RootState) => state.postInfo);
-//   const pageInfo = useSelector((state: RootState) => state.page);
-//   const categoryObj = useSelector((state: RootState) => state.category);
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-
-//   const categroyChange = async (categoryName: "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "none") => {
-//     if (from === "home") {
-//       navigate("/posts");
-//       return;
-//     };
-//     categoryObj.category === categoryName ? dispatch(resetCategory()) : dispatch(setCategory(categoryName));
-//   };
-
-//   return (
-//     <CategoryNavBar>
-//       <NavBar>
-//         <Category categoryName="컴퓨터" nameLeftPadding="0px" onClick={() => categroyChange("컴퓨터")} />
-//         <Category categoryName="노트북" nameLeftPadding="2px" onClick={() => categroyChange("노트북")} />
-//         <Category categoryName="핸드폰" nameLeftPadding="0px" onClick={() => categroyChange("핸드폰")} />
-//         <Category categoryName="모니터" nameLeftPadding="3px" onClick={() => categroyChange("모니터")} />
-//         <Category categoryName="키보드" nameLeftPadding="2px" onClick={() => categroyChange("키보드")} />
-//         <Category categoryName="마우스" nameLeftPadding="1px" onClick={() => categroyChange("마우스")} />
-//         <Category categoryName="태블릿" nameLeftPadding="2px" onClick={() => categroyChange("태블릿")} />
-//       </NavBar>
-//     </CategoryNavBar>
-//   )
-// }

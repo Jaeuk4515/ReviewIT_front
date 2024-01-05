@@ -149,7 +149,7 @@ export default function ReviewDetail() {
       <CommentForm url={!login ? user_default : user.userImage} uId={user._id} rId={param.pId!} commentInfo={commentInfo} setCommentInfo={setCommentInfo} />
       <CommentArea>
         {commentInfo.map(({ commentId, userId, text, createdAt }) => (
-          <CommentItem cId={commentId} userId={userId} text={text} createdAt={createdAt} commentInfo={commentInfo} setCommentInfo={setCommentInfo} />
+          <CommentItem key={commentId} cId={commentId} userId={userId} text={text} createdAt={createdAt} commentInfo={commentInfo} setCommentInfo={setCommentInfo} />
         ))}
       </CommentArea>
     </ReviewDetailPage>

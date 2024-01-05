@@ -61,16 +61,16 @@ const ArrowWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
-
-const Arrow = styled(ArrowIcon)`
-  width: 22px;
   cursor: pointer;
-  fill: ${({ theme }) => theme.arrowColor};
 
   &:hover {
     opacity: .5;
   }
+`
+
+const Arrow = styled(ArrowIcon)`
+  width: 22px;
+  fill: ${({ theme }) => theme.arrowColor};
 `
 
 const OptionBox = styled.div<{on: string}>`

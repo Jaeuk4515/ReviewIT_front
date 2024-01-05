@@ -220,8 +220,8 @@ export default function ReviewUpdate() {
             <InputArea>
               <h3>카테고리</h3>
               <SelectBox>
-                <Seleted><SelectedValue>{newContent.category}</SelectedValue></Seleted>
-                <ArrowWrapper><Arrow onClick={handleOption} /></ArrowWrapper>
+                <Seleted theme={theme}><SelectedValue>{newContent.category}</SelectedValue></Seleted>
+                <ArrowWrapper onClick={handleOption}><Arrow /></ArrowWrapper>
                 <OptionBox on={option.toString()}>
                   <OptionWrapper>
                     {categoryList.map((name, idx) => (

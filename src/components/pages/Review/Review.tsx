@@ -15,7 +15,7 @@ import PageControl from "../../../services/pageControl";
 import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
 import { origin_URL } from "../../../App";
 
-export type category = "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "none"
+export type category = "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "스마트워치" | "스피커" | "none";
 
 export default function Review() {
   const postInfo = useSelector((state: RootState) => state.postInfo);

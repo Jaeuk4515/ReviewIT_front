@@ -15,6 +15,14 @@ const CircleButton = styled(Button)`
   box-shadow: 0 0 5px #C4C4C4;
   cursor: ${props => props.state === "enable" ? "pointer" : "not-allowed"};
   opacity: ${props => props.state === "disable" ? .4 : 1};
+
+  &:hover {
+    ${props => props.state === "enable" ? "box-shadow: 0 0 8px #C4C4C4" : ""}
+  };
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    display: none;
+  };
 `
 
 export { CircleButton }

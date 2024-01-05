@@ -63,7 +63,7 @@ const ButtonArea = styled.div`
   }
 `
 
-const ThemeButton = styled.div<{buttonTheme: "light" | "dark", animate: "on" | "off"}>`
+const ThemeButton = styled.div<{buttontheme: "light" | "dark", animate: "on" | "off"}>`
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -74,7 +74,7 @@ const ThemeButton = styled.div<{buttonTheme: "light" | "dark", animate: "on" | "
   margin-right: 10px;
 
   &:hover {
-    background-color: ${props => props.buttonTheme === "light" ? "#f0f0f0" : "#4a4a4a"};
+    background-color: ${props => props.buttontheme === "light" ? "#f0f0f0" : "#4a4a4a"};
   }
 
   ${props => props.animate === "on" &&
@@ -97,10 +97,10 @@ const ThemeIcon = styled.div<{theme: "light" | "dark"}>`
   height: ${props => props.theme === "light" ? "25px" : "20px"};
 `
 
-const LoginButton = styled(SubmitButton)<{colorTheme: "light" | "dark"}>`
+const LoginButton = styled(SubmitButton)<{colortheme: "light" | "dark"}>`
   background-color: ${({ theme }) => theme.loginButtonColor};
   color: ${({ theme }) => theme.loginTextColor};
-  border: 1px solid ${props => props.colorTheme === "light" ? "rgba(0, 0, 0, .2)" : "white"};
+  border: 1px solid ${props => props.colortheme === "light" ? "rgba(0, 0, 0, .2)" : "white"};
   height: 35px;
   width: 80px;
   font-size: 15px;
