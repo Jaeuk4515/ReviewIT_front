@@ -21,34 +21,34 @@ export default function Banner({ banner_num, setCurrentImageIndex }: BannerType)
     case 1:
       content = (
         <>
-          <TextArea top="150px" left="50px">
-            <MainText color="#2B2A4C">IT 제품 뭘 사야할지 고민이라면?</MainText>
-            <SubText color="#576082">필수 IT 기기들의 리뷰를 한눈에 모아보고 결정해보세요!</SubText>
+          <TextArea num={1} top="150px" left="120px">
+            <MainText num={1} color="#2B2A4C">IT 제품 뭘 사야할지 고민이라면?</MainText>
+            <SubText num={1} color="#576082">필수 IT 기기들의 리뷰를 한눈에 모아보고 결정해보세요!</SubText>
           </TextArea>
-          <PosterImg category={img1} style={{width: "700px", height: "370px"}} top="22px" right="-10px" />
+          <PosterImg category={img1} num={1} width="550px" height="370px" top="22px" right="80px" />
         </>
       )
       break;
     case 2:
       content = (
         <>
-          <TextArea top="150px" right="40px">
-            <MainText color="#505C04">사람들의 다양한 리뷰</MainText>
-            <SubText color="#555843">제품에 대한 여러 사람들의 다양한 리뷰를 확인해보세요!</SubText>
+          <TextArea num={2} top="150px" right="110px">
+            <MainText num={2} color="#505C04">사람들의 다양한 리뷰</MainText>
+            <SubText num={2} color="#555843">제품에 대한 여러 사람들의 다양한 리뷰를 확인해보세요!</SubText>
           </TextArea>
-          <PosterImg category={img2} style={{width: "720px", height: "370px"}} top="30px" left="-10px" />
+          <PosterImg category={img2} num={2} width="570px" height="370px" top="30px" left="80px" />
         </>
       )
       break;
     case 3:
       content = (
         <>
-          <PosterImg category={img3_2} style={{width: "150px", height: "230px"}} bottom="30px" left="0px" />
-          <TextArea top="110px" left="180px">
-            <MainText color="#353535">추천과 비추천, 베스트 리뷰</MainText>
-            <SubText color="#555843">강추 제품과 비추 제품 리뷰, 많은 사람들이 좋아한 베스트 리뷰들로 현명한 소비를 해보세요!</SubText>
+          <PosterImg category={img3_2} num={3_2} width="120px" height="230px" bottom="40px" left="100px" />
+          <TextArea num={3} top="80px" left="180px">
+            <MainText num={3} color="#353535">추천과 비추천, 베스트 리뷰</MainText>
+            <SubText num={3} color="#555843">강추 제품과 비추 제품 리뷰, 많은 사람들이 좋아한 베스트 리뷰들로 현명한 소비를 해보세요!</SubText>
           </TextArea>
-          <PosterImg category={img3_1} style={{width: "720px", height: "370px"}} bottom="0px" right="0px" />
+          <PosterImg category={img3_1} num={3_1} width="600px" height="330px" bottom="0px" right="80px" />
         </>
       )
       break;

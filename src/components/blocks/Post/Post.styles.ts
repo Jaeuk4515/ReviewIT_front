@@ -15,6 +15,11 @@ const ProductImg = styled(ImageCard)`
   height: auto;
   aspect-ratio: 1;
   background-size: cover;
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    width: 128px;
+    height: 128px;
+  };
 `
 
 const ProductName = styled.span`
@@ -28,6 +33,15 @@ const ProductName = styled.span`
   text-overflow: ellipsis;
   text-align: center;
   margin-top: 5px;
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    font-size: 16px;
+    width: 130px;
+  };
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    font-size: 15px;
+  };
 `
 
 export { PostArea, ProductImg, ProductName }

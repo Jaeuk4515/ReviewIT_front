@@ -3,7 +3,8 @@ import Post from "../../blocks/Post/Post";
 import { 
   HomePage,
   PagePart, 
-  ContentArea, 
+  ContentArea,
+  RecommendCardArea, 
   PageText, 
   PageTitle, 
   PageIcon, 
@@ -100,10 +101,9 @@ export default function Home() {
             </PageTitle>
             <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
           </PageText>
-          <MoreButton>
-            <Link to={`/posts?category=none&page=1&perPage=${pageInfo.perPage}&reset=yes`}><MoreText>전체 리뷰</MoreText></Link>
-            <MoreIcon />
-          </MoreButton>
+          <Link to={`/posts?category=none&page=1&perPage=${pageInfo.perPage}&reset=yes`}>
+            <MoreButton><MoreText>전체 리뷰</MoreText><MoreIcon /></MoreButton>
+          </Link>
         </ContentArea>
         <CategoryNav from="home" />
       </PagePart>
@@ -121,7 +121,7 @@ export default function Home() {
           <LeftShiftButton className="" direction="left" state={scrollPosition === 0 ? "disable" : "enable"} onClick={handlePrevClick} />
           <Carousel ref={carouselRef}>
             {postInfo.map((post, index) => (
-              <Link to={`/posts/detail/${post.reviewId}`} key={index} style={{ flex: "0 0 auto", width: "20%" }}>
+              <Link to={`/posts/detail/${post.reviewId}`} key={index} style={{ flex: "0 0 auto", width: "20%", minWidth: "150px" }}>
                 <Post className="" url={post.productImage} name={post.productName} grade={post.grade} />
               </Link>
             ))}
@@ -144,10 +144,10 @@ export default function Home() {
           </PageTitle>
           <PageDes>제품들의 사용 후기를 찾아보세요</PageDes>
         </PageText>
-        <ContentArea>
+        <RecommendCardArea>
           <RecommendCard status="good" onClick={goToReviews("good")} />
           <RecommendCard status="bad" onClick={goToReviews("bad")} />
-        </ContentArea>
+        </RecommendCardArea>
       </PagePart>
     </HomePage>
   )

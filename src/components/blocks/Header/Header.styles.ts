@@ -83,6 +83,11 @@ const ThemeButton = styled.div<{buttontheme: "light" | "dark", animate: "on" | "
     `
   }
 
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    &:hover {
+      background-color: initial;
+    };
+  };
   @media ${({ theme }) => theme.mediaQuery.small} {
     margin-right: 0px;
   };

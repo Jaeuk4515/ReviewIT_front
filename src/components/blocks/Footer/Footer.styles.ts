@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { HeaderArea, HeaderLogo, HeaderWrapper } from "../Header/Header.styles";
-import { Logo } from "../Modal/AuthModal/AuthModal.styles";
 
 
 const FooterWrapper = styled(HeaderWrapper)`
@@ -9,10 +8,20 @@ const FooterWrapper = styled(HeaderWrapper)`
   border-top: 1px solid rgba(0, 0, 0, .05);
   background-color: ${({ theme }) => theme.footerColor};
   z-index: 10;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    align-items: flex-start;
+  };
 `
 
 const FooterArea = styled(HeaderArea)`
   height: 80px;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    flex-direction: column;
+    gap: 1.3rem;
+    margin-top: 24px;
+  };
 `
 
 const IconArea = styled.div`
@@ -22,6 +31,10 @@ const IconArea = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    height: 60px;
+  };
 `
 
 const FooterLogo = styled(HeaderLogo)<{theme: "login" | "dark"}>`
@@ -33,6 +46,10 @@ const ContactIconArea = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 170px;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 130px;
+  };
 `
 
 const ContactIcon = styled.div<{icontype: string}>`
@@ -42,6 +59,11 @@ const ContactIcon = styled.div<{icontype: string}>`
   background-position: center;
   width: 30px;
   height: 30px;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 22px;
+    height: 22px;
+  }
 `
 
 const FooterTextArea = styled.div`
@@ -50,11 +72,23 @@ const FooterTextArea = styled.div`
   justify-content: space-between;
   height: 100%;
   width: 50%;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 80%;
+    align-items: center;
+  };
 `
 
 const FooterText = styled.span`
   color: ${({ theme }) => theme.footerText};
   font-size: 13px;
+
+  @media screen and (max-width: 800px) {
+    font-size: 11px;
+  };
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    font-size: 10px;
+  };
 `
 
 export { FooterWrapper, FooterArea, IconArea, FooterLogo, ContactIconArea, ContactIcon, FooterTextArea, FooterText }
