@@ -8,6 +8,12 @@ const SearchArea = styled.form<{width: string, height: string}>`
   width: ${props => props.width};
   height: ${props => props.height};
   border-radius: 30px;
+
+  @media screen and (max-width: 700px) {
+    width: 80%;
+    max-width: 500px;
+    min-width: 270px;
+  };
 `
 
 const SearchBox = styled(InputBox)<{theme: "light" | "dark"}>`
@@ -24,11 +30,15 @@ const SearchBox = styled(InputBox)<{theme: "light" | "dark"}>`
 
   &:focus {
     outline: none;
-  }
+  };
 
   &::placeholder {
     color: #D9D9D9;
-  }
+  };
+
+  @media screen and (max-width: 700px) {
+    width: 100%;
+  };
 `
 
 const CancelButton = styled.div`
@@ -37,7 +47,7 @@ const CancelButton = styled.div`
   border-radius: 10px;
   background-color: #B7B7B7;
   position: absolute;
-  top: 14px; right: 80px;
+  top: 14px; left: -35px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,6 +61,7 @@ const XIcon = styled(X)`
 
 const IconArea = styled.button`
   width: 12.5%;
+  min-width: 50px;
   height: 100%;
   border-radius: 0 30px 30px 0;
   border: none;

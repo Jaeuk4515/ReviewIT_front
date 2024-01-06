@@ -12,13 +12,16 @@ const PostArea = styled.div`
 
 const ProductImg = styled(ImageCard)`
   width: 80%;
+  min-width: 140px;
+  min-height: 140px;
   height: auto;
   aspect-ratio: 1;
   background-size: cover;
 
   @media ${({ theme }) => theme.mediaQuery.medium} {
-    width: 128px;
-    height: 128px;
+    width: 90%;
+    min-width: 128px;
+    min-height: 128px;
   };
 `
 

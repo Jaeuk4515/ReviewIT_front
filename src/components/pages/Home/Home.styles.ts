@@ -72,6 +72,7 @@ const PageIcon = styled(Logo)<{url: string}>`
 
   @media ${({ theme }) => theme.mediaQuery.small} {
     width: 23px;
+    min-width: initial;
     height: 23px;
   }
 `

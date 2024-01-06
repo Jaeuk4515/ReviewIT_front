@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { HomePage } from "../Home/Home.styles";
+import { HomePage, RecommendCardArea } from "../Home/Home.styles";
 import Post from "../../blocks/Post/Post";
 import { Img } from "../../atoms/Category/Category.styles";
 import { ReactComponent as First } from "../../../assets/icons/first.svg";
@@ -10,15 +10,58 @@ import { ReactComponent as Last } from "../../../assets/icons/last.svg";
 const ReviewPage = styled(HomePage)`
   margin-top: 15px;
   gap: 4rem;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    margin-top: -15px;
+    gap: 2.5rem;
+  }
+`
+
+const RecommendCardWrapper = styled(RecommendCardArea)`
+  width: 60%;
+  min-width: 800px;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: 800px) {
+    width: 80%;
+    min-width: 290px;
+  };
+` 
+
+const CategoryWrapper = styled.div`
+  width: 60%; 
+  min-width: 800px;
+
+  @media screen and (max-width: 800px) {
+    width: 85%;
+    min-width: 300px;
+  };
 `
 
 const ReviewPostArea = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 2%;
+  gap: .7rem;
   width: 60%;
   min-width: 800px;
   margin-top: -30px;
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    // gap: 0;
+  };
+  @media screen and (max-width: 850px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: .8rem;
+    width: 80%;
+    min-width: 300px;
+  };
+  @media screen and (max-width: 700px) {
+    grid-template-columns: repeat(3, 1fr);
+  };
+  @media screen and (max-width: 500px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  };
 `
 
 const GridPost = styled(Post)`
@@ -33,6 +76,11 @@ const PaginationArea = styled.div`
   align-items: center;
   margin-top: 30px;
   gap: .3rem;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    gap: .1rem;
+    margin-top: 0;
+  };
 `
 
 const ShiftButton = styled.div`
@@ -82,6 +130,10 @@ const NumberArea = styled.div`
   width: 70%;
   height: 35px;
   margin: 0 10px;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    gap: .1rem;
+  };
 `
 
 const NumberMark = styled.div<{focus: "on" | "off"; theme: "light" | "dark"}>`
@@ -96,4 +148,4 @@ const NumberMark = styled.div<{focus: "on" | "off"; theme: "light" | "dark"}>`
   cursor: pointer;
 `
 
-export { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, ShiftIcon, FirstIcon, PrevIcon, NextIcon, LastIcon, NumberArea, NumberMark }
+export { ReviewPage, RecommendCardWrapper, CategoryWrapper, ReviewPostArea, GridPost, PaginationArea, ShiftButton, ShiftIcon, FirstIcon, PrevIcon, NextIcon, LastIcon, NumberArea, NumberMark }

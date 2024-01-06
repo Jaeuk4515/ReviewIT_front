@@ -26,6 +26,15 @@ const Modal = styled.form<{modaltype: "login" | "signup"}>`
   align-items: center;
   gap: 2rem;
   background-color: ${({ theme }) => theme.headerColor};
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 90%;
+    max-width: 400px;
+    min-width: 270px;
+  };
+  @media screen and (max-width: 400px) {
+    height: ${props => props.modaltype === "login" ? "500px" : "555px"};
+  };
 `
 
 const Logo = styled.div<{logotheme: "light" | "dark"}>`
@@ -35,11 +44,20 @@ const Logo = styled.div<{logotheme: "light" | "dark"}>`
   background-position: center;
   width: 200px;
   height: 45px;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 50%;
+    min-width: 160px;
+  };
 `
 
 const ModalTitle = styled.span`
   font-size: 25px;
   font-weight: bold;
+
+  @media screen and (max-width: 400px) {
+    font-size: 22px;
+  };
 `
 
 const InputArea = styled.div`
@@ -48,18 +66,26 @@ const InputArea = styled.div`
   justify-content: center;
   align-items: center;
   gap: .4rem;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 100%;
+  };
 `
 
-const InputBox = styled(Input)<{theme: "light" | "dark"}>`
+const InputBox = styled(Input)<{inputtheme: "light" | "dark"}>`
   box-sizing: border-box;
   padding: 0 20px;
   border: none;
-  background-color: ${props => props.theme === "light" ? "#F0F0F0" : "#626265"};
-  color: ${props => props.theme === "light" ? "black" : "white"};
+  background-color: ${props => props.inputtheme === "light" ? "#F0F0F0" : "#626265"};
+  color: ${props => props.inputtheme === "light" ? "black" : "white"};
   
   &::placeholder {
     color: #A8A8A8;
-  }
+  };
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 82.5%;
+  };
 `
 
 const ErrorText = styled.span`
@@ -68,6 +94,10 @@ const ErrorText = styled.span`
   color: ${({ theme }) => theme.errorTextColor};
   font-size: 10.5px;
   padding-left: 20px;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 82.5%;
+  };
 `
 
 const ModalButton = styled(SubmitButton)`
@@ -78,6 +108,10 @@ const ModalButton = styled(SubmitButton)`
   border-radius: 10px;
   font-size: 20px;
   margin-top: 10px;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 82.5%;
+  };
 `
 
 const TextArea = styled.div`
@@ -91,6 +125,10 @@ const TextArea = styled.div`
 const FindPasswordText = styled.span`
   color: ${({ theme }) => theme.modalLinkText};
   cursor: pointer;
+
+  @media screen and (max-width: 400px) {
+    font-size: 14px;
+  };
 `
 
 const ModalTypeToggle = styled.div`
@@ -100,11 +138,19 @@ const ModalTypeToggle = styled.div`
 
 const NormalText = styled.span`
   color: #909090;
+
+  @media screen and (max-width: 400px) {
+    font-size: 14px;
+  };
 `
 
 const ToggleLink = styled.span`
   color: ${({ theme }) => theme.modalLinkText};
   cursor: pointer;
+
+  @media screen and (max-width: 400px) {
+    font-size: 14px;
+  };
 `
 
 export { ModalBg, Modal, Logo, ModalTitle, InputArea, InputBox, ErrorText, ModalButton, TextArea, FindPasswordText, ModalTypeToggle, NormalText, ToggleLink }

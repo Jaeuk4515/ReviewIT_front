@@ -191,12 +191,12 @@ export default function AuthModal() {
           <Logo logotheme={theme} />
           <ModalTitle>{modal === "login" ? "로그인" : "회원가입"}</ModalTitle>
           <InputArea>
-            {modal === "signup" && <InputBox theme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="닉네임" name="nickname" value={inputInfo.userInfo.nickname} onChange={(e) => handleChange(e, "nickname")} />}
+            {modal === "signup" && <InputBox inputtheme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="닉네임" name="nickname" value={inputInfo.userInfo.nickname} onChange={(e) => handleChange(e, "nickname")} />}
             {modal === "signup" && <ErrorText>{inputInfo.inputError.nicknameError}</ErrorText>}
-            <InputBox theme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="이메일" name="email" value={inputInfo.userInfo.email} onChange={(e)=>handleChange(e, "email")} />
+            <InputBox inputtheme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="이메일" name="email" value={inputInfo.userInfo.email} onChange={(e)=>handleChange(e, "email")} />
             {modal === "signup" && <ErrorText>{inputInfo.inputError.emailError}</ErrorText>}
             {modal === "login" && <ErrorText>{inputInfo.inputError.emailError}</ErrorText>}
-            <InputBox theme={theme} type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="비밀번호" name="password" value={inputInfo.userInfo.password} onChange={(e)=>handleChange(e, "password")} />
+            <InputBox inputtheme={theme} type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="비밀번호" name="password" value={inputInfo.userInfo.password} onChange={(e)=>handleChange(e, "password")} />
             {modal === "signup" && <ErrorText>{inputInfo.inputError.passwordError}</ErrorText>}
             {modal === "login" && <ErrorText>{inputInfo.inputError.passwordError}</ErrorText>}
             <ModalButton>{modal === "login" ? "로그인" : "회원가입"}</ModalButton>

@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import Search from "../../atoms/Search/Search";
 import CategoryNav from "../../blocks/CategoryNav/CategoryNav";
 import RecommendCard from "../../blocks/RecommendCard/RecommendCard";
-import { ContentArea } from "../Home/Home.styles";
-import { ReviewPage, ReviewPostArea, GridPost, PaginationArea, ShiftButton, FirstIcon, PrevIcon, NextIcon, LastIcon, NumberArea, NumberMark } from "./Review.styled";
+import { ReviewPage, RecommendCardWrapper, CategoryWrapper, ReviewPostArea, GridPost, PaginationArea, ShiftButton, FirstIcon, PrevIcon, NextIcon, LastIcon, NumberArea, NumberMark } from "./Review.styled";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import getPageArray from "../../../services/getPageArray";
@@ -109,12 +108,12 @@ export default function Review() {
 
   return (
     <ReviewPage>
-      <ContentArea style={{width: "60%", minWidth: "800px", marginBottom: "20px"}}>
+      <RecommendCardWrapper>
         <RecommendCard status="good" onClick={goToReviews("good")} />
         <RecommendCard status="bad" onClick={goToReviews("bad")} />
-      </ContentArea>
+      </RecommendCardWrapper>
       <Search color="white" width="500px" height="50px" mode="whole" isSearching={isSearching} setIsSearching={setIsSearching} pageController={pageController} />
-      <div style={{width: "60%", minWidth: "800px"}}><CategoryNav setCategoryQuery={setCategoryQuery} setResetQuery={setResetQuery} /></div>
+      <CategoryWrapper><CategoryNav setCategoryQuery={setCategoryQuery} setResetQuery={setResetQuery} /></CategoryWrapper>
       <ReviewPostArea>
         {postInfo.map(({ reviewId, productImage, productName, grade }) => {
           return <Link to={`/posts/detail/${reviewId}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>

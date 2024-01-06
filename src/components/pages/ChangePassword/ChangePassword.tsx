@@ -122,19 +122,19 @@ export default function ChangePassword() {
       <PasswordForm onSubmit={handleSubmit}>
         <ModalTitle>비밀번호 변경</ModalTitle>
         <InputArea>
-          <InputBox theme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="이메일을 입력하세요" name="email" 
+          <InputBox inputtheme={theme} type="text" className="" color="#F0F0F0" width="330px" height="45px" placeholder="이메일을 입력하세요" name="email" 
             value={inputInfo.userInfo.email} 
             onChange={(e)=>{ handleChange(e, "email") }} 
             onBlur={() => handleBlur("email")}
           />
           <ErrorText>{inputInfo.inputError.emailError}</ErrorText>
-          <InputBox theme={theme} type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호를 입력하세요" name="newPassword" 
+          <InputBox inputtheme={theme} type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호를 입력하세요" name="newPassword" 
             value={inputInfo.userInfo.newPassword} 
             onChange={(e)=>{ handleChange(e, "newPassword") }}
             onBlur={() => handleBlur("newPassword")}
           />
           <ErrorText>{inputInfo.inputError.newPasswordError}</ErrorText>
-          <InputBox theme={theme} type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호 확인" name="confirmPassword" 
+          <InputBox inputtheme={theme} type="password" className="" color="#F0F0F0" width="330px" height="45px" placeholder="새 비밀번호 확인" name="confirmPassword" 
             value={inputInfo.userInfo.confirmPassword} 
             onChange={(e)=>{ handleChange(e, "confirmPassword") }}
             onBlur={() => handleBlur("confirmPassword")}

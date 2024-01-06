@@ -85,8 +85,7 @@ export default function Search({color, width, height, mode, isSearching, setIsSe
   return (
     <SearchArea width={width} height={height} onSubmit={handleSubmit}>
       <SearchBox theme={theme} color={color} width={width} height={height} placeholder="Search" value={searchText} onChange={handleChange} />
-      {searchText && <CancelButton onClick={cancelSearch}><XIcon /></CancelButton>}
-      <IconArea />
+      <IconArea>{searchText && <CancelButton onClick={cancelSearch}><XIcon /></CancelButton>}</IconArea>
     </SearchArea>
   )
 }
