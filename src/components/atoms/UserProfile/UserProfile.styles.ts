@@ -6,6 +6,11 @@ const UserImg = styled(Img)`
   height: 35px;
   border-radius: 20px;
   background-size: cover;
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    width: 30px;
+    height: 30px;
+  };
 `
 
 export { UserImg }

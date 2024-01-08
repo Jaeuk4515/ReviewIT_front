@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ModalBg } from "../Modal/AuthModal/AuthModal.styles";
-import { NextButton, PrevButton } from "../ReviewCard/ReviewCard.styles";
-import { FullImage, ModalPrevButton, ModalNextButton } from "./ImageModal.styles";
+import { ImageWrapper, FullImage, ModalPrevButton, ModalNextButton } from "./ImageModal.styles";
 
 interface ImageModalType {
   urls: string[];
@@ -23,11 +22,11 @@ export default function ImageModal({ urls, setImgModal }: ImageModalType) {
 
   return (
     <ModalBg onClick={() => { setImgModal(false) }}>
-      <div onClick={(e) => { e.stopPropagation() }} style={{position: "relative"}}>
+      <ImageWrapper onClick={(e) => { e.stopPropagation() }}>
         <ModalPrevButton className="" direction="left" state={urlsIndex <= 0 ? "disable" : "enable"} onClick={handlePrevClick} />
         <FullImage category={urls[urlsIndex]} />
         <ModalNextButton className="" direction="right" state={urlsIndex >= urls.length - 1 ? "disable" : "enable"} onClick={handleNextClick} />
-      </div>
+      </ImageWrapper>
     </ModalBg>
   )
 }

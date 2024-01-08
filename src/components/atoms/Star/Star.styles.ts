@@ -11,7 +11,15 @@ const StyledStar = styled(Star)<{status: "full" | "empty", onClick?: (index: num
   @media ${({ theme }) => theme.mediaQuery.small} {
     width: 22px;
     height: 22px;
-  }
+  };
+  @media screen and (max-width: 500px) {
+    width: 20px;
+    height: 20px;
+  };
+  @media screen and (max-width: 450px) {
+    width: 18px;
+    height: 18px;
+  };
 `
 
 export { StyledStar }

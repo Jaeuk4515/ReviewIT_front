@@ -135,15 +135,17 @@ const WriteReviewButton = styled(SubmitButton)`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: .3rem;
+  gap: .1rem;
   width: 100px;
   height: 35px;
   font-size: 15px;
   margin-right: 10px;
 
   @media ${({ theme }) => theme.mediaQuery.small} {
-    width: 80px;
-    font-size: 12.5px;
+    width: 70px;
+    height: 30px;
+    font-size: 12px;
+    margin-right: 6px;
   };
 `
 
@@ -154,15 +156,20 @@ const WriteIcon = styled(Write)`
   fill: white;
 
   @media ${({ theme }) => theme.mediaQuery.small} {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
   };
 `
 
 const Profile = styled(UserProfile)`
-  width: 40px;
-  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   cursor: pointer;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    min-width: 32px;
+    min-height: 32px;
+  };
 `
 
 export { HeaderWrapper, HeaderArea, HeaderLogo, ButtonArea, ThemeButton, ThemeIcon, LoginButton, RegisterButton, WriteReviewButton, WriteIcon, Profile }

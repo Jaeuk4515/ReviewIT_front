@@ -49,8 +49,8 @@ export default function CommentForm({ url, uId, rId, commentInfo, setCommentInfo
       {!login && <NoAuthCover theme={theme}><NoAuthText>댓글을 작성하려면 로그인을 해주세요!</NoAuthText></NoAuthCover>}
       <FormArea>
         <InputWrapper>
-          <UserProfile className="" url={url} onClick={()=>{}} />
-          <CommentInput color="#FFF" width="700px" height="60px" fontSize="15px" name="" value={commentText} onChange={handleChange} commentform="yes" />
+          <div style={{minWidth: "45px"}}><UserProfile className="" url={url} onClick={()=>{}} /></div>
+          <CommentInput commentform="yes">{commentText}</CommentInput>
         </InputWrapper>
         <SubmitButton>댓글 쓰기</SubmitButton>
       </FormArea>

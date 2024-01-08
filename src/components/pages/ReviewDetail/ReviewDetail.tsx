@@ -19,6 +19,7 @@ import RequireLoginModal from "../../blocks/Modal/RequireLoginModal/RequireLogin
 import user_default from "../../../assets/icons/user_default.svg";
 import { ModalBg } from "../../blocks/Modal/AuthModal/AuthModal.styles";
 import { origin_URL } from "../../../App";
+import Image3dSlide from "../../blocks/Image3dSlide/Image3dSlide";
 
 export interface CommentInfo {
   commentId: string;
@@ -107,8 +108,8 @@ export default function ReviewDetail() {
   return (
     <ReviewDetailPage>
       {isModal && <ModalBg style={{ background: "initial", backdropFilter: "initial", zIndex: "1500" }} onClick={() => { setIsModal(false) }} />}
-      <UserInfoWrapper theme={theme}>
-        <UserInfoArea style={{"marginLeft": "15px"}}>
+      <UserInfoWrapper infotheme={theme}>
+        <UserInfoArea>
           <Profile className="" url={reviewInfo.userImage} onClick={()=>{}} />
           <UserName>{reviewInfo.nickname}</UserName>
           <WritedTime>{reviewInfo.createdAt}</WritedTime>
@@ -137,7 +138,7 @@ export default function ReviewDetail() {
         </ReviewHeader>
         <ReviewCard urls={reviewInfo.productImages} name={reviewInfo.productName} grade={reviewInfo.grade} link={reviewInfo.productLink} />
         <ContentText>{reviewInfo.reviewContent}</ContentText>
-        <ExtraInfoWrapper theme={theme}>
+        <ExtraInfoWrapper infotheme={theme}>
           <LikeyButton onClick={handleLikeButtonClick}><LikeyIcon category={isLike ? red_heart : gray_heart} /></LikeyButton>
           {loginRequired && <RequireLoginModal setLoginRequired={setLoginRequired} />}
           <ExtraInfo>
@@ -153,5 +154,6 @@ export default function ReviewDetail() {
         ))}
       </CommentArea>
     </ReviewDetailPage>
+    // <Image3dSlide productImages={reviewInfo.productImages} />
   )
 }

@@ -35,6 +35,10 @@ const LeftShiftButton = styled(PrevButton)`
   width: 47px;
   height: 47px;
   display: ${props => props.state === "disable" ? "none" : ""};
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    display: none;
+  };
 `
 
 const RightShiftButton = styled(NextButton)`
@@ -42,6 +46,10 @@ const RightShiftButton = styled(NextButton)`
   width: 47px;
   height: 47px;
   display: ${props => props.state === "disable" ? "none" : ""};
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    display: none;
+  };
 `
 
 export { CategoryNavBar, NavBar, LeftShiftButton, RightShiftButton }

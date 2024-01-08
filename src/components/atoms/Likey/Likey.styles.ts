@@ -11,10 +11,17 @@ const LikeyIcon = styled(Heart)`
   width: 18px;
   height: 16px;
   fill: ${({ theme }) => theme.commentIconColor};
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 14px;
+    height: 13x;
+  };
 `
 
 const LikeyNum = styled.span`
-
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    font-size: 14px;
+  };
 `
 
 export { LikeyArea, LikeyIcon, LikeyNum }

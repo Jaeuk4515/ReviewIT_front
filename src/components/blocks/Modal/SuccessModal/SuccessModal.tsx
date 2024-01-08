@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Logo, ModalBg, ModalButton, ModalTitle } from "../AuthModal/AuthModal.styles";
-import { ButtonWrapper, LoginButton, ModalBox, SuccessMark, SuccessMessage, LoginText } from "./SuccessModal.styles";
+import { ModalBg, ModalButton } from "../AuthModal/AuthModal.styles";
+import { ModalBox, ModalLogo, SuccessMark, SuccessText, SuccessMessage, ButtonWrapper, ConfirmButton, LoginButton, LoginText } from "./SuccessModal.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../../../store/slices/modalSlice";
 import { RootState } from "../../../../store/RootState";
@@ -51,14 +51,14 @@ export default function SuccessModal({ mode, setsuccess }: SuccessModalType) {
   return (
     <ModalBg>
       <ModalBox style={mode === "changeuserinfo" ? {height: "320px", gap: "1rem"} : {}}>
-        <Logo logotheme={theme} />
+        <ModalLogo logotheme={theme} />
         <SuccessMessage>
           <SuccessMark logotheme={theme} />
-          <ModalTitle>{getModalText()}</ModalTitle>
+          <SuccessText>{getModalText()}</SuccessText>
         </SuccessMessage>
         <ButtonWrapper>
-          <ModalButton onClick={() => handleClick("확인")}>확인</ModalButton>
-          {mode !== "changeuserinfo" && <LoginButton theme={theme} onClick={() => handleClick("로그인")}><LoginText>로그인</LoginText></LoginButton>}
+          <ConfirmButton onClick={() => handleClick("확인")}>확인</ConfirmButton>
+          {mode !== "changeuserinfo" && <LoginButton buttontheme={theme} onClick={() => handleClick("로그인")}><LoginText>로그인</LoginText></LoginButton>}
         </ButtonWrapper>
       </ModalBox>
     </ModalBg>

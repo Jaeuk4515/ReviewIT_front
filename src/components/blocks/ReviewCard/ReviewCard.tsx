@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Stars from "../Stars/Stars";
-import { Card, ReviewImg, PrevButton, NextButton, VerticalDivider, ReviewInfo, InfoArea, LinkArea, ProductName, ProductLink } from "./ReviewCard.styles";
+import { Card, ImgWrapper, ReviewImg, PrevButton, NextButton, VerticalDivider, InfoWrapper, ReviewInfo, InfoArea, LinkArea, ProductName, ProductLink } from "./ReviewCard.styles";
 import ImageModal from "../ImageModal/ImageModal";
 import { MoreIcon } from "../../pages/Home/Home.styles";
+import Image3dSlide from "../Image3dSlide/Image3dSlide";
 
 interface ReviewCardType {
   urls: string[];
@@ -27,25 +28,28 @@ export default function ReviewCard({ urls, name, link, grade }: ReviewCardType) 
 
   return (
     <Card>
-      <div style={{position: "relative"}}>
+      <ImgWrapper>
         <PrevButton className="" direction="left" state={urlsIndex <= 0 ? "disable" : "enable"} onClick={handlePrevClick} />
         <ReviewImg className="" url={urls[urlsIndex]} onClick={() => { setImgModal(true) }} />
         <NextButton className="" direction="right" state={urlsIndex >= urls.length - 1 ? "disable" : "enable"} onClick={handleNextClick} />
-      </div>
+        {/* <Image3dSlide productImages={urls} /> */}
+      </ImgWrapper>
       <VerticalDivider />
-      <ReviewInfo>
-        <InfoArea>
-          <ProductName>{name}</ProductName>
-        </InfoArea>
-        <LinkArea href={link} target="_blank">
-          <ProductLink>제품 보러가기</ProductLink>
-          <MoreIcon />
-        </LinkArea>
-        <InfoArea>
-          <Stars mode="view" grade={grade} />
-        </InfoArea>
-      </ReviewInfo>
-      { imgModal && <ImageModal urls={urls} setImgModal={setImgModal} /> }
+      <InfoWrapper>
+        <ReviewInfo>
+          <InfoArea>
+            <ProductName>{name}</ProductName>
+          </InfoArea>
+          <LinkArea href={link} target="_blank">
+            <ProductLink>제품 보러가기</ProductLink>
+            <MoreIcon />
+          </LinkArea>
+          <InfoArea>
+            <Stars mode="view" grade={grade} />
+          </InfoArea>
+        </ReviewInfo>
+        { imgModal && <ImageModal urls={urls} setImgModal={setImgModal} /> }
+      </InfoWrapper>
     </Card>
   )
 }

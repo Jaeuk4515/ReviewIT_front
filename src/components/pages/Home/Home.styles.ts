@@ -148,11 +148,21 @@ const Carousel = styled.div`
 `
 
 const LeftShiftButton = styled(PrevButton)`
+  width: 70px;
   top: 65px; left: -25px;
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    display: none;
+  };
 `
 
 const RightShiftButton = styled(NextButton)`
+  width: 70px;
   top: 65px; right: -25px;
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    display: none;
+  };
 `
 
 export { HomePage, PagePart, ContentArea, RecommendCardArea, PageText, PageTitle, PageIcon, PageTitleText, PageDes, MoreButton, MoreText, MoreIcon, PostArea, Carousel, LeftShiftButton, RightShiftButton }
