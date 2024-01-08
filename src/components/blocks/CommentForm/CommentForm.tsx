@@ -1,6 +1,5 @@
 import axios from "axios";
-import UserProfile from "../../atoms/UserProfile/UserProfile";
-import { Form, NoAuthCover, NoAuthText, InputWrapper, CommentInput, SubmitButton, FormArea } from "./CommentForm.styles";
+import { Form, NoAuthCover, NoAuthText, InputWrapper, ImageWrapper, UserImage, CommentInput, SubmitButton, FormArea } from "./CommentForm.styles";
 import { useState } from "react";
 import { CommentInfo } from "../../pages/ReviewDetail/ReviewDetail";
 import { useSelector } from "react-redux";
@@ -49,7 +48,7 @@ export default function CommentForm({ url, uId, rId, commentInfo, setCommentInfo
       {!login && <NoAuthCover theme={theme}><NoAuthText>댓글을 작성하려면 로그인을 해주세요!</NoAuthText></NoAuthCover>}
       <FormArea>
         <InputWrapper>
-          <div style={{minWidth: "45px"}}><UserProfile className="" url={url} onClick={()=>{}} /></div>
+          <ImageWrapper><UserImage className="" url={url} onClick={()=>{}} /></ImageWrapper>
           <CommentInput commentform="yes">{commentText}</CommentInput>
         </InputWrapper>
         <SubmitButton>댓글 쓰기</SubmitButton>

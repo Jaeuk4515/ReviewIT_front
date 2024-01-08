@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 import Button from "../../atoms/Button/Button";
+import { Profile } from "../CommentItem/CommentItem.styles";
+import UserProfile from "../../atoms/UserProfile/UserProfile";
 
 const Form = styled.form`
   width: 790px;
@@ -81,6 +83,49 @@ const InputWrapper = styled.div`
   width: 100%;
 `
 
+const ImageWrapper = styled.div`
+  min-width: 45px;
+
+  @media screen and (max-width: 800px) {
+    min-width: 42px;
+  };
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    min-width: 40px;
+  };
+  @media screen and (max-width: 500px) {
+    min-width: 38px;
+  };
+  @media screen and (max-width: 450px) {
+    min-width: 36px;
+  };
+  @media screen and (max-width: 400px) {
+    min-width: 34px;
+  };
+`
+
+const UserImage = styled(UserProfile)`
+  @media screen and (max-width: 800px) {
+    width: 29px;
+    height: 29px;
+  };
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 28px;
+    height: 28px;
+  };
+  @media screen and (max-width: 500px) {
+    width: 26px;
+    height: 26px;
+  };
+  @media screen and (max-width: 450px) {
+    width: 24px;
+    height: 24px;
+  };
+  @media screen and (max-width: 400px) {
+    width: 22px;
+    height: 22px;
+  };
+`
+
 const CommentInput = styled.textarea<{commentform: "yes" | "no"}>`
   width: 93%;
   height: 60px;
@@ -148,4 +193,4 @@ const SubmitButton = styled(Button)`
   };
 `
 
-export { Form, NoAuthCover, NoAuthText, FormArea, InputWrapper, CommentInput, SubmitButton }
+export { Form, NoAuthCover, NoAuthText, FormArea, InputWrapper, ImageWrapper, UserImage, CommentInput, SubmitButton }

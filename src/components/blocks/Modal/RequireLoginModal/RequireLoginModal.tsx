@@ -1,5 +1,5 @@
 import { ModalBg } from "../AuthModal/AuthModal.styles";
-import { ConfirmButton, ModalBox, ModalLogo, SuccessMessage, SuccessText } from "../SuccessModal/SuccessModal.styles";
+import { ConfirmButton, ModalLogo, SuccessMessage, SuccessText } from "../SuccessModal/SuccessModal.styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/RootState";
 import { NewModalBox, AlertIcon } from "./RequireLoginModal.styles";
