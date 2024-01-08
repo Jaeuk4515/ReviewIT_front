@@ -186,6 +186,11 @@ const ExtraInfoWrapper = styled(UserInfoWrapper)`
   };
   @media ${({ theme }) => theme.mediaQuery.small} {
     margin-top: 20px;
+    padding: 0 15px 10px 15px;
+  };
+  @media screen and (max-width: 400px) {
+    margin-top: 10px;
+    padding: 0 10px 8px 10px;
   };
 `
 
@@ -207,6 +212,17 @@ const LikeyButton = styled.div`
   @media ${({ theme }) => theme.mediaQuery.small} {
     width: 30px;
     height: 25px;
+    border-radius: 8px;
+  };
+  @media screen and (max-width: 500px) {
+    width: 26px;
+    height: 21px;
+    border-radius: 7px;
+  };
+  @media screen and (max-width: 400px) {
+    width: 24px;
+    height: 19px;
+    border-radius: 7px;
   };
 `
 
@@ -218,11 +234,29 @@ const LikeyIcon = styled(Img)`
     width: 20px;
     height: 15px;
   };
+  @media screen and (max-width: 500px) {
+    width: 18px;
+    height: 13px;
+  };
+  @media screen and (max-width: 400px) {
+    width: 16px;
+    height: 11px;
+  };
 `
 
 const ExtraInfo = styled.div`
   display: flex;
   gap: 1rem;
+
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    gap: .8rem;
+  };
+  @media screen and (max-width: 500px) {
+    gap: .6rem;
+  };
+  @media screen and (max-width: 400px) {
+    gap: .4rem;
+  };
 `
 
 const CommentArea = styled(PostContent)`
