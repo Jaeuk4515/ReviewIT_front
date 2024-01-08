@@ -1,6 +1,26 @@
-import { MyPageArea, InfoArea, ProfileUpdateCard, UserImage, UserImageCover, InputAndButtonArea, ButtonArea, UpdateButton, DeleteIdButton, SlimDivider, UserReviewArea, ReviewOptionArea, InitButton, CommentCard } from "./MyPage.styles"
-import { FileBox, ImageInput, ImageUploadButton, InputArea } from "../ReviewCreate/ReviewCreate.styles";
-import Input from "../../atoms/Input/Input";
+import { 
+  MyPageArea, 
+  InfoArea, 
+  ProfileUpdateCard,
+  UserInfoWrapper, 
+  UserImage, 
+  UserImageCover, 
+  ButtonWrapper, 
+  ImageChangeButton, 
+  InputAndButtonArea, 
+  FormArea, 
+  InputTitle,
+  InputBox, 
+  ButtonArea, 
+  UpdateButton, 
+  DeleteIdButton, 
+  SlimDivider, 
+  UserReviewArea, 
+  ReviewOptionArea, 
+  InitButton, 
+  CommentCard 
+} from "./MyPage.styles"
+import { ImageInput } from "../ReviewCreate/ReviewCreate.styles";
 import Category from "../../atoms/Category/Category";
 import UserReviewInfo from "../../blocks/UserReviewInfo/UserReviewInfo";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,23 +78,23 @@ export default function MyPage() {
   }, [login]);
 
   useEffect(() => {
-    dispatch(setCategory("내가 쓴 리뷰"));
+    dispatch(setCategory("리뷰"));
   }, []);
 
   useEffect(() => {
     // userId가 현재 user의 id인 리뷰들 가져오는 api 호출 
     const getMyReviews = async () => {
-      if (category.category === "내가 쓴 리뷰") {
+      if (category.category === "리뷰") {
         const response = await axios.get(`${origin_URL}/review/myReviews/${param.userId}?category=write_review`);
         setReviewInfo(response.data);
         setCommentInfo([]);
       };
-      if (category.category === "좋아요 한 리뷰") {
+      if (category.category === "좋아요") {
         const response = await axios.get(`${origin_URL}/review/myReviews/${param.userId}?category=like_review`);
         setReviewInfo(response.data);
         setCommentInfo([]);
       };
-      if (category.category === "내가 쓴 댓글") {
+      if (category.category === "댓글") {
         const response = await axios.get(`${origin_URL}/review/myReviews/${param.userId}?category=write_comment`);
         setReviewInfo([]);
         setCommentInfo(response.data);
@@ -145,35 +165,37 @@ export default function MyPage() {
     <MyPageArea>
       <InfoArea>
         <ProfileUpdateCard>
-          <UserImage theme={theme} category={showImage || user.userImage} onMouseEnter={() => setIsUserImageHover(true)} onMouseLeave={() => setIsUserImageHover(false)}>
-            {isUserImageHover && 
-              <UserImageCover>
-                <FileBox style={{flexDirection: "column", gap: ".5rem"}}>
-                  <ImageUploadButton htmlFor="img_file">이미지 변경</ImageUploadButton>
-                  <ImageInput type="file" id="img_file" accept="image/*" onChange={imagePreview} />
-                  <InitButton onClick={changeDefaultImage}>기본 이미지로</InitButton>
-                </FileBox>
-              </UserImageCover>}
-          </UserImage>
-          <InputAndButtonArea>
-            <InputArea style={{gap: ".7rem", width: "100%"}}>
-              <h3>닉네임</h3>
-              <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="nickname" value={userInfo.nickname} onChange={changeNickname} />
-            </InputArea>
-            <ButtonArea>
-              <UpdateButton onClick={handleSubmit}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>저장</span></UpdateButton>
-              {success && <SuccessModal mode="changeuserinfo" setsuccess={setSuccess} />}
-              <DeleteIdButton onClick={deleteAccount}><span style={{color: "white", fontWeight: "bold", fontSize: "17px"}}>회원 탈퇴</span></DeleteIdButton>
-              {deleteModal && <AlertModal mode="deleteAccountAlert" setAlertModal={setDeleteModal} />}
-            </ButtonArea>
-          </InputAndButtonArea>
+          <UserInfoWrapper>
+            <UserImage imagetheme={theme} category={showImage || user.userImage} onMouseEnter={() => setIsUserImageHover(true)} onMouseLeave={() => setIsUserImageHover(false)}>
+              {isUserImageHover && 
+                <UserImageCover>
+                  <ButtonWrapper>
+                    <ImageChangeButton htmlFor="img_file">이미지 변경</ImageChangeButton>
+                    <ImageInput type="file" id="img_file" accept="image/*" onChange={imagePreview} />
+                    <InitButton onClick={changeDefaultImage}>기본 이미지로</InitButton>
+                  </ButtonWrapper>
+                </UserImageCover>}
+            </UserImage>
+            <InputAndButtonArea>
+              <FormArea>
+                <InputTitle>닉네임</InputTitle>
+                <InputBox type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="nickname" value={userInfo.nickname} onChange={changeNickname} />
+              </FormArea>
+              <ButtonArea>
+                <UpdateButton onClick={handleSubmit}>저장</UpdateButton>
+                {success && <SuccessModal mode="changeuserinfo" setsuccess={setSuccess} />}
+                <DeleteIdButton onClick={deleteAccount}>회원 탈퇴</DeleteIdButton>
+                {deleteModal && <AlertModal mode="deleteAccountAlert" setAlertModal={setDeleteModal} />}
+              </ButtonArea>
+            </InputAndButtonArea>
+          </UserInfoWrapper>
         </ProfileUpdateCard>
-        <SlimDivider className="" width="80%" minwidth="700px" />
+        <SlimDivider linetheme={theme} className="" width="90%" minwidth="700px" />
         <UserReviewArea>
           <ReviewOptionArea>
-            <Category categoryName="내가 쓴 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 리뷰")) }} />
-            <Category categoryName="좋아요 한 리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("좋아요 한 리뷰")) }}/>
-            <Category categoryName="내가 쓴 댓글" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("내가 쓴 댓글")) }} />
+            <Category categoryName="리뷰" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("리뷰")) }} />
+            <Category categoryName="좋아요" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("좋아요")) }}/>
+            <Category categoryName="댓글" nameLeftPadding="0px" onClick={() => { dispatch(setCategory("댓글")) }} />
           </ReviewOptionArea>
           {reviewInfo.map(({ reviewId, productImage, reviewTitle, productName, grade, createdAt }) => (
             <UserReviewInfo key={reviewId} productImage={productImage} reviewTitle={reviewTitle} productName={productName} grade={grade} createdAt={createdAt} onClick={() => moveToReviewDetail(reviewId)} />

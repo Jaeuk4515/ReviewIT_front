@@ -23,7 +23,7 @@ export default function UserReviewInfo({ productImage, reviewTitle, productName,
         </TextInfo>
         <Stars mode="view" grade={grade} />
       </ReviewInfo>
-      <DateInfo><span style={{fontSize: "15px", color: "#929292"}}>{createdAt}</span></DateInfo>
+      <DateInfo>{createdAt}</DateInfo>
     </InfoCard>
   )
 }

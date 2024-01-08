@@ -36,13 +36,13 @@ export default function getCategory(categoryName: string) {
     case "태블릿":
       svg = tablet;
       break;
-    case "내가 쓴 리뷰":
+    case "리뷰":
       svg = review_write;
       break;
-    case "좋아요 한 리뷰":
+    case "좋아요":
       svg = review_likey;
       break;
-    case "내가 쓴 댓글":
+    case "댓글":
       svg = comment_icon;
       break;
     case "스마트워치":

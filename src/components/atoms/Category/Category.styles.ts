@@ -30,14 +30,17 @@ const CategoryButton = styled.div<{active: "on" | "off", buttontheme: "light" | 
   @media ${({ theme }) => theme.mediaQuery.medium} {
     height: 40px;
     padding: 0 18px;
+    gap: .4rem;
   };
   @media ${({ theme }) => theme.mediaQuery.small} {
     height: 35px;
     padding: 0 16px;
+    gap: .3rem;
   };
   @media screen and (max-width: 400px) {
     height: 30px;
     padding: 0 14px;
+    gap: .2rem;
   }
 `
 

@@ -99,9 +99,9 @@ export default function ReviewDetail() {
 
   const checkCategory = () => {
     // 리뷰 상세 페이지에서 마이페이지로 이동 후 다시 뒤로가기로 리뷰 상세 페이지에 온 경우. 그냥 목록버튼을 누르면 category가 아래 세가지 중 하나여서 리뷰 목록이 안나옴. 이를 위해 목록버튼 클릭 시 category 필터링
-    if (category === "내가 쓴 리뷰") return true;
-    if (category === "좋아요 한 리뷰") return true;
-    if (category === "내가 쓴 댓글") return true;
+    if (category === "리뷰") return true;
+    if (category === "좋아요") return true;
+    if (category === "댓글") return true;
     return false;
   };
 

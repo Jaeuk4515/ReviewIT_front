@@ -40,17 +40,31 @@ const UserInfoWrapper = styled.div<{infotheme: "light" | "dark"}>`
 const ListButton = styled(SubmitButton)`
   background-color: #EAEAEA;
   color: black;
-  width: 60px;
+  width: 55px;
 
   @media screen and (max-width: 800px) {
     width: 50px;
-    height: 25px;
+    height: 26px;
     font-size: 12.5px;
+    border-radius: 9px;
   };
-  @media screen and (max-width: 380px) {
-    width: 42px;
-    height: 23px;
-    font-size: 12px;
+  @media screen and (max-width: 600px) {
+    width: 43px;
+    height: 24px;
+    font-size: 11px;
+    border-radius: 8px;
+  };
+  @media screen and (max-width: 500px) {
+    width: 40px;
+    height: 21.5px;
+    font-size: 10px;
+    border-radius: 7px;
+  };
+  @media screen and (max-width: 400px) {
+    width: 38px;
+    height: 20px;
+    font-size: 9px;
+    border-radius: 6px;
   };
 `
 
