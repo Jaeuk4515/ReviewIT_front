@@ -14,19 +14,31 @@ const CategoryArea = styled.div`
   }
 `
 
-const CategoryButton = styled.div<{active: "on" | "off", theme: "light" | "dark", width: string | undefined}>`
+const CategoryButton = styled.div<{active: "on" | "off", buttontheme: "light" | "dark"}>`
   height: 45px;
-  width: ${props => props.width ? props.width : "132px"};
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1.5px solid ${props => props.active === "on" && props.theme === "light" ? "#256FFF" : "none"};
+  border: 1.5px solid ${props => props.active === "on" && props.buttontheme === "light" ? "#256FFF" : "none"};
   border-radius: 25px;
   box-shadow: 0 0 4px #C4C4C4;
   gap: .5rem;
   padding: 0 20px;
   box-sizing: border-box;
-  background-color: ${props => props.theme === "light" ? "white" : props.active === "on" ? "white" : "#626265"};
+  background-color: ${props => props.buttontheme === "light" ? "white" : props.active === "on" ? "white" : "#626265"};
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    height: 40px;
+    padding: 0 18px;
+  };
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    height: 35px;
+    padding: 0 16px;
+  };
+  @media screen and (max-width: 400px) {
+    height: 30px;
+    padding: 0 14px;
+  }
 `
 
 const Img = styled.div<{category: string}>`
@@ -36,14 +48,36 @@ const Img = styled.div<{category: string}>`
   background-position: center;
   width: 22px;
   height: 22px;
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    width: 20px;
+    height: 20px;
+  };
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    width: 16px;
+    height: 16px;
+  };
+  @media screen and (max-width: 400px) {
+    width: 13px;
+    height: 13px;
+  };
 `
 
-const Name = styled.span<{padding: string, active: "on" | "off", theme: "light" | "dark"}>`
+const Name = styled.span<{padding: string, active: "on" | "off", nametheme: "light" | "dark"}>`
   font-size: 19px;
-  height: 25px;
-  line-height: 25px;
   padding-left: ${props => props.padding};
-  color: ${props => props.theme === "light" ? props.active === "on" ? "#256FFF" : "black" : props.active === "on" ? "black" : "white"};
+  color: ${props => props.nametheme === "light" ? props.active === "on" ? "#256FFF" : "black" : props.active === "on" ? "black" : "white"};
+  white-space: nowrap;
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    font-size: 17px;
+  };
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    font-size: 14px;
+  };
+  @media screen and (max-width: 400px) {
+    font-size: 12px;
+  };
 `
 
 export { CategoryArea, CategoryButton, Img, Name }

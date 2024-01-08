@@ -7,18 +7,17 @@ interface CategoryType {
   categoryName: string;
   nameLeftPadding: string;
   onClick: () => void;
-  width?: string;
 }
 
-export default function Category({ categoryName, nameLeftPadding, onClick, width }: CategoryType) {
+export default function Category({ categoryName, nameLeftPadding, onClick }: CategoryType) {
   const { category } = useSelector((state: RootState) => state.category);
   const { theme } = useSelector((state: RootState) => state.theme);
 
   return (
     <CategoryArea onClick={onClick}>
-      <CategoryButton active={category === categoryName ? "on" : "off"} theme={theme} width={width}>
+      <CategoryButton active={category === categoryName ? "on" : "off"} buttontheme={theme}>
         <Img category={getCategory(categoryName)} />
-        <Name padding={nameLeftPadding} active={category === categoryName ? "on" : "off"} theme={theme}>{categoryName}</Name>
+        <Name padding={nameLeftPadding} active={category === categoryName ? "on" : "off"} nametheme={theme}>{categoryName}</Name>
       </CategoryButton>
     </CategoryArea>
   )

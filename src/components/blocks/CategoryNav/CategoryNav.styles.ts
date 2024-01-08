@@ -28,6 +28,16 @@ const NavBar = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
   };
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    gap: .4rem;
+  };
+  @media ${({ theme }) => theme.mediaQuery.small} {
+    gap: .3rem;
+  };
+  @media screen and (max-width: 400px) {
+    gap: .2rem;
+  };
 `
 
 const LeftShiftButton = styled(PrevButton)`

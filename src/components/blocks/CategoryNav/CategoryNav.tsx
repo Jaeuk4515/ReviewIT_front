@@ -61,8 +61,8 @@ export default function CategoryNav({ from, setCategoryQuery, setResetQuery }: C
         <Category categoryName="키보드" nameLeftPadding="2px" onClick={() => categroyChange("키보드")} />
         <Category categoryName="마우스" nameLeftPadding="1px" onClick={() => categroyChange("마우스")} />
         <Category categoryName="태블릿" nameLeftPadding="2px" onClick={() => categroyChange("태블릿")} />
-        <Category categoryName="스마트워치" nameLeftPadding="2px" onClick={() => categroyChange("스마트워치")} width="162px" />
-        <Category categoryName="스피커" nameLeftPadding="2px" onClick={() => categroyChange("스피커")} />
+        <Category categoryName="스마트워치" nameLeftPadding="0px" onClick={() => categroyChange("스마트워치")} />
+        <Category categoryName="스피커" nameLeftPadding="0px" onClick={() => categroyChange("스피커")} />
       </NavBar>
       <RightShiftButton className="" direction="right" state={scrollPosition < maxScrollLeft ? "enable" : "disable"} onClick={handleNextClick} />
     </CategoryNavBar>

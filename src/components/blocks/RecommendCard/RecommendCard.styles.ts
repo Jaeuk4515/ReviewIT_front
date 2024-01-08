@@ -26,7 +26,7 @@ const Card = styled.div`
   };
   @media ${({ theme }) => theme.mediaQuery.small} {
     gap: 5%;
-    min-height: 150px;
+    min-height: 130px;
   };
 `
 
