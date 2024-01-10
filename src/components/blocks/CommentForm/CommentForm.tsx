@@ -49,7 +49,7 @@ export default function CommentForm({ url, uId, rId, commentInfo, setCommentInfo
       <FormArea>
         <InputWrapper>
           <ImageWrapper><UserImage className="" url={url} onClick={()=>{}} /></ImageWrapper>
-          <CommentInput commentform="yes">{commentText}</CommentInput>
+          <CommentInput commentform="yes" value={commentText} onChange={handleChange} />
         </InputWrapper>
         <SubmitButton>댓글 쓰기</SubmitButton>
       </FormArea>

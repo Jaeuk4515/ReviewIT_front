@@ -126,7 +126,7 @@ const UserImage = styled(UserProfile)`
   };
 `
 
-const CommentInput = styled.textarea<{commentform: "yes" | "no"}>`
+const CommentInput = styled.textarea<{commentform: "yes" | "no", onChange: (e: React.ChangeEvent<HTMLInputElement>) => void}>`
   width: 93%;
   height: 60px;
   background-color: #FFF;

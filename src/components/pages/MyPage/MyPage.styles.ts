@@ -201,7 +201,10 @@ const InputAndButtonArea = styled.div`
   };
 `
 
-const FormArea = styled(InputArea)`
+const FormArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: .7rem;
   width: 100%;
 

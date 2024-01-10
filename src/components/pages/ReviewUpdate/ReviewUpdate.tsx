@@ -26,12 +26,15 @@ import {
   CompleteButton,
   OptionWrapper,
   ArrowWrapper,
-  TextLimit
+  TextLimit,
+  InputTitle,
+  TextInputArea,
+  TextBox,
+  InputBox,
+  MaxImageText
 } from "../ReviewCreate/ReviewCreate.styles";
-import Input from "../../atoms/Input/Input";
 import Stars from "../../blocks/Stars/Stars";
 import { PageDes, PageTitle } from "../Home/Home.styles";
-import TextArea from "../../atoms/TextArea/TextArea";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import x_button from "../../../assets/icons/x-button.svg";
 import camera_light from "../../../assets/icons/camera_light.svg";
@@ -214,11 +217,11 @@ export default function ReviewUpdate() {
         <ReviewInfoArea>
           <TextInfoArea>
             <InputArea>
-              <h3>제목</h3>
-              <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="reviewTitle" value={newContent.reviewTitle} onChange={(e) => { dispatch(setReviewTitle(e.target.value)) }} />
+              <InputTitle>제목</InputTitle>
+              <InputBox type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="reviewTitle" value={newContent.reviewTitle} onChange={(e) => { dispatch(setReviewTitle(e.target.value)) }} />
             </InputArea>
             <InputArea>
-              <h3>카테고리</h3>
+              <InputTitle>카테고리</InputTitle>
               <SelectBox>
                 <Seleted theme={theme}><SelectedValue>{newContent.category}</SelectedValue></Seleted>
                 <ArrowWrapper onClick={handleOption}><Arrow /></ArrowWrapper>
@@ -232,22 +235,22 @@ export default function ReviewUpdate() {
               </SelectBox>
             </InputArea>
             <InputArea>
-              <h3>제품명</h3>
-              <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productName" value={newContent.productName} onChange={(e) => { dispatch(setProductName(e.target.value)) }} />
+              <InputTitle>제품명</InputTitle>
+              <InputBox type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productName" value={newContent.productName} onChange={(e) => { dispatch(setProductName(e.target.value)) }} />
             </InputArea>
             <InputArea>
-              <h3>제품 링크</h3>
-              <Input type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productLink" value={newContent.productLink} onChange={(e) => { dispatch(setProductLink(e.target.value)) }} />
+              <InputTitle>제품 링크</InputTitle>
+              <InputBox type="text" className="" color={theme === "light" ? "white" : "#626265"} width="100%" height="40px" name="productLink" value={newContent.productLink} onChange={(e) => { dispatch(setProductLink(e.target.value)) }} />
             </InputArea>
-            <InputArea><h3>별점</h3><Stars mode="edit" grade={newContent.grade} /></InputArea>
+            <InputArea><InputTitle>별점</InputTitle><Stars mode="edit" grade={newContent.grade} /></InputArea>
           </TextInfoArea>
           <ImageInfoArea>
             <InputArea>
               <PageTitle style={{alignItems: "flex-end"}}>
-                <h3>제품 사진</h3>
-                <span style={{fontSize: "14px", color: "#B7B7B7", paddingBottom: "2px"}}>(최대 4개)</span>
+                <InputTitle>제품 사진</InputTitle>
+                <MaxImageText>(최대 4개)</MaxImageText>
               </PageTitle>
-              <InputPicture isgrid={(showImages.length > 0).toString()}>
+              <InputPicture areatheme={theme} isgrid={(showImages.length > 0).toString()}>
                 {showImages.length > 0 
                   ? 
                   showImages.map((image, idx) => (
@@ -270,11 +273,11 @@ export default function ReviewUpdate() {
             </FileBox>
           </ImageInfoArea>
         </ReviewInfoArea>
-        <InputArea style={{"width": "50%", "minWidth": "800px"}}>
-          <h3>리뷰</h3>
-          <TextArea color={theme === "light" ? "white" : "#626265"} width="100%" height="400px" fontSize="18px" name="reviewContent" value={newContent.reviewContent} onChange={handleTextAreaChange} />
+        <TextInputArea>
+          <InputTitle>리뷰</InputTitle>
+          <TextBox className="" color={theme === "light" ? "white" : "#626265"} width="100%" name="reviewContent" value={newContent.reviewContent} onChange={handleTextAreaChange} />
           <TextLimit>{`( ${textCount} / 1000 )`}</TextLimit>
-        </InputArea>
+        </TextInputArea>
         <ButtonArea>
           <CompleteButton buttontype="cancel" type="button" onClick={ () => { navigate(-1) } }>취소</CompleteButton>
           <CompleteButton buttontype="write" type="submit">등록</CompleteButton>
