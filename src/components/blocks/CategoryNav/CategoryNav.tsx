@@ -21,10 +21,11 @@ export default function CategoryNav({ from, setCategoryQuery, setResetQuery }: C
   const [ maxScrollLeft, setMaxScrollLeft ] = useState(0);  // 스크롤 가능한 최대 너비를 가져와서 설정
 
   const categroyChange = async (categoryName: category) => {
-    if (from === "home") {
+    if (from === "home") {  // 홈 화면의 카테고리 버튼을 클릭하는 경우 
       navigate(`/posts?category=${categoryName}&page=${pageInfo.page}&perPage=${pageInfo.perPage}&reset=yes`);
       return;
     };
+    // 선택한 카테고리가 현재 선택중인 카테고리면 초기화, 그렇지 않으면 해당 카테고리로 적용
     categoryObj.category === categoryName ? setCategoryQuery!("none") : setCategoryQuery!(categoryName);
     setResetQuery!("yes");
   };

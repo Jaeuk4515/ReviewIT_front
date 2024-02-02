@@ -96,11 +96,11 @@ export default function ReviewCreate() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
-    if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
-      setAlertModal(true);
-      return;
-    };
+    // const { reviewTitle, category, productName, productLink, productImages, reviewContent } = content;
+    // if (!reviewTitle || !productName || !productLink || !reviewContent || !productImages || productImages.length === 0 || !category) {
+    //   setAlertModal(true);
+    //   return;
+    // };
     
     // 함수로 빼기
     const formData = new FormData();
@@ -123,7 +123,7 @@ export default function ReviewCreate() {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response);
+    // console.log(response);
     if (response.data.message === 'success') {
       navigate(`/posts/detail/${response.data.reviewId}`);
       dispatch(resetContent());
@@ -139,7 +139,7 @@ export default function ReviewCreate() {
     setOption(!option);
   };
 
-  const [ showImages, setShowImages ] = useState<string[]>([]);
+  const [ showImages, setShowImages ] = useState<string[]>([]);  // blob 형태로 변경한 이미지 url 들을 담기 위한 배열 state
 
   const imagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imgFiles = e.target.files;
@@ -149,16 +149,18 @@ export default function ReviewCreate() {
       if (imgUrls.length >= 4) break;  // 이미지 개수는 최대 4개
       imgUrls.push(URL.createObjectURL(imgFiles[i]));
     };
-    console.log(imgUrls);
+    console.log('imgUrls : ', imgUrls);
     setShowImages(imgUrls);
 
     // 이전에 새로 추가한 이미지를 유지한채 또다시 새로 추가한 이미지가 있으면 추가
-    const combinedFilesArray = Array.from(content.productImages || []);
-    combinedFilesArray.push(...Array.from(imgFiles));
+    // const combinedFilesArray = Array.from(content.productImages || []);  // productImages의 타입이 FileList | null 이기 때문에 null 인 경우는 Array.from 하면 에러나니까 productImages가 null 이면 [] 로 명시적으로 지정 
+    // combinedFilesArray.push(...Array.from(imgFiles));
+    const combinedFilesArray = Array.from(content.productImages || []).concat(Array.from(imgFiles));
 
     // combinedFilesArray를 FileList 타입의 값으로 변환 
     const dataTransfer = new DataTransfer();
-    Array.from(combinedFilesArray).forEach((file) => {
+    // Array.from(combinedFilesArray).forEach((file) => {
+    combinedFilesArray.forEach((file) => {
       dataTransfer.items.add(file);
     });
 

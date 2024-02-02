@@ -36,7 +36,6 @@ export default function Home() {
   const postInfo = useSelector((state: RootState) => state.postInfo);
   const pageInfo = useSelector((state: RootState) => state.page);
   const dispatch = useDispatch();
-  const [ currentImageIndex, setCurrentImageIndex ] = useState(1);
   const [ scrollPosition, setScrollPosition ] = useState(0);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -55,14 +54,6 @@ export default function Home() {
 
     getReviewsInfo();
   }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex(prevIndex => prevIndex === 3 ? 1 : prevIndex + 1);
-    }, 6000);
-
-    return () => clearInterval(interval);
-  }, [currentImageIndex]);
 
   useEffect(() => {
     if (carouselRef.current) {
@@ -91,7 +82,7 @@ export default function Home() {
 
   return (
     <HomePage>
-      <Banner banner_num={currentImageIndex} setCurrentImageIndex={setCurrentImageIndex} />
+      <Banner />
       <PagePart>
         <ContentArea>
           <PageText>

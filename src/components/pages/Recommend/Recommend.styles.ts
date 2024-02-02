@@ -9,6 +9,7 @@ const TitleArea = styled.div`
   align-items: center;
   width: 60%;
   min-width: 800px;
+  margin-top: 60px;
   margin-bottom: -20px;
 
   @media screen and (max-width: 850px) {
@@ -19,6 +20,7 @@ const TitleArea = styled.div`
     min-width: 470px;
   };
   @media ${({ theme }) => theme.mediaQuery.small} {
+    margin-top: 40px;
     min-width: 300px;
   };
 `

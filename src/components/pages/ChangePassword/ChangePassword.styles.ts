@@ -3,7 +3,7 @@ import { CompleteButton } from "../ReviewCreate/ReviewCreate.styles";
 import { HomePage } from "../Home/Home.styles";
 
 const ChangePasswordPage = styled(HomePage)`
-  height: calc( 100vh - 535px );
+  // height: calc( 100vh - 535px );
   min-height: 450px;
   justify-content: center;
   margin-bottom: 160px;
@@ -45,6 +45,8 @@ const ButtonArea = styled.div`
 
 const Btn = styled(CompleteButton)`
   width: 50%;
+  height: 35px;
+  font-size: 14px;
   margin: 0;
   background-color: ${props => props.buttontype === "cancel" ? "white" : ""};
   border: ${props => props.buttontype === "cancel" ? "1.5px solid rgba(0, 0, 0, .1)" : ""};

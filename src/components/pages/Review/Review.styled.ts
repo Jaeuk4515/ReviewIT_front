@@ -8,13 +8,14 @@ import { ReactComponent as Next } from "../../../assets/icons/next.svg";
 import { ReactComponent as Last } from "../../../assets/icons/last.svg";
 
 const ReviewPage = styled(HomePage)`
-  margin-top: 15px;
+  margin-top: 60px;
   gap: 4rem;
 
   @media ${({ theme }) => theme.mediaQuery.small} {
-    margin-top: -15px;
+    margin-top: 35px;
+    margin-bottom: 100px;
     gap: 2.5rem;
-  }
+  };
 `
 
 const RecommendCardWrapper = styled(RecommendCardArea)`
@@ -74,7 +75,7 @@ const PaginationArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 10px;
   gap: .3rem;
 
   @media ${({ theme }) => theme.mediaQuery.small} {

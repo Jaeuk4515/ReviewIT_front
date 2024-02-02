@@ -3,21 +3,26 @@ import img1 from "../../../assets/icons/banner_image_1.png";
 import img2 from "../../../assets/icons/banner_image_2.png";
 import img3_1 from "../../../assets/icons/banner_image_3_1.png";
 import img3_2 from "../../../assets/icons/banner_image_3_2.png";
+import { useEffect, useState } from "react";
 
-interface BannerType {
-  banner_num: number;
-  setCurrentImageIndex: React.Dispatch<React.SetStateAction<number>>;
-}
-
-export default function Banner({ banner_num, setCurrentImageIndex }: BannerType) {
+export default function Banner() {
+  const [ currentImageIndex, setCurrentImageIndex ] = useState(1);
   let imgColor = [ "#F1EAFF", "#FFF9F1", "#E0F4FF" ];
   let content;
 
   const handleClick = (num: number) => {
     setCurrentImageIndex(num);
-  }
+  };
 
-  switch (banner_num) {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex(prevIndex => prevIndex === 3 ? 1 : prevIndex + 1);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [currentImageIndex]);
+
+  switch (currentImageIndex) {
     case 1:
       content = (
         <>
@@ -55,14 +60,14 @@ export default function Banner({ banner_num, setCurrentImageIndex }: BannerType)
   };
 
   return (
-    <BannerArea backgroundcolor={imgColor[banner_num - 1]}>
+    <BannerArea backgroundcolor={imgColor[currentImageIndex - 1]}>
       <ContentWrapper>
         {content}
-        <div style={{width: "40px", height: "100%"}}>
+        <div style={{ width: "40px", height: "100%" }}>
           <ButtonNav>
-            <ShiftButton active={banner_num === 1 ? "on" : "off"} onClick={() => handleClick(1)} />
-            <ShiftButton active={banner_num === 2 ? "on" : "off"} onClick={() => handleClick(2)} />
-            <ShiftButton active={banner_num === 3 ? "on" : "off"} onClick={() => handleClick(3)} />
+            <ShiftButton active={currentImageIndex === 1 ? "on" : "off"} onClick={() => handleClick(1)} />
+            <ShiftButton active={currentImageIndex === 2 ? "on" : "off"} onClick={() => handleClick(2)} />
+            <ShiftButton active={currentImageIndex === 3 ? "on" : "off"} onClick={() => handleClick(3)} />
           </ButtonNav>
         </div>
       </ContentWrapper>

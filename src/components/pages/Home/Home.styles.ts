@@ -10,11 +10,12 @@ const HomePage = styled.div`
   align-items: center;
   width: 100%;
   gap: 5rem;
-  margin-bottom: 100px;
+  margin-top: 55px;
+  margin-bottom: 150px;
 
   @media ${({ theme }) => theme.mediaQuery.small} {
     gap: 3rem;
-    margin-bottom: 60px;
+    margin-bottom: 100px;
   };
 `
 

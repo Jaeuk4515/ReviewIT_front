@@ -4,20 +4,20 @@ const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
-  }
+  };
 
   li {
     list-style: none;
-  }
+  };
 
   a {
     text-decoration: none;
     color: inherit;
-  }
+  };
 
   button {
     cursor: pointer;
-  }
+  };
 
   body {
     font-family: Arial, sans-serif;
@@ -25,13 +25,18 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     background-color: ${({ theme }) => theme.backgroundColor};
     color: ${({ theme }) => theme.textColor};
-  }
+  };
+
+  textarea, p {
+    white-space: pre-wrap;
+  };
 `
 
 const LayoutWrapper = styled.div`
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  justify-content: space-between;
 `
 
 export { GlobalStyle, LayoutWrapper }

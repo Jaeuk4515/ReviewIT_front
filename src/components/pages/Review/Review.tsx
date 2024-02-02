@@ -59,7 +59,7 @@ export default function Review() {
       } else {
         if (isSearching) {  // 검색인 경우 (카테고리 선택 O)
           response = await axios.get(`${origin_URL}/review/search/${searchText}?category=${category}&page=${page}&perPage=${perPage}`);
-        } else {  // 전체 조회 (검색 X)
+        } else {  // 특정 카테고리 전체 조회 (검색 X)
           response = await axios.get(`${origin_URL}/review/category/${category}?page=${page}&perPage=${perPage}`);
         };
       };
@@ -92,7 +92,7 @@ export default function Review() {
             } else {
               response = await axios.get(`${origin_URL}/review/search/${searchText}?category=${category}&page=${1}&perPage=${pageInfo.perPage}`);
             };
-          } else {  // 전체 조회 (검색 X)
+          } else {  // 특정 카테고리 전체 조회 (검색 X)
             response = await axios.get(`${origin_URL}/review/category/${category}?page=${1}&perPage=${pageInfo.perPage}`);
           };
           dispatch(setCategory(category as category));

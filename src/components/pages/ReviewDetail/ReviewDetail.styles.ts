@@ -8,10 +8,11 @@ import { ReactComponent as Delete } from "../../../assets/icons/delete.svg";
 
 const ReviewDetailPage = styled(HomePage)`
   gap: 2rem;
+  margin-top: 60px;
 
   @media ${({ theme }) => theme.mediaQuery.small} {
     gap: 1.5rem;
-    margin: -20px 0 15px 0;
+    margin: 30px 0 60px 0;
   };
 `
 

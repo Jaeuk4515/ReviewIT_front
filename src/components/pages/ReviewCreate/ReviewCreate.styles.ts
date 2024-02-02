@@ -10,12 +10,14 @@ const ReviewCreatePage = styled.form`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-top: 60px;
   margin-bottom: 100px;
   gap: 5rem;
 
   @media ${({ theme }) => theme.mediaQuery.small} {
     gap: 3rem;
-    margin-bottom: 50px;
+    margin-top: 30px;
+    margin-bottom: 60px;
   };
   @media screen and (max-width: 400px) {
     gap: 2rem;
@@ -495,6 +497,7 @@ const TextInputArea = styled(InputArea)`
 
 const TextBox = styled(TextArea)`
   height: 400px;
+  font-size: 17px;
 
   @media screen and (max-width: 900px) {
     height: 380px;

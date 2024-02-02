@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Img } from "../../atoms/Category/Category.styles";
 import Divider from "../../atoms/Divider/Divider";
 import { CommentArea } from "../../blocks/CommentItem/CommentItem.styles";
-import { ImageUploadButton, InputArea } from "../ReviewCreate/ReviewCreate.styles";
+import { ImageUploadButton } from "../ReviewCreate/ReviewCreate.styles";
 import Input from "../../atoms/Input/Input";
 
 const MyPageArea = styled.div`
@@ -11,10 +11,10 @@ const MyPageArea = styled.div`
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  margin-top: -20px;
+  margin: 60px 0 100px 0;
 
   @media screen and (max-width: 500px) {
-    margin-top: -30px;
+    margin: 30px 0 60px 0;
   };
 `
 
