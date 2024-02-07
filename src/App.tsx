@@ -36,6 +36,8 @@ function App() {
       dispatch(setLogin(false));
     };
   }, []);
+  
+  console.log("App 렌더링");
 
   const routePath = [
     {
@@ -84,20 +86,15 @@ function App() {
     <>
       <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
         <GlobalStyle />
-        <Routes>
-          {routePath.map(data => (
-            <Route 
-              key={data.path}
-              path={data.path} 
-              element={
-              <LayoutWrapper>
-                <Header />
-                {data.element}
-                <Footer />
-              </LayoutWrapper>
-            } />
-          ))}
-        </Routes>
+        <LayoutWrapper>
+          <Header />
+          <Routes>
+            {routePath.map(data => (
+              <Route key={data.path} path={data.path} element={data.element} />
+            ))}
+          </Routes>
+          <Footer />
+        </LayoutWrapper>
       </ThemeProvider>
     </>
   );

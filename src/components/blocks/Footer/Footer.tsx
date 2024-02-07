@@ -10,7 +10,7 @@ import { resetCategory } from "../../../store/slices/categorySlice";
 
 export default function Footer() {
   const { theme } = useSelector((state: RootState) => state.theme);
-  const { category } = useSelector((state: RootState) => state.category);
+  const { category } = useSelector((state: RootState) => state.category, () => { return true });  // 리뷰 페이지에서 카테고리가 변경되어도 리렌더링 되지 않게  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ export default function Footer() {
     if (category !== "none") dispatch(resetCategory());
     navigate("/");
   };
-  
+
   return (
     <FooterWrapper>
       <FooterArea>
