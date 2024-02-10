@@ -46,7 +46,7 @@ export default function Header() {
   const moveToCreate = () => {
     // 마이페이지에 있다가 리뷰 작성 페이지에서 리뷰 생성 후 목록 버튼 누르면 category가 "내가 쓴 리뷰" 인 상태여서 리뷰 목록이 안나옴 -> 이를 방지하기위해 리뷰 작성 페이지 진입 시 category를 none으로 변경 
     dispatch(setCategory("none"));
-    // navigate("/create");
+    navigate("/create");
   };
 
   const handleClick = () => {
