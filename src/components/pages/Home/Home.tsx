@@ -40,6 +40,8 @@ export default function Home() {
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const { theme } = useSelector((state: RootState) => state.theme);
+  // 최초 렌더링 후 scrollWidth가 변경된 후 RightShiftButton 컴포넌트의 state props에 적용하는 용도의 state. 왜인지 첫 리렌더링때에는 바뀐 scrollWidth대로 적용이 안되고 리렌더링을 한번 더 해야 적용됨.
+  const [ buttonState, setButtonState ] = useState<"disable" | "enable">("disable");
   
   const goToReviews = (status: "good" | "bad") => () => {
     if (status === "good") navigate(`/posts/recommendation/good-product?page=1&perPage=${pageInfo.perPage}`);
@@ -63,6 +65,11 @@ export default function Home() {
       });
     }
   }, [scrollPosition]);
+
+  useEffect(() => {
+    const isDisable = scrollPosition >= carouselRef.current!.scrollWidth - carouselRef.current!.clientWidth;
+    setButtonState(isDisable ? "disable" : "enable");
+  }, [carouselRef.current?.scrollWidth]);
 
   const handlePrevClick = () => {
     if (scrollPosition <= 0) return;
@@ -118,10 +125,10 @@ export default function Home() {
             ))}
           </Carousel>
           <RightShiftButton 
-            className="" 
-            direction="right" 
+            className=""
+            direction="right"
             state={carouselRef.current ? scrollPosition >= carouselRef.current.scrollWidth - carouselRef.current.clientWidth ? "disable" : "enable" : "disable"}
-            onClick={handleNextClick} 
+            onClick={handleNextClick}
           />
         </PostArea>
       </PagePart>
