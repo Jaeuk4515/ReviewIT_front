@@ -40,10 +40,12 @@ import getUserInfo from "../../../services/getUserInfo";
 import { useNavigate } from "react-router-dom";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import { Img } from "../../atoms/Category/Category.styles";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
-import { setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setReviewContent, resetContent } from "../../../store/slices/contentSlice";
+import { useDispatch } from "react-redux";
+import { setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setReviewContent, resetContent, selectContent } from "../../../store/slices/contentSlice";
 import { origin_URL } from "../../../App";
+import { useAppSelector } from "../../../store/hooks";
+import { selectLogin } from "../../../store/slices/loginSlice";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 export interface content {
   userId: string;
@@ -61,12 +63,12 @@ export type categoryType = "컴퓨터" | "노트북" | "핸드폰" | "모니터"
 
 export default function ReviewCreate() {
   const [ option, setOption ] = useState(false);
-  const content = useSelector((state: RootState) => state.content);
+  const content = useAppSelector(selectContent);
   const dispatch = useDispatch();
-  const login = useSelector((state: RootState) => state.login);
+  const login = useAppSelector(selectLogin);
   const [ alertModal, setAlertModal ] = useState(false);
   const navigate = useNavigate();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
   const [ textCount, setTextCount ] = useState(0);
 
   useEffect(() => {

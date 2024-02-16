@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ContentState } from "./contentSlice";
+import { RootState } from "..";
 
 export interface newContentState extends Omit<ContentState, "productImages"> {
   productImages: string[];
@@ -58,4 +59,5 @@ const newContentSlice = createSlice({
 });
 
 export const { setNewContent, setReviewTitle, setCategory, setProductName, setProductLink, setNewGrade, setProductImages, setNewProductImages, setDeletedProductImages, setReviewContent } = newContentSlice.actions;
+export const selectNewContent = (state: RootState) => state.newContent;
 export default newContentSlice.reducer;

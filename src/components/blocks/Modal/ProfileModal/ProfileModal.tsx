@@ -1,10 +1,10 @@
 import { Ballon, ButtonArea, MyPageButton, LogoutButton, InfoArea } from "./ProfileModal.styles";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../store/RootState";
+import { useDispatch } from "react-redux";
 import { setLogin } from "../../../../store/slices/loginSlice";
 import { cookies } from "../../../../App";
-import { resetUser } from "../../../../store/slices/userSlice";
+import { resetUser, selectUser } from "../../../../store/slices/userSlice";
+import { useAppSelector } from "../../../../store/hooks";
 
 type UserData = {
   nickname: string;
@@ -19,7 +19,7 @@ interface ProfileModalType {
 
 export default function ProfileModal({ userData, setProfileModal }: ProfileModalType) {
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user);
+  const user = useAppSelector(selectUser);
   const dispatch = useDispatch();
 
   const logout = async () => {

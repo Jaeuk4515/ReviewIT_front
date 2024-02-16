@@ -1,11 +1,11 @@
 import { ModalBg } from "../AuthModal/AuthModal.styles";
 import { ConfirmButton, ModalLogo, SuccessMessage, SuccessText } from "../SuccessModal/SuccessModal.styles";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store/RootState";
 import { NewModalBox, AlertIcon } from "./RequireLoginModal.styles";
+import { useAppSelector } from "../../../../store/hooks";
+import { selectTheme } from "../../../../store/slices/themeSlice";
 
 export default function RequireLoginModal({ setLoginRequired }: {setLoginRequired: React.Dispatch<React.SetStateAction<boolean>>}) {
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
 
   return (
     <ModalBg>

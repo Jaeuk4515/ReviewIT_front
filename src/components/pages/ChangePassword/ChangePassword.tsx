@@ -3,10 +3,10 @@ import { ErrorText, InputArea, InputBox, ModalTitle } from "../../blocks/Modal/A
 import { ChangePasswordPage, PasswordForm, ButtonArea, Btn } from "./ChangePassword.styles";
 import axios from "axios";
 import SuccessModal from "../../blocks/Modal/SuccessModal/SuccessModal";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
 import { useNavigate } from "react-router-dom";
 import { origin_URL } from "../../../App";
+import { useAppSelector } from "../../../store/hooks";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 type StateObj = {
   userInfo: {
@@ -50,7 +50,7 @@ const initialState: StateObj = {
 export default function ChangePassword() {
   const [ inputInfo, dispatch ] = useReducer(reducer, initialState);
   const [ success, setSuccess ] = useState(false);
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {

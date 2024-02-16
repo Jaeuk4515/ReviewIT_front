@@ -1,7 +1,8 @@
 import { CategoryArea, CategoryButton, Img, Name } from "./Category.styles";
 import getCategory from "../../../services/getCategory";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
+import { useAppSelector } from "../../../store/hooks";
+import { selectCategory } from "../../../store/slices/categorySlice";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 interface CategoryType {
   categoryName: string;
@@ -10,8 +11,8 @@ interface CategoryType {
 }
 
 export default function Category({ categoryName, nameLeftPadding, onClick }: CategoryType) {
-  const { category } = useSelector((state: RootState) => state.category);
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { category } = useAppSelector(selectCategory);
+  const { theme } = useAppSelector(selectTheme);
 
   return (
     <CategoryArea onClick={onClick}>

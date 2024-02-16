@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "..";
 
 export interface ModalType {
   modal: "login" | "signup" | "";
@@ -19,4 +20,5 @@ const modalSlice = createSlice({
 });
 
 export const { setModal } = modalSlice.actions;
+export const selectModal = (state: RootState) => state.modal;
 export default modalSlice.reducer;

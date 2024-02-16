@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "..";
 
 export type User = {
   _id: string,
@@ -36,4 +37,5 @@ const userSlice = createSlice({
 });
 
 export const { resetUser, setNickname, setUserImage, setUser } = userSlice.actions;
+export const selectUser = (state: RootState) => state.user;
 export default userSlice.reducer;

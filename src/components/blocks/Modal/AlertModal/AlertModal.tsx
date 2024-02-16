@@ -5,11 +5,13 @@ import alert from "../../../../assets/icons/alert.svg";
 import { ButtonArea } from "../../Header/Header.styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../store/RootState";
+import { useDispatch } from "react-redux";
 import { setLogin } from "../../../../store/slices/loginSlice";
 import { cookies, origin_URL } from "../../../../App";
-import { resetUser } from "../../../../store/slices/userSlice";
+import { resetUser, selectUser } from "../../../../store/slices/userSlice";
+import { useAppSelector } from "../../../../store/hooks";
+import { selectPage } from "../../../../store/slices/pageSlice";
+import { selectTheme } from "../../../../store/slices/themeSlice";
 
 interface AlertModalType {
   mode: "createAlert" | "deleteAlert" | "deleteAccountAlert";
@@ -19,10 +21,10 @@ interface AlertModalType {
 
 export default function AlertModal({ mode, setAlertModal, reviewId }: AlertModalType) {
   const navigate = useNavigate();
-  const pageInfo = useSelector((state: RootState) => state.page);
-  const user = useSelector((state: RootState) => state.user);
+  const pageInfo = useAppSelector(selectPage);
+  const user = useAppSelector(selectUser);
   const dispatch = useDispatch();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
 
   const handleDelete = async () => {
     if (mode === "deleteAlert") {

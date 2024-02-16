@@ -6,31 +6,34 @@ import { ReviewPage, RecommendCardWrapper, CategoryWrapper, ReviewPostArea, Grid
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import getPageArray from "../../../services/getPageArray";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
-import { setPostInfo } from "../../../store/slices/postInfoSlice";
-import { setPageInfo } from "../../../store/slices/pageSlice";
+import { useDispatch } from "react-redux";
+import { selectPosts, setPostInfo } from "../../../store/slices/postInfoSlice";
+import { selectPage, setPageInfo } from "../../../store/slices/pageSlice";
 import PageControl from "../../../services/pageControl";
 import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
 import { origin_URL } from "../../../App";
+import { useAppSelector } from "../../../store/hooks";
+import { selectSearchText } from "../../../store/slices/searchTextSlice";
+import { selectTheme } from "../../../store/slices/themeSlice";
+import Loading from "../Loading/Loading";
 
 export type category = "컴퓨터" | "노트북" | "핸드폰" | "모니터" | "키보드" | "마우스" | "태블릿" | "스마트워치" | "스피커" | "none";
 
 export default function Review() {
-  const postInfo = useSelector((state: RootState) => state.postInfo);
+  const { status, posts } = useAppSelector(selectPosts);
   const dispatch = useDispatch();
   const [ searchParams, setSearchParams ] = useSearchParams();
   const category = searchParams.get("category");
   const page = Number(searchParams.get("page"));
   const perPage = Number(searchParams.get("perPage"));
   const reset = searchParams.get("reset");
-  const pageInfo = useSelector((state: RootState) => state.page);
+  const pageInfo = useAppSelector(selectPage);
   const pageArray = getPageArray(page, pageInfo.totalPage);
   const navigate = useNavigate();
   const pageController = new PageControl(page, pageInfo, searchParams, setSearchParams);
   const [ isSearching, setIsSearching ] = useState(false);
-  const searchText = useSelector((state: RootState) => state.searchText);
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const searchText = useAppSelector(selectSearchText);
+  const { theme } = useAppSelector(selectTheme);
   
   const goToReviews = (status: "good" | "bad") => () => {
     if (status === "good") navigate(`/posts/recommendation/good-product?page=1&perPage=${pageInfo.perPage}`);
@@ -115,7 +118,7 @@ export default function Review() {
       <Search color="white" width="500px" height="50px" mode="whole" isSearching={isSearching} setIsSearching={setIsSearching} pageController={pageController} />
       <CategoryWrapper><CategoryNav setCategoryQuery={setCategoryQuery} setResetQuery={setResetQuery} /></CategoryWrapper>
       <ReviewPostArea>
-        {postInfo.map(({ reviewId, productImage, productName, grade }) => {
+        {posts.map(({ reviewId, productImage, productName, grade }) => {
           return <Link to={`/posts/detail/${reviewId}`} key={reviewId}><GridPost className="" url={productImage} name={productName} grade={grade} /></Link>
         })}
       </ReviewPostArea>

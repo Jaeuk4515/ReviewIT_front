@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
 import Category from "../../atoms/Category/Category";
 import { CategoryNavBar, NavBar, LeftShiftButton, RightShiftButton } from "./CategoryNav.styles";
-import { RootState } from "../../../store/RootState";
 import { useNavigate } from "react-router-dom";
 import { category } from "../../pages/Review/Review";
 import { useEffect, useRef, useState } from "react";
+import { useAppSelector } from "../../../store/hooks";
+import { selectCategory } from "../../../store/slices/categorySlice";
+import { selectPage } from "../../../store/slices/pageSlice";
 
 interface CategoryNavType {
   from?: string;
@@ -13,8 +14,8 @@ interface CategoryNavType {
 }
 
 export default function CategoryNav({ from, setCategoryQuery, setResetQuery }: CategoryNavType) {
-  const categoryObj = useSelector((state: RootState) => state.category);
-  const pageInfo = useSelector((state: RootState) => state.page);
+  const categoryObj = useAppSelector(selectCategory);
+  const pageInfo = useAppSelector(selectPage);
   const navigate = useNavigate();
   const [ scrollPosition, setScrollPosition ] = useState(0);
   const carouselRef = useRef<HTMLDivElement | null>(null);

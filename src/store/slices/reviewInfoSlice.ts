@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ContentState } from "./contentSlice";
+import { RootState } from "..";
 
 export interface ReviewInfo extends Omit<ContentState, 'productImages'> {
   likey: number;
@@ -41,4 +42,5 @@ const reviewInfoSlice = createSlice({
 });
 
 export const { setReviewInfo, setLikey } = reviewInfoSlice.actions;
+export const selectReviewInfo = (state: RootState) => state.reviewInfo;
 export default reviewInfoSlice.reducer;

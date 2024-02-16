@@ -8,25 +8,26 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
 import getPageArray from "../../../services/getPageArray";
 import PageControl from "../../../services/pageControl";
-import { setPageInfo } from "../../../store/slices/pageSlice";
-import { setPostInfo } from "../../../store/slices/postInfoSlice";
+import { selectPage, setPageInfo } from "../../../store/slices/pageSlice";
+import { selectPosts, setPostInfo } from "../../../store/slices/postInfoSlice";
 import { PaginationArea, ShiftButton, FirstIcon, PrevIcon, NextIcon, LastIcon, NumberArea, NumberMark } from "../Review/Review.styled";
 import { origin_URL } from "../../../App";
+import { useAppSelector } from "../../../store/hooks";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 export default function Recommend({ pageType }: {pageType: "good-product" | "bad-product"}) {
   const [ searchParams, setSearchParams ] = useSearchParams();
   const page = Number(searchParams.get("page"));
   const perPage = Number(searchParams.get("perPage"));
-  const postInfo = useSelector((state: RootState) => state.postInfo);
-  const pageInfo = useSelector((state: RootState) => state.page);
+  const { status, posts } = useAppSelector(selectPosts);
+  const pageInfo = useAppSelector(selectPage);
   const pageArray = getPageArray(page, pageInfo.totalPage);
   const pageController = new PageControl(page, pageInfo, searchParams, setSearchParams);
   const dispatch = useDispatch();
   const [ isSearching, setIsSearching ] = useState(false);
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,7 +62,7 @@ export default function Recommend({ pageType }: {pageType: "good-product" | "bad
       </TitleArea>
       <Search color="white" width="500px" height="50px" mode={pageType} isSearching={isSearching} setIsSearching={setIsSearching} pageController={pageController} />
       <ReviewPostArea>
-        {postInfo.map(({ reviewId, productImage, productName, grade }) => {
+        {posts.map(({ reviewId, productImage, productName, grade }) => {
           return <div key={reviewId} onClick={() => moveToReviewDetial(reviewId)} style={{cursor: "pointer"}}><GridPost className="" url={productImage} name={productName} grade={grade} /></div>
         })}
       </ReviewPostArea>

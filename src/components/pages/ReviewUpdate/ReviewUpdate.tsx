@@ -40,21 +40,23 @@ import x_button from "../../../assets/icons/x-button.svg";
 import camera_light from "../../../assets/icons/camera_light.svg";
 import camera_dark from "../../../assets/icons/camera_dark.svg";
 import { Img } from "../../atoms/Category/Category.styles";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
-import { setNewContent, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setNewProductImages, setDeletedProductImages, setReviewContent } from "../../../store/slices/newContentSlice";
+import { useDispatch } from "react-redux";
+import { setNewContent, setReviewTitle, setCategory, setProductName, setProductLink, setProductImages, setNewProductImages, setDeletedProductImages, setReviewContent, selectNewContent } from "../../../store/slices/newContentSlice";
 import { origin_URL } from "../../../App";
+import { selectLogin } from "../../../store/slices/loginSlice";
+import { useAppSelector } from "../../../store/hooks";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 export default function ReviewUpdate() {
   const param = useParams();
-  const login = useSelector((state: RootState) => state.login);
-  const newContent = useSelector((state: RootState) => state.newContent);
+  const login = useAppSelector(selectLogin);
+  const newContent = useAppSelector(selectNewContent);
   const dispatch = useDispatch();
   const [ option, setOption ] = useState(false);
   const [ alertModal, setAlertModal ] = useState(false);
   const [ showImages, setShowImages ] = useState<string[]>([]);
   const navigate = useNavigate();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
   const [ textCount, setTextCount ] = useState(0);
 
   useEffect(() => {

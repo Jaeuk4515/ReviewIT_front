@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "..";
 
 export interface PageObject {
   page: number;
@@ -26,4 +27,5 @@ const pageSlice = createSlice({
 });
 
 export const { resetPage, setPageInfo } = pageSlice.actions;
+export const selectPage = (state: RootState) => state.page;
 export default pageSlice.reducer;

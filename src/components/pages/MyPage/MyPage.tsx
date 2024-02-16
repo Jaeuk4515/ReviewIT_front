@@ -23,22 +23,24 @@ import {
 import { ImageInput } from "../ReviewCreate/ReviewCreate.styles";
 import Category from "../../atoms/Category/Category";
 import UserReviewInfo from "../../blocks/UserReviewInfo/UserReviewInfo";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
+import { resetCategory, selectCategory, setCategory } from "../../../store/slices/categorySlice";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { PostObject } from "../../../store/slices/postInfoSlice";
+import { Post } from "../../../store/slices/postInfoSlice";
 import { resetPage } from "../../../store/slices/pageSlice";
-import { setNickname, setUserImage } from "../../../store/slices/userSlice";
+import { selectUser, setNickname, setUserImage } from "../../../store/slices/userSlice";
 import user_default from "../../../assets/icons/user_default.svg";
 import { CommentText, Profile, UserInfoArea, UserName, WritedTime } from "../../blocks/CommentItem/CommentItem.styles";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
 import { origin_URL } from "../../../App";
 import SuccessModal from "../../blocks/Modal/SuccessModal/SuccessModal";
+import { useAppSelector } from "../../../store/hooks";
+import { selectLogin } from "../../../store/slices/loginSlice";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
-interface ReviewInfo extends PostObject {
+interface ReviewInfo extends Post {
   reviewTitle: string;
   createdAt: string;
 }
@@ -55,11 +57,11 @@ interface UserInfo {
 }
 
 export default function MyPage() {
-  const login = useSelector((state: RootState) => state.login);
-  const user = useSelector((state: RootState) => state.user);
+  const login = useAppSelector(selectLogin);
+  const user = useAppSelector(selectUser);
   const dispatch = useDispatch();
   const [ isUserImageHover, setIsUserImageHover ] = useState(false);
-  const category = useSelector((state: RootState) => state.category);
+  const category = useAppSelector(selectCategory);
   const param = useParams();
   const [ reviewInfo, setReviewInfo ] = useState<ReviewInfo[]>([]);
   const [ commentInfo, setCommentInfo ] = useState<CommentInfo[]>([]);
@@ -70,7 +72,7 @@ export default function MyPage() {
   });
   const [ showImage, setShowImage ] = useState("");
   const [ deleteModal, setDeleteModal ] = useState(false);
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
   const [ success, setSuccess ] = useState(false);
 
   useEffect(() => {

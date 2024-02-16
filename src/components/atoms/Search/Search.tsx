@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { SearchArea, SearchBox, CancelButton, XIcon, IconArea } from "./Search.styles";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
-import { resetSearchText, setSearchText } from "../../../store/slices/searchTextSlice";
-import { setPageInfo } from "../../../store/slices/pageSlice";
+import { resetSearchText, selectSearchText, setSearchText } from "../../../store/slices/searchTextSlice";
+import { selectPage, setPageInfo } from "../../../store/slices/pageSlice";
 import { setPostInfo } from "../../../store/slices/postInfoSlice";
 import PageControl from "../../../services/pageControl";
 import { origin_URL } from "../../../App";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { selectCategory } from "../../../store/slices/categorySlice";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 interface SearchType {
   color: string;
@@ -20,11 +21,11 @@ interface SearchType {
 };
 
 export default function Search({color, width, height, mode, isSearching, setIsSearching, pageController}: SearchType) {
-  const searchText = useSelector((state: RootState) => state.searchText);
-  const pageInfo = useSelector((state: RootState) => state.page);
-  const { category } = useSelector((state: RootState) => state.category);
-  const dispatch = useDispatch();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const searchText = useAppSelector(selectSearchText);
+  const pageInfo = useAppSelector(selectPage);
+  const { category } = useAppSelector(selectCategory);
+  const dispatch = useAppDispatch();
+  const { theme } = useAppSelector(selectTheme);
 
   useEffect(() => {
     dispatch(resetSearchText());

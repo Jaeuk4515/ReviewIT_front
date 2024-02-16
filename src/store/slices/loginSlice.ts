@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "..";
 
 const initialState: boolean = false;
 
@@ -13,4 +14,5 @@ const loginSlice = createSlice({
 });
 
 export const { setLogin } = loginSlice.actions;
+export const selectLogin = (state: RootState) => state.login;
 export default loginSlice.reducer;

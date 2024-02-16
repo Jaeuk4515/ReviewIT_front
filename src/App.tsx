@@ -13,11 +13,11 @@ import Cookies from 'universal-cookie';
 import ReviewUpdate from './components/pages/ReviewUpdate/ReviewUpdate';
 import MyPage from './components/pages/MyPage/MyPage';
 import ErrorPage from './components/pages/404ErrorPage/404ErrorPage';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './store/RootState';
 import { setLogin } from './store/slices/loginSlice';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './theme/theme';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { selectTheme } from './store/slices/themeSlice';
 
 // export const origin_URL = "http://localhost:3001";
 export const origin_URL = "https://robotic-heaven-409619.du.r.appspot.com";
@@ -25,8 +25,8 @@ export const origin_URL = "https://robotic-heaven-409619.du.r.appspot.com";
 export const cookies = new Cookies();
 
 function App() {
-  const dispatch = useDispatch();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const dispatch = useAppDispatch();
+  const { theme } = useAppSelector(selectTheme);
 
   useEffect(() => {
     const jwtToken = cookies.get('token');
@@ -36,8 +36,6 @@ function App() {
       dispatch(setLogin(false));
     };
   }, []);
-  
-  console.log("App 렌더링");
 
   const routePath = [
     {

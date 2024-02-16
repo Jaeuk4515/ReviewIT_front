@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { CommentArea, UserInfoArea, Profile, UserName, WritedTime, CommentText, DeleteButton } from "./CommentItem.styles";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
 import { CommentInfo } from "../../pages/ReviewDetail/ReviewDetail";
 import { origin_URL } from "../../../App";
+import { useAppSelector } from "../../../store/hooks";
+import { selectLogin } from "../../../store/slices/loginSlice";
+import { selectUser } from "../../../store/slices/userSlice";
 
 export interface CommentItemType {
   cId: string;
@@ -21,8 +22,8 @@ interface UserInfo {
 }
 
 export default function CommentItem({ cId, userId, text, createdAt, commentInfo, setCommentInfo }: CommentItemType) {
-  const login = useSelector((state: RootState) => state.login);
-  const user = useSelector((state: RootState) => state.user);
+  const login = useAppSelector(selectLogin);
+  const user = useAppSelector(selectUser);
   const [ userInfo, setUserInfo ] = useState<UserInfo>({
     userImage: "",
     nickname: ""

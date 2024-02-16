@@ -25,21 +25,21 @@ import thumbs_up from "../../../assets/icons/thumbs_up.svg"
 import thumbs_down from "../../../assets/icons/thumbs_down.svg"
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
-import { setPostInfo } from "../../../store/slices/postInfoSlice";
+import { getPostsThunk, selectPosts } from "../../../store/slices/postInfoSlice";
 import Banner from "../../blocks/Banner/Banner";
-import { origin_URL } from "../../../App";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { selectPage } from "../../../store/slices/pageSlice";
+import { selectTheme } from "../../../store/slices/themeSlice";
+import Loading from "../Loading/Loading";
 
 export default function Home() {
-  const postInfo = useSelector((state: RootState) => state.postInfo);
-  const pageInfo = useSelector((state: RootState) => state.page);
-  const dispatch = useDispatch();
+  const { status, posts } = useAppSelector(selectPosts);
+  const pageInfo = useAppSelector(selectPage);
+  const dispatch = useAppDispatch();
   const [ scrollPosition, setScrollPosition ] = useState(0);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
   // 최초 렌더링 후 scrollWidth가 변경된 후 RightShiftButton 컴포넌트의 state props에 적용하는 용도의 state. 왜인지 첫 리렌더링때에는 바뀐 scrollWidth대로 적용이 안되고 리렌더링을 한번 더 해야 적용됨.
   const [ buttonState, setButtonState ] = useState<"disable" | "enable">("disable");
   
@@ -49,12 +49,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const getReviewsInfo = async () => {
-      const response = await axios.get(`${origin_URL}/review/topReviews`);
-      dispatch(setPostInfo(response.data));
-    };
-
-    getReviewsInfo();
+    dispatch(getPostsThunk());
   }, []);
 
   useEffect(() => {
@@ -67,8 +62,10 @@ export default function Home() {
   }, [scrollPosition]);
 
   useEffect(() => {
-    const isDisable = scrollPosition >= carouselRef.current!.scrollWidth - carouselRef.current!.clientWidth;
-    setButtonState(isDisable ? "disable" : "enable");
+    if (carouselRef.current) {
+      const isDisable = scrollPosition >= carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
+      setButtonState(isDisable ? "disable" : "enable");
+    }
   }, [carouselRef.current?.scrollWidth]);
 
   const handlePrevClick = () => {
@@ -85,6 +82,13 @@ export default function Home() {
       const newScrollPosition = scrollPosition + carouselRef.current.clientWidth;
       setScrollPosition(newScrollPosition);
     };
+  };
+
+  if (status === "pending") {
+    return <Loading />
+  };
+  if (status === "rejected") {
+    return <></>
   };
 
   return (
@@ -118,7 +122,7 @@ export default function Home() {
         <PostArea>
           <LeftShiftButton className="" direction="left" state={scrollPosition === 0 ? "disable" : "enable"} onClick={handlePrevClick} />
           <Carousel ref={carouselRef}>
-            {postInfo.map((post, index) => (
+            {posts.map((post, index) => (
               <Link to={`/posts/detail/${post.reviewId}`} key={index} style={{ flex: "0 0 auto", width: "20%", minWidth: "150px" }}>
                 <Post className="" url={post.productImage} name={post.productName} grade={post.grade} />
               </Link>

@@ -2,9 +2,10 @@ import axios from "axios";
 import { Form, NoAuthCover, NoAuthText, InputWrapper, ImageWrapper, UserImage, CommentInput, SubmitButton, FormArea } from "./CommentForm.styles";
 import { useState } from "react";
 import { CommentInfo } from "../../pages/ReviewDetail/ReviewDetail";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
 import { origin_URL } from "../../../App";
+import { useAppSelector } from "../../../store/hooks";
+import { selectLogin } from "../../../store/slices/loginSlice";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 interface CommentFormType {
   url: string;
@@ -15,9 +16,9 @@ interface CommentFormType {
 };
 
 export default function CommentForm({ url, uId, rId, commentInfo, setCommentInfo }: CommentFormType) {
-  const login = useSelector((state: RootState) => state.login);
+  const login = useAppSelector(selectLogin);
   const [ commentText, setCommentText ] = useState("");
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommentText(e.target.value);

@@ -4,24 +4,25 @@ import AuthModal from "../Modal/AuthModal/AuthModal";
 import { useNavigate } from "react-router-dom";
 import getUserInfo from "../../../services/getUserInfo";
 import ProfileModal from "../Modal/ProfileModal/ProfileModal";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
-import { resetCategory, setCategory } from "../../../store/slices/categorySlice";
-import { setUser } from "../../../store/slices/userSlice";
-import { setModal } from "../../../store/slices/modalSlice";
+import { resetCategory, selectCategory, setCategory } from "../../../store/slices/categorySlice";
+import { selectUser, setUser } from "../../../store/slices/userSlice";
+import { selectModal, setModal } from "../../../store/slices/modalSlice";
 import { ModalBg } from "../Modal/AuthModal/AuthModal.styles";
-import { setTheme } from "../../../store/slices/themeSlice";
+import { selectTheme, setTheme } from "../../../store/slices/themeSlice";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { selectLogin } from "../../../store/slices/loginSlice";
+import { selectReviewInfo } from "../../../store/slices/reviewInfoSlice";
 
 export default function Header() {
-  const login = useSelector((state: RootState) => state.login);
-  const { modal } = useSelector((state: RootState) => state.modal);
-  const user = useSelector((state: RootState) => state.user);
+  const login = useAppSelector(selectLogin);
+  const { modal } = useAppSelector(selectModal);
+  const user = useAppSelector(selectUser);
   const [ profileModal, setProfileModal ] = useState(false);
   const navigate = useNavigate();
-  const { category } = useSelector((state: RootState) => state.category, () => { return true });
-  const dispatch = useDispatch();
-  const reviewInfo = useSelector((state: RootState) => state.reviewInfo);
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { category } = useAppSelector(selectCategory, () => { return true });
+  const dispatch = useAppDispatch();
+  const reviewInfo = useAppSelector(selectReviewInfo);
+  const { theme } = useAppSelector(selectTheme);
   const [ isAnimating, setIsAnimating ] = useState(false);
 
   useEffect(() => {

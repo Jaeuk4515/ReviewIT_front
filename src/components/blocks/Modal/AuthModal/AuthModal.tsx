@@ -17,11 +17,12 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SuccessModal from "../SuccessModal/SuccessModal";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../store/RootState";
-import { setModal } from "../../../../store/slices/modalSlice";
+import { useDispatch } from "react-redux";
+import { selectModal, setModal } from "../../../../store/slices/modalSlice";
 import { setLogin } from "../../../../store/slices/loginSlice";
 import { cookies, origin_URL } from "../../../../App";
+import { useAppSelector } from "../../../../store/hooks";
+import { selectTheme } from "../../../../store/slices/themeSlice";
 
 type StateObj = {
   userInfo: {
@@ -72,11 +73,11 @@ const initialState = {
 
 export default function AuthModal() {
   const navigate = useNavigate();
-  const { modal } = useSelector((state: RootState) => state.modal);
+  const { modal } = useAppSelector(selectModal);
   const Dispatch = useDispatch();
   const [ inputInfo, dispatch ] = useReducer(reducer, initialState);
   const [ success, setSuccess ] = useState(false);
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     dispatch({ type: "infoUpdate", payload: { name, value: e.target.value } });

@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "..";
 
 export interface ContentState {
   userId: string;
@@ -57,4 +58,5 @@ const contentSlice = createSlice({
 });
 
 export const { resetContent, setUserId, setReviewTitle, setCategory, setProductName, setProductLink, setGrade, setProductImages, setReviewContent } = contentSlice.actions;
+export const selectContent = (state: RootState) => state.content;
 export default contentSlice.reducer;

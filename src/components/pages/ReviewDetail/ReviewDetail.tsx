@@ -10,16 +10,20 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import getUserInfoById from "../../../services/getUserInfoById";
 import AlertModal from "../../blocks/Modal/AlertModal/AlertModal";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
+import { useDispatch } from "react-redux";
 import gray_heart from "../../../assets/icons/gray_heart.svg";
 import red_heart from "../../../assets/icons/red_heart.svg";
-import { setLikey, setReviewInfo } from "../../../store/slices/reviewInfoSlice";
+import { selectReviewInfo, setLikey, setReviewInfo } from "../../../store/slices/reviewInfoSlice";
 import RequireLoginModal from "../../blocks/Modal/RequireLoginModal/RequireLoginModal";
 import user_default from "../../../assets/icons/user_default.svg";
 import { ModalBg } from "../../blocks/Modal/AuthModal/AuthModal.styles";
 import { origin_URL } from "../../../App";
-import Image3dSlide from "../../blocks/Image3dSlide/Image3dSlide";
+import { useAppSelector } from "../../../store/hooks";
+import { selectLogin } from "../../../store/slices/loginSlice";
+import { selectPage } from "../../../store/slices/pageSlice";
+import { selectCategory } from "../../../store/slices/categorySlice";
+import { selectUser } from "../../../store/slices/userSlice";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 export interface CommentInfo {
   commentId: string;
@@ -30,19 +34,19 @@ export interface CommentInfo {
 
 export default function ReviewDetail() {
   const param = useParams();
-  const login = useSelector((state: RootState) => state.login);
-  const pageInfo = useSelector((state: RootState) => state.page);
-  const { category } = useSelector((state: RootState) => state.category);
-  const reviewInfo = useSelector((state: RootState) => state.reviewInfo);
+  const login = useAppSelector(selectLogin);
+  const pageInfo = useAppSelector(selectPage);
+  const { category } = useAppSelector(selectCategory);
+  const reviewInfo = useAppSelector(selectReviewInfo);
   const dispatch = useDispatch();
   const [ isModal, setIsModal ] = useState(false);
   const [ alertModal, setAlertModal ] = useState(false);
-  const user = useSelector((state: RootState) => state.user);
+  const user = useAppSelector(selectUser);
   const [ isLike, setIsLike ] = useState(false);
   const [ loginRequired, setLoginRequired ] = useState(false);
   const [ commentInfo, setCommentInfo ] = useState<CommentInfo[]>([]);
   const navigate = useNavigate();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
   const location = useLocation();
 
   useEffect(() => {

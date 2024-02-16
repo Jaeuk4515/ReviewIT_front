@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { ModalBg, ModalButton } from "../AuthModal/AuthModal.styles";
+import { ModalBg } from "../AuthModal/AuthModal.styles";
 import { ModalBox, ModalLogo, SuccessMark, SuccessText, SuccessMessage, ButtonWrapper, ConfirmButton, LoginButton, LoginText } from "./SuccessModal.styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setModal } from "../../../../store/slices/modalSlice";
-import { RootState } from "../../../../store/RootState";
+import { useAppSelector } from "../../../../store/hooks";
+import { selectTheme } from "../../../../store/slices/themeSlice";
 
 interface SuccessModalType {
   mode: "signup" | "changepassword" | "changeuserinfo";
@@ -13,7 +14,7 @@ interface SuccessModalType {
 export default function SuccessModal({ mode, setsuccess }: SuccessModalType) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useAppSelector(selectTheme);
 
   const handleClick = (buttonName: string) => {
     if (buttonName === "확인") {

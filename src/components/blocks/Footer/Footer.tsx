@@ -3,14 +3,15 @@ import facebook from "../../../assets/icons/facebook.svg";
 import instagram from "../../../assets/icons/instagram.svg";
 import youtube from "../../../assets/icons/youtube.svg";
 import mail from "../../../assets/icons/mail.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/RootState";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { resetCategory } from "../../../store/slices/categorySlice";
+import { resetCategory, selectCategory } from "../../../store/slices/categorySlice";
+import { useAppSelector } from "../../../store/hooks";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 export default function Footer() {
-  const { theme } = useSelector((state: RootState) => state.theme);
-  const { category } = useSelector((state: RootState) => state.category, () => { return true });  // 리뷰 페이지에서 카테고리가 변경되어도 리렌더링 되지 않게  
+  const { theme } = useAppSelector(selectTheme);
+  const { category } = useAppSelector(selectCategory, () => { return true });  // 리뷰 페이지에서 카테고리가 변경되어도 리렌더링 되지 않게  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "..";
 
 const initialState: string = "";
 
@@ -16,4 +17,5 @@ const searchTextSlice = createSlice({
 });
 
 export const { resetSearchText, setSearchText } = searchTextSlice.actions;
+export const selectSearchText = (state: RootState) => state.searchText;
 export default searchTextSlice.reducer;
