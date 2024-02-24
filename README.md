@@ -176,3 +176,16 @@
   리뷰나 댓글 클릭시 해당 리뷰 페이지로 이동
   
 </details>
+
+<details>
+  <summary>9. 비밀번호 변경 페이지</summary>
+  <img src="https://github.com/Jaeuk4515/ReviewIT_front/assets/112686037/d53356a9-934a-4f3f-993b-df2656d42fac" />
+
+  #### 인풋 정보 검증
+  - 이메일<br>
+    <img src="https://github.com/Jaeuk4515/ReviewIT_front/assets/112686037/e340a14d-4c97-4a2a-a4ad-b9a12dea5abf" />
+  - 비밀번호<br>
+    <img src="https://github.com/Jaeuk4515/ReviewIT_front/assets/112686037/1c70874e-dd93-4bc7-a5c8-7fdb8f8db9b8" />
+  - 비밀번호 확인<br>
+    <img src="https://github.com/Jaeuk4515/ReviewIT_front/assets/112686037/6a94c01a-076c-440c-98ac-32ddbaf8c9d8" />
+</details>
