@@ -10,7 +10,7 @@
   - FE : React.js, styled-components, TypeScript
   - BE : Node.js, Express.js, MongoDB
   - infra : Vercel(FE), Google Cloud Platform(BE)
-  - 
+  
 <br>
 
 사이트 링크 : https://review-it-tawny.vercel.app/
