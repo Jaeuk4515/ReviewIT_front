@@ -48,6 +48,10 @@ const BorderFilter = styled.div<{gradient: "left" | "right"}>`
   width: 90px;
   height: 50px;
   background-image: linear-gradient(${props => props.gradient === "left" ? "90deg" : "270deg"}, white 60%, hsla(0, 0%, 100%, 0));
+
+  @media ${({ theme }) => theme.mediaQuery.medium} {
+    display: none;
+  };
 `
 
 const LeftShiftButton = styled(PrevButton)`
