@@ -10,7 +10,7 @@ const CategoryNavBar = styled.div`
 `
 
 const NavBar = styled.div`
-  width: 95%;
+  width: 100%;
   padding: 5px;
   display: flex;
   gap: .46rem;
@@ -40,8 +40,18 @@ const NavBar = styled.div`
   };
 `
 
+const BorderFilter = styled.div<{gradient: "left" | "right"}>`
+  position: absolute;
+  top: 2px; 
+  left: ${props => props.gradient === "left" ? "0px" : "initial"};
+  right: ${props => props.gradient === "right" ? "0px" : "initial"};
+  width: 90px;
+  height: 50px;
+  background-image: linear-gradient(${props => props.gradient === "left" ? "90deg" : "270deg"}, white 60%, hsla(0, 0%, 100%, 0));
+`
+
 const LeftShiftButton = styled(PrevButton)`
-  top: 4px; left: 0px;
+  top: 4px; left: -5px;
   width: 47px;
   height: 47px;
   display: ${props => props.state === "disable" ? "none" : ""};
@@ -52,7 +62,7 @@ const LeftShiftButton = styled(PrevButton)`
 `
 
 const RightShiftButton = styled(NextButton)`
-  top: 4px; right: 0px;
+  top: 4px; right: -5px;
   width: 47px;
   height: 47px;
   display: ${props => props.state === "disable" ? "none" : ""};
@@ -62,4 +72,4 @@ const RightShiftButton = styled(NextButton)`
   };
 `
 
-export { CategoryNavBar, NavBar, LeftShiftButton, RightShiftButton }
+export { CategoryNavBar, NavBar, BorderFilter, LeftShiftButton, RightShiftButton }

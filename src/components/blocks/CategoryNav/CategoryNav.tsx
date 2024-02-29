@@ -1,5 +1,5 @@
 import Category from "../../atoms/Category/Category";
-import { CategoryNavBar, NavBar, LeftShiftButton, RightShiftButton } from "./CategoryNav.styles";
+import { CategoryNavBar, NavBar, BorderFilter, LeftShiftButton, RightShiftButton } from "./CategoryNav.styles";
 import { useNavigate } from "react-router-dom";
 import { category } from "../../pages/Review/Review";
 import { useEffect, useRef, useState } from "react";
@@ -55,6 +55,7 @@ export default function CategoryNav({ from, setCategoryQuery, setResetQuery }: C
   return (
     <CategoryNavBar>
       <LeftShiftButton className="" direction="left" state={scrollPosition > 0 ? "enable" : "disable"} onClick={handlePrevClick} />
+      {scrollPosition > 0 && <BorderFilter gradient="left" />}
       <NavBar ref={carouselRef}>
         <Category categoryName="컴퓨터" nameLeftPadding="0px" onClick={() => categroyChange("컴퓨터")} />
         <Category categoryName="노트북" nameLeftPadding="2px" onClick={() => categroyChange("노트북")} />
@@ -66,6 +67,7 @@ export default function CategoryNav({ from, setCategoryQuery, setResetQuery }: C
         <Category categoryName="스마트워치" nameLeftPadding="0px" onClick={() => categroyChange("스마트워치")} />
         <Category categoryName="스피커" nameLeftPadding="0px" onClick={() => categroyChange("스피커")} />
       </NavBar>
+      {scrollPosition < maxScrollLeft && <BorderFilter gradient="right" />}
       <RightShiftButton className="" direction="right" state={scrollPosition < maxScrollLeft ? "enable" : "disable"} onClick={handleNextClick} />
     </CategoryNavBar>
   )
