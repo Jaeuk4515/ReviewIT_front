@@ -40,8 +40,7 @@ export default function Home() {
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const { theme } = useAppSelector(selectTheme);
-  // 최초 렌더링 후 scrollWidth가 변경된 후 RightShiftButton 컴포넌트의 state props에 적용하는 용도의 state. 왜인지 첫 리렌더링때에는 바뀐 scrollWidth대로 적용이 안되고 리렌더링을 한번 더 해야 적용됨.
-  const [ buttonState, setButtonState ] = useState<"disable" | "enable">("disable");
+  const [ maxScrollLeft, setMaxScrollLeft ] = useState(0);
   
   const goToReviews = (status: "good" | "bad") => () => {
     if (status === "good") navigate(`/posts/recommendation/good-product?page=1&perPage=${pageInfo.perPage}`);
@@ -63,10 +62,9 @@ export default function Home() {
 
   useEffect(() => {
     if (carouselRef.current) {
-      const isDisable = scrollPosition >= carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
-      setButtonState(isDisable ? "disable" : "enable");
-    }
-  }, [carouselRef.current?.scrollWidth]);
+      setMaxScrollLeft(carouselRef.current.clientWidth * 3);
+    };
+  }, [carouselRef.current]);
 
   const handlePrevClick = () => {
     if (scrollPosition <= 0) return;
@@ -78,7 +76,7 @@ export default function Home() {
 
   const handleNextClick = () => {
     if (carouselRef.current) {
-      if (scrollPosition >= carouselRef.current.clientWidth * 3) return;
+      if (scrollPosition >= maxScrollLeft) return;
       const newScrollPosition = scrollPosition + carouselRef.current.clientWidth;
       setScrollPosition(newScrollPosition);
     };
@@ -128,12 +126,7 @@ export default function Home() {
               </Link>
             ))}
           </Carousel>
-          <RightShiftButton 
-            className=""
-            direction="right"
-            state={carouselRef.current ? scrollPosition >= carouselRef.current.scrollWidth - carouselRef.current.clientWidth ? "disable" : "enable" : "disable"}
-            onClick={handleNextClick}
-          />
+          <RightShiftButton className="" direction="right" state={scrollPosition >= maxScrollLeft ? "disable" : "enable"} onClick={handleNextClick} />
         </PostArea>
       </PagePart>
       <PagePart style={{"marginTop": "20px"}}>
