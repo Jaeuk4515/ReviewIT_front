@@ -47,7 +47,7 @@ const BorderFilter = styled.div<{gradient: "left" | "right"}>`
   right: ${props => props.gradient === "right" ? "0px" : "initial"};
   width: 90px;
   height: 50px;
-  background-image: linear-gradient(${props => props.gradient === "left" ? "90deg" : "270deg"}, white 60%, hsla(0, 0%, 100%, 0));
+  background-image: linear-gradient(${props => props.gradient === "left" ? "90deg" : "270deg"}, ${({ theme }) => theme.backgroundColor} 60%, hsla(0, 0%, 100%, 0));
 
   @media ${({ theme }) => theme.mediaQuery.medium} {
     display: none;
